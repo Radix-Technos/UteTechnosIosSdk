@@ -1,0 +1,2496 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "TopLevel",
+    "printedName": "TopLevel",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "UTESmartBandApi",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreBluetooth",
+        "printedName": "CoreBluetooth",
+        "declKind": "Import",
+        "moduleName": "UTESmartBandApi"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SYDUpdateDelegate",
+        "printedName": "SYDUpdateDelegate",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "sydUpdateProccess",
+            "printedName": "sydUpdateProccess(proccess:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Float",
+                "printedName": "Swift.Float",
+                "usr": "s:Sf"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(pl)SYDUpdateDelegate(im)sydUpdateProccessWithProccess:",
+            "mangledName": "$s15UTESmartBandApi17SYDUpdateDelegateP17sydUpdateProccess8proccessySf_tF",
+            "moduleName": "UTESmartBandApi",
+            "genericSig": "<τ_0_0 where τ_0_0 : UTESmartBandApi.SYDUpdateDelegate>",
+            "sugared_genericSig": "<Self where Self : UTESmartBandApi.SYDUpdateDelegate>",
+            "protocolReq": true,
+            "objc_name": "sydUpdateProccessWithProccess:",
+            "declAttributes": [
+              "Optional",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sydUpdateSuccess",
+            "printedName": "sydUpdateSuccess()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(pl)SYDUpdateDelegate(im)sydUpdateSuccess",
+            "mangledName": "$s15UTESmartBandApi17SYDUpdateDelegateP16sydUpdateSuccessyyF",
+            "moduleName": "UTESmartBandApi",
+            "genericSig": "<τ_0_0 where τ_0_0 : UTESmartBandApi.SYDUpdateDelegate>",
+            "sugared_genericSig": "<Self where Self : UTESmartBandApi.SYDUpdateDelegate>",
+            "protocolReq": true,
+            "declAttributes": [
+              "Optional",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sydUpdateFail",
+            "printedName": "sydUpdateFail()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(pl)SYDUpdateDelegate(im)sydUpdateFail",
+            "mangledName": "$s15UTESmartBandApi17SYDUpdateDelegateP13sydUpdateFailyyF",
+            "moduleName": "UTESmartBandApi",
+            "genericSig": "<τ_0_0 where τ_0_0 : UTESmartBandApi.SYDUpdateDelegate>",
+            "sugared_genericSig": "<Self where Self : UTESmartBandApi.SYDUpdateDelegate>",
+            "protocolReq": true,
+            "declAttributes": [
+              "Optional",
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "c:@M@UTESmartBandApi@objc(pl)SYDUpdateDelegate",
+        "mangledName": "$s15UTESmartBandApi17SYDUpdateDelegateP",
+        "moduleName": "UTESmartBandApi",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SYDUpdate",
+        "printedName": "SYDUpdate",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "otaCharacter",
+            "printedName": "otaCharacter",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "CoreBluetooth.CBCharacteristic?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CBCharacteristic",
+                    "printedName": "CoreBluetooth.CBCharacteristic",
+                    "usr": "c:objc(cs)CBCharacteristic"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC12otaCharacterSo16CBCharacteristicCSgvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC12otaCharacterSo16CBCharacteristicCSgvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "CoreBluetooth.CBCharacteristic?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "CBCharacteristic",
+                        "printedName": "CoreBluetooth.CBCharacteristic",
+                        "usr": "c:objc(cs)CBCharacteristic"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC12otaCharacterSo16CBCharacteristicCSgvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC12otaCharacterSo16CBCharacteristicCSgvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "CoreBluetooth.CBCharacteristic?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "CBCharacteristic",
+                        "printedName": "CoreBluetooth.CBCharacteristic",
+                        "usr": "c:objc(cs)CBCharacteristic"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC12otaCharacterSo16CBCharacteristicCSgvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC12otaCharacterSo16CBCharacteristicCSgvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC12otaCharacterSo16CBCharacteristicCSgvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC12otaCharacterSo16CBCharacteristicCSgvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "connectPer",
+            "printedName": "connectPer",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "CoreBluetooth.CBPeripheral?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CBPeripheral",
+                    "printedName": "CoreBluetooth.CBPeripheral",
+                    "usr": "c:objc(cs)CBPeripheral"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC10connectPerSo12CBPeripheralCSgvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC10connectPerSo12CBPeripheralCSgvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "CoreBluetooth.CBPeripheral?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "CBPeripheral",
+                        "printedName": "CoreBluetooth.CBPeripheral",
+                        "usr": "c:objc(cs)CBPeripheral"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10connectPerSo12CBPeripheralCSgvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10connectPerSo12CBPeripheralCSgvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "CoreBluetooth.CBPeripheral?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "CBPeripheral",
+                        "printedName": "CoreBluetooth.CBPeripheral",
+                        "usr": "c:objc(cs)CBPeripheral"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10connectPerSo12CBPeripheralCSgvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10connectPerSo12CBPeripheralCSgvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10connectPerSo12CBPeripheralCSgvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10connectPerSo12CBPeripheralCSgvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "delegate",
+            "printedName": "delegate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any UTESmartBandApi.SYDUpdateDelegate)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(py)delegate",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC8delegateAA0D8Delegate_pSgvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ReferenceOwnership",
+              "ObjC"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any UTESmartBandApi.SYDUpdateDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SYDUpdateDelegate",
+                        "printedName": "any UTESmartBandApi.SYDUpdateDelegate",
+                        "usr": "c:@M@UTESmartBandApi@objc(pl)SYDUpdateDelegate"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)delegate",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8delegateAA0D8Delegate_pSgvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any UTESmartBandApi.SYDUpdateDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SYDUpdateDelegate",
+                        "printedName": "any UTESmartBandApi.SYDUpdateDelegate",
+                        "usr": "c:@M@UTESmartBandApi@objc(pl)SYDUpdateDelegate"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)setDelegate:",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8delegateAA0D8Delegate_pSgvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC8delegateAA0D8Delegate_pSgvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8delegateAA0D8Delegate_pSgvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isUpgrade",
+            "printedName": "isUpgrade",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC9isUpgradeSbvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC9isUpgradeSbvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC9isUpgradeSbvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC9isUpgradeSbvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC9isUpgradeSbvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC9isUpgradeSbvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC9isUpgradeSbvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC9isUpgradeSbvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "deadline",
+            "printedName": "deadline",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ImplicitlyUnwrappedOptional",
+                "printedName": "Dispatch.DispatchTime?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DispatchTime",
+                    "printedName": "Dispatch.DispatchTime",
+                    "usr": "s:8Dispatch0A4TimeV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC8deadline8Dispatch0F4TimeVSgvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC8deadline8Dispatch0F4TimeVSgvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ImplicitlyUnwrappedOptional",
+                    "printedName": "Dispatch.DispatchTime?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "DispatchTime",
+                        "printedName": "Dispatch.DispatchTime",
+                        "usr": "s:8Dispatch0A4TimeV"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC8deadline8Dispatch0F4TimeVSgvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8deadline8Dispatch0F4TimeVSgvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ImplicitlyUnwrappedOptional",
+                    "printedName": "Dispatch.DispatchTime?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "DispatchTime",
+                        "printedName": "Dispatch.DispatchTime",
+                        "usr": "s:8Dispatch0A4TimeV"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC8deadline8Dispatch0F4TimeVSgvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8deadline8Dispatch0F4TimeVSgvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC8deadline8Dispatch0F4TimeVSgvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8deadline8Dispatch0F4TimeVSgvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isErase",
+            "printedName": "isErase",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC7isEraseSbvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC7isEraseSbvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC7isEraseSbvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC7isEraseSbvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC7isEraseSbvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC7isEraseSbvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC7isEraseSbvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC7isEraseSbvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "ReadData",
+            "printedName": "ReadData",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Data",
+                "printedName": "Foundation.Data",
+                "usr": "s:10Foundation4DataV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC8ReadData10Foundation0F0Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC8ReadData10Foundation0F0Vvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Data",
+                    "printedName": "Foundation.Data",
+                    "usr": "s:10Foundation4DataV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC8ReadData10Foundation0F0Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8ReadData10Foundation0F0Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Data",
+                    "printedName": "Foundation.Data",
+                    "usr": "s:10Foundation4DataV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC8ReadData10Foundation0F0Vvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8ReadData10Foundation0F0Vvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC8ReadData10Foundation0F0VvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC8ReadData10Foundation0F0VvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "SECTION_CRC",
+            "printedName": "SECTION_CRC",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC11SECTION_CRCSivp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC11SECTION_CRCSivp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC11SECTION_CRCSivg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC11SECTION_CRCSivg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC11SECTION_CRCSivs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC11SECTION_CRCSivs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC11SECTION_CRCSivM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC11SECTION_CRCSivM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "CRC",
+            "printedName": "CRC",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC3CRCSivp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC3CRCSivp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC3CRCSivg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC3CRCSivg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC3CRCSivs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC3CRCSivs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC3CRCSivM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC3CRCSivM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "CMD_FW_WRITE_START",
+            "printedName": "CMD_FW_WRITE_START",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC18CMD_FW_WRITE_STARTs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC18CMD_FW_WRITE_STARTs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC18CMD_FW_WRITE_STARTs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC18CMD_FW_WRITE_STARTs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "CMD_FW_UPGRADEV20",
+            "printedName": "CMD_FW_UPGRADEV20",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC17CMD_FW_UPGRADEV20s5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC17CMD_FW_UPGRADEV20s5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC17CMD_FW_UPGRADEV20s5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC17CMD_FW_UPGRADEV20s5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "CMD_FW_ERASE",
+            "printedName": "CMD_FW_ERASE",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC12CMD_FW_ERASEs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC12CMD_FW_ERASEs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC12CMD_FW_ERASEs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC12CMD_FW_ERASEs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "MAX_TRANS_COUNT_V30",
+            "printedName": "MAX_TRANS_COUNT_V30",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC19MAX_TRANS_COUNT_V30Sivp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC19MAX_TRANS_COUNT_V30Sivp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC19MAX_TRANS_COUNT_V30Sivg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC19MAX_TRANS_COUNT_V30Sivg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "MAX_TRANS_SECTIONALL_COUNT",
+            "printedName": "MAX_TRANS_SECTIONALL_COUNT",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC26MAX_TRANS_SECTIONALL_COUNTSivp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC26MAX_TRANS_SECTIONALL_COUNTSivp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC26MAX_TRANS_SECTIONALL_COUNTSivg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC26MAX_TRANS_SECTIONALL_COUNTSivg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "MAX_TRANS_SECTIONALL_PACKET_COUNT",
+            "printedName": "MAX_TRANS_SECTIONALL_PACKET_COUNT",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC33MAX_TRANS_SECTIONALL_PACKET_COUNTSivp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC33MAX_TRANS_SECTIONALL_PACKET_COUNTSivp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC33MAX_TRANS_SECTIONALL_PACKET_COUNTSivg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC33MAX_TRANS_SECTIONALL_PACKET_COUNTSivg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "MAX_TRANS_SECTIONALL_SIZE",
+            "printedName": "MAX_TRANS_SECTIONALL_SIZE",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC25MAX_TRANS_SECTIONALL_SIZESivp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC25MAX_TRANS_SECTIONALL_SIZESivp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC25MAX_TRANS_SECTIONALL_SIZESivg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC25MAX_TRANS_SECTIONALL_SIZESivg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC25MAX_TRANS_SECTIONALL_SIZESivs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC25MAX_TRANS_SECTIONALL_SIZESivs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC25MAX_TRANS_SECTIONALL_SIZESivM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC25MAX_TRANS_SECTIONALL_SIZESivM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "ACTIONTYPE_CMD_FW_WRITE_START",
+            "printedName": "ACTIONTYPE_CMD_FW_WRITE_START",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC29ACTIONTYPE_CMD_FW_WRITE_STARTs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC29ACTIONTYPE_CMD_FW_WRITE_STARTs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC29ACTIONTYPE_CMD_FW_WRITE_STARTs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC29ACTIONTYPE_CMD_FW_WRITE_STARTs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "ACTIONTYPE_CMD_FW_WRITE_END",
+            "printedName": "ACTIONTYPE_CMD_FW_WRITE_END",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC27ACTIONTYPE_CMD_FW_WRITE_ENDs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC27ACTIONTYPE_CMD_FW_WRITE_ENDs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC27ACTIONTYPE_CMD_FW_WRITE_ENDs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC27ACTIONTYPE_CMD_FW_WRITE_ENDs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "ACTIONTYPE_CMD_FW_ERASE",
+            "printedName": "ACTIONTYPE_CMD_FW_ERASE",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC23ACTIONTYPE_CMD_FW_ERASEs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC23ACTIONTYPE_CMD_FW_ERASEs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC23ACTIONTYPE_CMD_FW_ERASEs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC23ACTIONTYPE_CMD_FW_ERASEs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "ACTIONTYPE_CMD_FW_UPGRADE",
+            "printedName": "ACTIONTYPE_CMD_FW_UPGRADE",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC25ACTIONTYPE_CMD_FW_UPGRADEs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC25ACTIONTYPE_CMD_FW_UPGRADEs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC25ACTIONTYPE_CMD_FW_UPGRADEs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC25ACTIONTYPE_CMD_FW_UPGRADEs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "ACTIONTYPE_CMD_FW_FINISH",
+            "printedName": "ACTIONTYPE_CMD_FW_FINISH",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC24ACTIONTYPE_CMD_FW_FINISHs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC24ACTIONTYPE_CMD_FW_FINISHs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC24ACTIONTYPE_CMD_FW_FINISHs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC24ACTIONTYPE_CMD_FW_FINISHs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "ERR_COMMAND_FAILED",
+            "printedName": "ERR_COMMAND_FAILED",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC18ERR_COMMAND_FAILEDs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC18ERR_COMMAND_FAILEDs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC18ERR_COMMAND_FAILEDs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC18ERR_COMMAND_FAILEDs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "EVT_COMMAND_COMPLETE",
+            "printedName": "EVT_COMMAND_COMPLETE",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC20EVT_COMMAND_COMPLETEs5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC20EVT_COMMAND_COMPLETEs5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC20EVT_COMMAND_COMPLETEs5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC20EVT_COMMAND_COMPLETEs5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isCheckCRC",
+            "printedName": "isCheckCRC",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC10isCheckCRCSbvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC10isCheckCRCSbvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10isCheckCRCSbvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10isCheckCRCSbvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10isCheckCRCSbvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10isCheckCRCSbvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10isCheckCRCSbvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10isCheckCRCSbvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "actionType",
+            "printedName": "actionType",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UInt8",
+                "printedName": "Swift.UInt8",
+                "usr": "s:s5UInt8V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC10actionTypes5UInt8Vvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC10actionTypes5UInt8Vvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10actionTypes5UInt8Vvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10actionTypes5UInt8Vvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt8",
+                    "printedName": "Swift.UInt8",
+                    "usr": "s:s5UInt8V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10actionTypes5UInt8Vvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10actionTypes5UInt8Vvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC10actionTypes5UInt8VvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC10actionTypes5UInt8VvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "binFileName",
+            "printedName": "binFileName",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC11binFileNameSSvp",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC11binFileNameSSvp",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC11binFileNameSSvg",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC11binFileNameSSvg",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC11binFileNameSSvs",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC11binFileNameSSvs",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15UTESmartBandApi9SYDUpdateC11binFileNameSSvM",
+                "mangledName": "$s15UTESmartBandApi9SYDUpdateC11binFileNameSSvM",
+                "moduleName": "UTESmartBandApi",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "updateSYD",
+            "printedName": "updateSYD(for:cb:binData:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ImplicitlyUnwrappedOptional",
+                "printedName": "CoreBluetooth.CBCharacteristic?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CBCharacteristic",
+                    "printedName": "CoreBluetooth.CBCharacteristic",
+                    "usr": "c:objc(cs)CBCharacteristic"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ImplicitlyUnwrappedOptional",
+                "printedName": "CoreBluetooth.CBPeripheral?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CBPeripheral",
+                    "printedName": "CoreBluetooth.CBPeripheral",
+                    "usr": "c:objc(cs)CBPeripheral"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ImplicitlyUnwrappedOptional",
+                "printedName": "Foundation.Data?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Data",
+                    "printedName": "Foundation.Data",
+                    "usr": "s:10Foundation4DataV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)updateSYDFor:cb:binData:",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC9updateSYD3for2cb7binDataySo16CBCharacteristicCSg_So12CBPeripheralCSg10Foundation0J0VSgtF",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "objc_name": "updateSYDFor:cb:binData:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "timerCall",
+            "printedName": "timerCall()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)timerCall",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC9timerCallyyF",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "oc_clearParam",
+            "printedName": "oc_clearParam()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)oc_clearParam",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC13oc_clearParamyyF",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "didWriteValue",
+            "printedName": "didWriteValue(data:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Data",
+                "printedName": "Foundation.Data",
+                "usr": "s:10Foundation4DataV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)didWriteValueWithData:",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC13didWriteValue4datay10Foundation4DataV_tF",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "objc_name": "didWriteValueWithData:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "didUpdateValue",
+            "printedName": "didUpdateValue(data:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Data",
+                "printedName": "Foundation.Data",
+                "usr": "s:10Foundation4DataV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)didUpdateValueWithData:",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC14didUpdateValue4datay10Foundation4DataV_tF",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "objc_name": "didUpdateValueWithData:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "peripheralReady",
+            "printedName": "peripheralReady()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)peripheralReady",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC15peripheralReadyyyF",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "paramInit",
+            "printedName": "paramInit()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15UTESmartBandApi9SYDUpdateC9paramInityyF",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateC9paramInityyF",
+            "moduleName": "UTESmartBandApi",
+            "isOpen": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SYDUpdate",
+                "printedName": "UTESmartBandApi.SYDUpdate",
+                "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate(im)init",
+            "mangledName": "$s15UTESmartBandApi9SYDUpdateCACycfc",
+            "moduleName": "UTESmartBandApi",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@UTESmartBandApi@objc(cs)SYDUpdate",
+        "mangledName": "$s15UTESmartBandApi9SYDUpdateC",
+        "moduleName": "UTESmartBandApi",
+        "isOpen": true,
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "BooleanLiteral",
+      "offset": 670,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "BooleanLiteral",
+      "offset": 723,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "BooleanLiteral",
+      "offset": 770,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 840,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 881,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 919,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 993,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1022,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1042,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1079,
+      "length": 4,
+      "value": "0x14"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1118,
+      "length": 4,
+      "value": "0x15"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1152,
+      "length": 4,
+      "value": "0x16"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1192,
+      "length": 2,
+      "value": "20"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1232,
+      "length": 4,
+      "value": "5120"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1282,
+      "length": 4,
+      "value": "5120"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1289,
+      "length": 2,
+      "value": "20"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1329,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1382,
+      "length": 4,
+      "value": "0x01"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1431,
+      "length": 4,
+      "value": "0x02"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1476,
+      "length": 4,
+      "value": "0x03"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1523,
+      "length": 4,
+      "value": "0x05"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1569,
+      "length": 4,
+      "value": "0x09"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1609,
+      "length": 4,
+      "value": "0x01"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1651,
+      "length": 4,
+      "value": "0x0e"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1677,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/mac_vv\/work\/project\/SDK\/禁止发布Client\/UTESmartBandApi\/UTESmartBandApi\/SYDUpdate\/SYDUpdate.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1715,
+      "length": 1,
+      "value": "0"
+    }
+  ]
+}

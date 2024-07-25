@@ -1,0 +1,6 @@
+framework module UTEBluetoothRYApi {
+  umbrella header "UTEBluetoothRYApi.h"
+  export *
+
+  module * { export * }
+}
