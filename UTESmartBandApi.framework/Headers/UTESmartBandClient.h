@@ -121,6 +121,10 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  */
 @property (nonatomic,assign,readonly) BOOL  isBloodPPGCalibrating;
 /**
+ *  Blood PPG Mode
+ */
+@property (nonatomic,assign,readonly) BOOL  isBloodPrecisionMode;
+/**
  *  Whether the 'Raise wrist' is being calibrated.
  *  Note:Any value sent by the App to the device during the calibration process is invalid.
  */
@@ -160,6 +164,11 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  */
 @property (nonatomic,assign) BOOL         isScanRepeat;
 /**
+ *  Delay connecting devices. In order to prevent some devices from connecting too fast, the app has not yet read the data of the device.
+ *  Units: seconds
+ */
+@property (nonatomic,assign) CGFloat      delayTimeConnect;
+/**
  *  Scan devices without filtering, default NO.
  *  Note:
  *  1.If yes,filterName/filerServers/filerServersArray is invalid.
@@ -191,7 +200,7 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  */
 @property (nonatomic,assign,readonly) BOOL isSYDDevices;
 /**
- *   Whether the device is ATS platform
+ *   Whether the device is ATS platform (3085L)
  */
 @property (nonatomic,assign,readonly) BOOL isATSDevices;
 /**
@@ -210,6 +219,10 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *   Whether the device is 3085s platform
  */
 @property (nonatomic,assign) BOOL is3085sDevices;
+/**
+ *   Whether the device is 8773ewe platform
+ */
+@property (nonatomic,assign) BOOL is8773eweDevices;
 /**
  *   Does the device's connection require a password
  */
@@ -583,6 +596,14 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
                           longitude:(double)longitude
                             success:(void (^_Nullable)(UTEModelWeatherInfo * _Nullable data))success
                             failure:(void (^_Nullable)(NSError * _Nullable error))failure;
+- (void)getUTEWeatherDataFormServer:(NSString *_Nullable)sdkkey
+                           latitude:(double)latitude
+                          longitude:(double)longitude
+                           cityZone:(NSString *_Nullable)cityZone
+                         cityParent:(NSString *_Nullable)cityParent
+                          provinces:(NSString *_Nullable)provinces
+                            success:(void (^_Nullable)(UTEModelWeatherInfo * _Nullable data))success
+                            failure:(void (^_Nullable)(NSError * _Nullable error))failure;
 
 #pragma mark - Version OTA/Update
 
@@ -603,6 +624,9 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *  @return It sends successfully or fails
  */
 - (BOOL)checkUTEFirmwareVersion;
+
+//Always get a new firmware, even if it's exactly the same as the current one
+- (BOOL)checkUTEFirmwareVersionAlwaysNew;
 
 /**
  *  @discussion Check if the server has the latest firmware UI.
@@ -673,12 +697,13 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *  e.g. @"/var/mobile/Containers/Data/Application/xxxxx/SH0AV000564.bin"
  *  e.g. @"/var/mobile/Containers/Data/Application/xxxxx/SH0AV000564.img"
  *
- *  Note: Please check the validity of the data yourself.
+ *  @return Is the firmware valid. If Yes , You can invoke method beginUpdateFirmware to upgrade the firmware.
+ *  if NO,Please do not upgrade the firmware, otherwise the device will freeze and become unusable.
  */
 - (BOOL)updateLocalFirmwareCMUrl:(NSString *_Nullable)urlCM dspUrl:(NSString *_Nullable)dspUrl;
 
 /**
- *  @discussion local firmware update
+ *  @discussion local firmware update(Straight to the start of the upgrade)
  *  *  Required: isATSDevices = YES
  *
  *  @param filePath firmware local path
@@ -940,6 +965,11 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
 - (void)changeUTEModelDialInfo:(UTEModelDialInfo *_Nonnull)model
                        success:(void (^_Nullable)(UTEModelDialInfo * _Nullable dialInfo))success
                        failure:(void (^_Nullable)(void))failure;
+- (void)changeUTEModelDialInfo:(UTEModelDialInfo *_Nonnull)model
+                    screenType:(UTEDeviceScreenType)screenType
+                    compatible:(NSInteger)compatible
+                       success:(void (^_Nullable)(UTEModelDialInfo * _Nullable dialInfo))success
+                       failure:(void (^_Nullable)(void))failure;
 
 /**
  *  @discussion Get preview only
@@ -947,6 +977,9 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *  @param model  See  getUTECustomDialDefualtInfo  OR getUTECustomDialInfoFromServer:device:success:failure OR getUTECustomDialInfoFromUnzippedPath:defaultInfo
  */
 - (UIImage *_Nullable)getDialPreviewImageFrom:(UTEModelDialInfo *_Nonnull)model;
+- (UIImage *_Nullable)getDialPreviewImageFrom:(UTEModelDialInfo *_Nonnull)model 
+                                   screenType:(UTEDeviceScreenType)screenType
+                                   compatible:(NSInteger)compatible;
 
 
 #pragma mark - iBeacon
@@ -996,6 +1029,7 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *
  *  e.g.
  *  model.firstTime = @"2022-10-01"
+ *  model.duration = 28
  *  model.cycle = 28
  *  Array returns data from No. 1 to No. 28
  *
@@ -1365,11 +1399,14 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
 /**
  *  @discussion Blood  PPG Start
  *  Required:isHasBloodHengAi=YES
- *  
+ *  @param isPrecisionMode
+ *   If Yes, The use of precision mode is provided that calibration data is required to improve the accuracy of the results.
+ *   If No, Simple mode, the results of the data will be skewed greatly.
+ *
  *  Callback See delegate uteManagerDevicesSate:UTEDevicesSateBloodPPGStartFromApp  error: userInfo:
  *  @return It sends successfully or fails
  */
-- (BOOL)startBloodPPG;
+- (BOOL)startBloodPPG:(BOOL)isPrecisionMode;
 
 /**
  *  @discussion Blood  PPG Stop
@@ -1471,6 +1508,14 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *  @return It sends successfully or fails
  */
 - (BOOL)loginAccountPPG:(NSInteger)userID callback:(void(^_Nullable)(BOOL success ,UTEErrorCode errorCode))callback;
+
+/**
+ *  @discussion send Account
+ *
+ *  @return It sends successfully or fails
+ */
+- (BOOL)sendHengAiAccount:(UTEModelHengAiAccount *_Nonnull)model callback:(void(^_Nullable)(BOOL success ,UTEErrorCode errorCode))callback;
+
 /**
  *  @discussion Read BloodPPG Calibration
  *  Required:isHasBloodHengAi=YES
@@ -1578,6 +1623,130 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
 *  @return It sends successfully or fails
 */
 - (BOOL)syncHistoryBloodGlucoseFrom:(NSString *_Nonnull)time;
+
+#pragma mark - Blood Glucose Algorithm 1
+
+- (void)getBloodGlucoseAlgorithm1ServerID:(UTEModelBloodGlucoseAccount1 *_Nonnull)model callback:(void(^_Nullable)(UTEModelBloodGlucoseAccount1 *_Nullable accountServer,NSError * _Nullable err))callback;
+
+/**
+ *  @discussion Enable Blood Glucose Algorithm 1
+ *
+ *  Callback See delegate  uteManageUTEOptionCallBack:UTECallBackBloodGlucoseAlgorithm1Open/UTECallBackBloodGlucoseAlgorithm1Close
+ *
+ *  Note: When  Blood Glucose Algorithm 1 is enable, the 24-hour heart rate is also enable
+ *  @return It sends successfully or fails
+ */
+- (BOOL)setBloodGlucoseAlgorithm1Enable:(BOOL)enable;
+
+/**
+ *  @discussion Blood Glucose Algorithm 1 Status
+ *  Required: isHasBloodGlucoseAlgorithm1=YES
+ *
+ *  @return It sends successfully or fails
+ */
+- (BOOL)readBloodGlucoseAlgorithm1Status:(void(^_Nullable)(BOOL enable))callback;
+
+/**
+*  @discussion Sync Blood Glucose Algorithm1 history
+*  Required: isHasBloodGlucoseAlgorithm1 = YES
+*
+*   Callback See delegate  uteManagerDevicesSate:UTEDevicesSateSync error: userInfo:
+*
+*  @return It sends successfully or fails
+*/
+- (BOOL)syncHistoryBloodGlucoseAlgorithm1;
+
+/**
+*  @discussion Upload Blood Glucose Algorithm1 To Server
+*
+*  @param array See method (syncHistoryBloodGlucoseAlgorithm1)
+* Note:If Upload success, please invoke method(deleteHistoryBloodGlucoseAlgorithm1)  delete histyory.
+ Otherwise, the device data storage is too much, and the synchronization speed of the APP is very slow.
+*
+* @param sn  See method readUTEDeviceSN
+* @param serverID See method getBloodGlucoseAlgorithm1ServerID
+* @param mac See UTEModelDevices.addressStr
+*
+*/
+- (void)uploadHistoryBloodGlucoseAlgorithm1:(NSArray<UTEModelBloodGlucoseAlgorithm1 *> *_Nullable)array
+                                         sn:(NSString *_Nonnull)sn
+                                   serverID:(NSString *_Nonnull)serverID
+                                        mac:(NSString *_Nonnull)mac
+                                   callback:(void(^_Nullable)(BOOL success,NSError * _Nullable error))callback;
+/**
+*  @discussion analyze server data
+*  Required: isHasBloodGlucoseAlgorithm1 = YES
+*
+* Note:When method(uploadHistoryBloodGlucoseAlgorithm1:sn:serverID:mac:callback)  succeeds, you can invoke this method  to analyze
+*/
+- (void)analyzeBloodGlucoseAlgorithm1:(UTEModelBloodGlucoseAlgorithm1ServerData *_Nonnull)model
+                             callback:(void(^_Nullable)(BOOL isSuccess,NSError * _Nullable error))callback;
+/**
+*  @discussion The result of getting the data from the server
+*  Required: isHasBloodGlucoseAlgorithm1 = YES
+*
+* Note:
+* 1. Param startTime and endTime can not be nil.
+* 2. When method(analyzeBloodGlucoseAlgorithm1:callback)  succeeds, you can invoke this method  to obtain the data result.
+*/
+- (void)getBloodGlucoseAlgorithm1ServerData:(UTEModelBloodGlucoseAlgorithm1ServerData *_Nonnull)model
+                               callback:(void(^_Nullable)(UTEModelBloodGlucoseAlgorithm1ServerHistory * _Nullable history,NSError * _Nullable error))callback;
+
+/**
+*  @discussion The result of getting the status from the server
+*/
+- (void)getBloodGlucoseAlgorithm1ServerStatus:(UTEModelBloodGlucoseAlgorithm1ServerData *_Nonnull)model
+                               callback:(void(^_Nullable)(UTEModelBloodGlucoseAlgorithm1Status * _Nullable status,NSError * _Nullable error))callback;
+
+/**
+*  @discussion Calibrate Blood Glucose Algorithm1 To Server
+*
+* Note:Calibrate status at least 4 times (Status see UTEDietaryStatus)
+*/
+- (void)calibrateBloodGlucoseAlgorithm1:(UTEModelBloodGlucoseAlgorithm1Calibrate *_Nonnull)model
+                               callback:(void(^_Nullable)(BOOL success,NSError * _Nullable error))callback;
+
+/**
+*  @discussion Build Blood Glucose Algorithm1 Server Model
+*
+* Note:In general, the return to NO is caused by the fact that the wearing time is less than 18 hours, and the amount of data is too small.
+*/
+- (void)buildBloodGlucoseAlgorithm1ServerModel:(UTEModelBloodGlucoseAlgorithm1ServerData *_Nonnull)model
+                                      callback:(void(^_Nullable)(BOOL success,NSError * _Nullable error))callback;
+
+/**
+*  @discussion delete Blood Glucose History
+*  Required: isHasBloodGlucoseAlgorithm1 = YES
+*
+* Callback See delegate  uteManageUTEOptionCallBack:UTECallBackBloodGlucoseAlgorithm1HistoryDelete
+*
+*  @return It sends successfully or fails
+*/
+- (BOOL)deleteHistoryBloodGlucoseAlgorithm1;
+
+/**
+*  @discussion Blood Glucose Level throughout the day
+*  Required: isHasBloodGlucoseAlgorithm1 = YES
+*
+*   @param interval The interval between each Blood Glucose in a day
+*   @param values The level of each Blood Glucose in a day. Each value is a UTEBloodGlucoseLevel
+*
+*   If interval is UTEBloodGlucoseIntervalMin1, values needs to fill in 1440 data
+*   If interval is UTEBloodGlucoseIntervalMin5, values needs to fill in 288 data
+*   If interval is UTEBloodGlucoseIntervalMin10, values needs to fill in 144 data
+*
+*  @return It sends successfully or fails
+*/
+- (BOOL)setBloodGlucoseAlgorithm1:(UTEBloodGlucoseInterval)interval values:(NSArray<NSNumber *> *_Nonnull)values callback:(void(^_Nullable)(BOOL success))callback;
+
+/**
+*  @discussion Set Today Blood Glucose TIR to device
+*  Required: isHasBloodGlucoseAlgorithm1 = YES
+*
+*  @return It sends successfully or fails
+*/
+- (BOOL)setBloodGlucoseAlgorithm1TIR:(UTEModelBloodGlucoseTIR *_Nonnull)TIR;
+
 
 #pragma mark - HRV Test
 /**
@@ -2255,6 +2424,13 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  */
 - (void)sendAliActivationFail;
 
+/**
+ *  @discussion Notify AliPay result
+ *  isSuccess: Activate Success or Fail
+ *  isFunctionInvalid: The AliPay of this device can no longer be used.
+ */
+- (void)notifyAliActivationResult:(void (^_Nullable)(BOOL isSuccess,BOOL isFunctionInvalid))callback;
+
 #pragma mark - Off Screen
 
 /**
@@ -2304,6 +2480,19 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *   endTime : HH-mm
  */
 - (void)onNotifyOffScreenActiveTimeRange:(void(^_Nullable)(NSString * _Nullable startTime,NSString * _Nullable endTime))callback;
+
+#pragma mark - 4G
+/**
+ *  @discussion Read device imei
+ */
+- (BOOL)readDevice4Gimei:(void(^_Nullable)(NSString * _Nullable imei))block;
+
+/**
+ *  @discussion Set the upload interval for 4G data
+ *  @param interval minute
+ *   See delegate uteManageUTEOptionCallBack:UTECallBack4GInterval
+ */
+- (BOOL)sendDeviceUpload4GDataInterval:(NSInteger)interval;
 
 #pragma mark - Prayer
 /**
@@ -2578,10 +2767,22 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
 /**
  *  @discussion Read device address
  *  The device will automatically read it once it is connected.
+ *  Also see UTECallBackDevicesAddress
  *
  *  @return It sends successfully or fails
  */
 - (BOOL)readUTEDeviceAddress;
+/**
+ *  @discussion Read device address
+ *  The device will automatically read it once it is connected.
+ *
+ *  Also see UTECallBackDevicesAddress
+ *
+ *  address The same as  UTEModelDevices.addressStr
+ *
+ *  @return It sends successfully or fails
+ */
+- (BOOL)readUTEDeviceAddressBlock:(void(^_Nullable)(NSString * _Nullable address))block;
 
 /**
  *  @discussion Read the current riding status of the device
