@@ -180,7 +180,7 @@
  *  @discussion When the device UTEOptionOpenCameraMode enters the camera mode, it will be called back every 3 shakes.
  *   Note:You must call UTEOptionCloseCameraMode to exit the camera mode, otherwise the device may not record the number of steps.(If the device is disconnected, it will automatically exit the camera mode.)
  */
-- (void) uteManagerTakePicture;
+- (void)uteManagerTakePicture;
 
 /**
  *  @discussion The device entered camera mode
@@ -344,6 +344,16 @@
  *  @discussion custom characteristics value call back
  */
 - (void)uteManagerUpdateValueForCharacteristic:(CBCharacteristic *)cb error:(NSError *)error;
+
+/**
+ *  @discussion Continuous monitoring of MPF
+ *  @param isAppCtl start from app, or start from device
+ *  @param isStop The test starts or stops
+ *  @param type The type of stop
+ *  @param dict {kUTEQueryMPF_PPG:NSData}
+ *
+ */
+- (void)uteManagerMPFContinuousTesting:(BOOL)isAppCtl isStop:(BOOL)isStop stopType:(UTETestingStopType)type dict:(NSDictionary *)dict;
 
 - (void)uteManagerReceivePrepareInfo:(NSString *)uuid version:(NSString *)version address:(NSString *)address error:(NSError *)error;
 

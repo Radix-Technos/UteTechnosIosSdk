@@ -267,6 +267,12 @@ extern NSString *const kUTEQueryGoalHistory;
  */
 extern NSString *const kUTEQueryMPF;
 /*!
+ *  Mood, Pressure and Fatigue
+ *
+ *  @discussion NSDictionary value:NSData or UTEModelMPFInfo
+ */
+extern NSString *const kUTEQueryMPF_PPG;
+/*!
  *  Get the error provided by the mobile phone system, not the error defined by the SDK.
  *  @discussion NSDictionary value:NSError.
  */
@@ -331,6 +337,12 @@ extern NSString *const kUTEQueryHRVPPGProcess;
  *  @discussion NSDictionary value:NSArray or UTEModelBloodGlucose
  */
 extern NSString *const kUTEQueryBloodGlucose;
+/*!
+ *  Blood Glucose Algorithm1
+ *
+ *  @discussion NSDictionary value:NSArray<UTEModelBloodGlucoseAlgorithm1 *>
+ */
+extern NSString *const kUTEQueryBloodGlucoseAlgorithm1;
 /*!
  *  HRV
  */
@@ -475,6 +487,9 @@ typedef NS_ENUM(NSInteger, UTEOption) {
     UTEOptionSyncRestingHR                  = 86, //Required isHasRHRM=Yes Synchronize historical data (resting heart rate)
     UTEOptionSyncBloodPPG                   = 87, //Required isHasBloodHengAi = YES.
     UTEOptionSyncBloodPPGMiddle             = 88, //Required isHasBloodHengAi = YES.
+    
+    UTEOptionMPFContinuousTestingStart      = 89, //see delegate uteManagerMPFContinuousTesting:
+    UTEOptionMPFContinuousTestingStop       = 90, //see delegate uteManagerMPFContinuousTesting:
 };
 
 
@@ -747,14 +762,20 @@ typedef NS_ENUM(NSInteger, UTECallBack) {
     UTECallBackBloodPressureMorningTestClose,
     
     UTECallBackECGAppTestFail,
+    
+    UTECallBackBloodGlucoseAlgorithm1Open,
+    UTECallBackBloodGlucoseAlgorithm1Close,
+    UTECallBackBloodGlucoseAlgorithm1HistoryDelete,
+    
+    UTECallBack4GInterval,
 };
 
 /*!
  *  @enum UTEDevicesSate
  */
 typedef NS_ENUM(NSInteger, UTEDevicesSate) {
-    UTEDevicesSateConnected = 0,
-    UTEDevicesSateSystemConnected,
+    UTEDevicesSateConnected = 0,          //SDK and device can now send data
+    UTEDevicesSateSystemConnected,        //At this time, it is not possible to send data, because the SDK needs to read the necessary information of the device before it can interact with the data.See UTEDevicesSateConnected
     UTEDevicesSateDisconnected,           //If there is an error, please see error.code(UTEErrorCode)
     UTEDevicesSateConnectingError,        //There may be too many devices connected to the Bluetooth system of the mobile phone, making it impossible to connect. if error=14 or 15,Please ignore the device in the system Bluetooth interface.
     
@@ -978,6 +999,9 @@ typedef NS_ENUM(NSInteger, UTEErrorCode) {
     UTEErrorCodeBinNil                  = 58,
     UTEErrorCodeDialCancel              = 59,
     UTEErrorCodeDialUpperLimit          = 60,
+    UTEErrorCodeInvalidParameter        = 61,
+    UTEErrorCodeDialBusy                = 62,
+    UTEErrorCodeBeingOTA                = 63,
 };
 
 /*!
@@ -1765,7 +1789,7 @@ typedef NS_ENUM(NSInteger, UTEDeviceSportMode) {
     UTEDeviceSportModeDodgeBall             = 126,
     UTEDeviceSportModeDragonBoat            = 127,
     UTEDeviceSportModeDrifing               = 128,
-    UTEDeviceSportModeEnduranceRun          = 139,
+    UTEDeviceSportModeEnduranceRun          = 129,
     
     UTEDeviceSportModeFatBurnRun            = 130,
     UTEDeviceSportModeFlyKite               = 131,
@@ -1870,8 +1894,27 @@ typedef NS_ENUM(NSInteger, UTEDeviceSportMode) {
     UTEDeviceSportModeStatic                = 221,
     UTEDeviceSportModeTilt                  = 222,
     UTEDeviceSportModeWheelChairMobility    = 223,
+    UTEDeviceSportModeFreeExercise          = 224,
+    UTEDeviceSportModeIndoorFitness         = 225,
+    UTEDeviceSportModeSoftTraining          = 226,
+    UTEDeviceSportModeSteppingTraining      = 227,
+    UTEDeviceSportModeDumbbellTraining      = 228,
+    UTEDeviceSportModeBarbellTraining       = 229,
     
+    UTEDeviceSportModeDeadlift              = 230,
+    UTEDeviceSportModePoppyJump             = 231,
+    UTEDeviceSportModeUpperBody             = 232,
+    UTEDeviceSportModeLowerTraining         = 233,
+    UTEDeviceSportModeBackTraining          = 234,
+    UTEDeviceSportModeATV                   = 235,
+    UTEDeviceSportModeRackets               = 236,
+    UTEDeviceSportModeOutdoorFootball       = 237,
+    UTEDeviceSportModeSnowmobile            = 238,
+    UTEDeviceSportModeSkiBoard              = 239,
     
+    UTEDeviceSportModeKababddi              = 240,
+    UTEDeviceSportModeFootKickboxing        = 241,
+    UTEDeviceSportModeThaiBoxing            = 242,
 };
 
 /*!
@@ -2041,6 +2084,49 @@ typedef NS_ENUM(NSInteger, UTEDeviceApp) {
     UTEDeviceAppSlack,
     UTEDeviceAppSpotify,
     UTEDeviceAppiOSMail,
+    UTEDeviceAppYandex,
+    
+    UTEDeviceAppMagalu,
+    UTEDeviceAppAmericanas,
+    UTEDeviceAppEnjoei,
+    UTEDeviceAppAliexpress,
+    UTEDeviceAppShopee,
+    UTEDeviceAppTikTok,
+    UTEDeviceApp99Taxi,
+    UTEDeviceAppIfood,
+    
+    UTEDeviceAppMercadoLivre,
+    UTEDeviceAppAlarm,
+    UTEDeviceAppTechnosConnect,
+    UTEDeviceAppNubank,
+    UTEDeviceAppBradesco,
+    UTEDeviceAppIta,
+    UTEDeviceAppBancoDoBrasil,
+    UTEDeviceAppCorreios,
+    
+    UTEDeviceAppBancoInter,
+    UTEDeviceAppCaixaEconomica,
+    UTEDeviceAppNeon,
+    UTEDeviceAppSantander,
+    UTEDeviceAppNext,
+    UTEDeviceAppGoogleCalendar,
+    UTEDeviceAppShein,
+    UTEDeviceAppGoogleTask,
+    
+    UTEDeviceAppMicrosoftToDo,
+    UTEDeviceAppTickTick,
+    UTEDeviceAppTodoist,
+    UTEDeviceAppMeesho,
+    UTEDeviceAppZivame,
+    UTEDeviceAppAjio,
+    UTEDeviceAppUrbanic,
+    UTEDeviceAppNykaa,
+    
+    UTEDeviceAppHealthifyme,
+    UTEDeviceAppCultfit,
+    UTEDeviceAppFlo,
+    UTEDeviceAppHinge,
+    UTEDeviceAppBumble,
 };
 
 
@@ -2278,5 +2364,68 @@ typedef NS_ENUM(NSInteger, UTEPayStatus) {
     UTEPayStatusProcessing,
 };
 
+typedef NS_ENUM(NSInteger, UTEBloodGlucoseInterval) {
+    UTEBloodGlucoseIntervalMin1         = 1,
+    UTEBloodGlucoseIntervalMin5         = 5,
+    UTEBloodGlucoseIntervalMin10        = 10,
+};
+
+typedef NS_ENUM(NSInteger, UTEBloodGlucoseLevel) {
+    UTEBloodGlucoseLevelNone,
+    UTEBloodGlucoseLevelGood,
+    UTEBloodGlucoseLevelNormal,
+    UTEBloodGlucoseLevelBad,
+};
+
+typedef NS_ENUM(NSInteger, UTEDiabetesType) {
+    UTEDiabetesTypeNone,
+    UTEDiabetesTypeType1,//Type 1 diabetes
+    UTEDiabetesTypeType2,//Type 2 diabetes
+};
+
+typedef NS_ENUM(NSInteger, UTEDietaryStatus) {
+    UTEDietaryStatusAfterBreakfast  = 2,
+    UTEDietaryStatusAfterLunch      = 4,
+    UTEDietaryStatusAfterDinner     = 6,
+    UTEDietaryStatusFasting         = 11,
+};
+
+typedef NS_ENUM(NSInteger, UTEConcentrationType) {
+    UTEConcentrationTypeInvalid     = -1,
+    UTEConcentrationTypeMedium      = 0,
+    UTEConcentrationTypeMediumHigh  = 1,
+    UTEConcentrationTypeHigh        = 2,
+};
+
+typedef NS_ENUM(NSInteger, UTETestingStopType) {
+    UTETestingStopTypeNil,
+    UTETestingStopTypeInitiative,
+    UTETestingStopTypeDisengage,
+};
+
+typedef NS_ENUM(NSInteger, UTEChatGPTType) {
+ 
+    UTEChatGPTTypeEnterChatGPT                 = 0x01,
+    UTEChatGPTTypeStartRecording               = 0x02,
+    UTEChatGPTTypeEndRecording                 = 0x03,
+    UTEChatGPTTypeExitChatGPT                  = 0x04,
+    UTEChatGPTTypeReminderOpenApp              = 0x05,
+    UTEChatGPTTypeIdentificationFailed         = 0x06,
+    UTEChatGPTTypeIdentificationSuccessful     = 0x07,
+    UTEChatGPTTypeConfirmContent               = 0x08,
+    UTEChatGPTTypeStartAnswer                  = 0x09,
+    UTEChatGPTTypeAnswerCompleted              = 0x0a,
+    UTEChatGPTTypeAnswering                    = 0x0b,
+
+};
+
+typedef NS_ENUM(NSInteger, UTEChatGPTMemorandumType) {
+
+    UTEChatGPTMemorandumTypeReadySending              = 0x00,
+    UTEChatGPTMemorandumTypeReadyComplete             = 0x01,
+    UTEChatGPTMemorandumTypeCurrentDataComplete       = 0x02,
+    UTEChatGPTMemorandumTypeCRCError                  = 0x03,
+    
+};
 
 @end

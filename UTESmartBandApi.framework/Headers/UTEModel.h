@@ -709,6 +709,10 @@
  */
 @property (nonatomic,assign) BOOL      isHasHRM5mins;
 /**
+ *  ①Support MPF  is one value in 5 minutes
+ */
+@property (nonatomic,assign) BOOL      isHasMPF5mins;
+/**
  *  ①Support  Customize time to save data
  */
 @property (nonatomic,assign) BOOL      isHasCustomTimeSaveData;
@@ -728,6 +732,10 @@
  *  ①Support Blood Glucose Test
  */
 @property (nonatomic,assign) BOOL      isHasBloodGlucose;
+/**
+ *  ①Support Blood Glucose Algorithm Schemes 1
+ */
+@property (nonatomic,assign) BOOL      isHasBloodGlucoseAlgorithm1;
 /**
  *  ①Support HRV Test
  */
@@ -761,13 +769,23 @@
  */
 @property (nonatomic,assign) BOOL      isHasPray;
 /**
- *  ①Support Blood Suger
- */
-@property (nonatomic,assign) BOOL      isBloodSugar;
-/**
  *  ①Support Sport Extended Upload
  */
 @property (nonatomic,assign) BOOL      isSportExtendedUpload;
+/**
+ *  ①Support 4G
+ */
+@property (nonatomic,assign) BOOL      isHas4G;
+/**
+ *  ①Support Chat GPT
+ *  See Class UTERYMgrChatGPT
+ */
+@property (nonatomic,assign) BOOL      isHasRYChatGPT;
+/**
+ *  ①Support AGPS
+ *  See Class UTERYMgrAGPS
+ */
+@property (nonatomic,assign) BOOL      isHasRYAGPS;
 
 /**
  *  ①Support factory mode
@@ -1040,6 +1058,8 @@
  *  Required isHasSleepSporadic=Yes
  */
 @property (nonatomic,assign) UTETimeType  timeType;
+//This attribute is currently invalid
+@property (nonatomic,assign) BOOL         timeMerge;
 
 @end
 
@@ -2305,6 +2325,49 @@
 @property (nonatomic,assign) UTEDeviceRemindEnableType     Slack;
 @property (nonatomic,assign) UTEDeviceRemindEnableType     Spotify;
 @property (nonatomic,assign) UTEDeviceRemindEnableType     iOSMail;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Yandex;
+
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Magalu;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Americanas;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Enjoei;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Aliexpress;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Shopee;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     TikTok;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Taxi99;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Ifood;
+
+@property (nonatomic,assign) UTEDeviceRemindEnableType     MercadoLivre;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Alarm;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     TechnosConnect;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Nubank;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Bradesco;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Ita;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     BancoDoBrasil;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Correios;
+
+@property (nonatomic,assign) UTEDeviceRemindEnableType     BancoInter;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     CaixaEconomica;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Neon;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Santander;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Next;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     GoogleCalendar;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Shein;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     GoogleTask;
+
+@property (nonatomic,assign) UTEDeviceRemindEnableType     MicrosoftToDo;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     TickTick;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Todoist;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Meesho;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Zivame;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Ajio;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Urbanic;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Nykaa;
+
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Healthifyme;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Cultfit;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Flo;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Hinge;
+@property (nonatomic,assign) UTEDeviceRemindEnableType     Bumble;
 
 //When isHasIconANCS=YES, supports all the above apps.
 
@@ -2747,6 +2810,10 @@
  */
 @property (nonatomic,assign) NSInteger               dowloadCount;
 /**
+    ③ Release Time   @"yyyy-MM-dd HH:mm:ss"
+ */
+@property (nonatomic,copy  ) NSString                *releaseTime;
+/**
     ③ Free
  */
 @property (nonatomic,assign) BOOL                    isFree;
@@ -2838,7 +2905,7 @@
  *  current speed,unit: km/h.
  *  How long does it take per kilometer.
  */
-@property (nonatomic,copy) NSString       *speed;
+@property (nonatomic,copy) NSString         *speed;
 /**
  *  Step frequency (How many steps per minute)
  */
@@ -2846,11 +2913,15 @@
 /**
  *  latitude e.g. @"23.3333" wgs84 coordinate
  */
-@property (nonatomic,copy) NSString       *latitude;
+@property (nonatomic,copy) NSString         *latitude;
 /**
  *  longitude e.g. @"23.3333" wgs84 coordinate
  */
-@property (nonatomic,copy) NSString       *longitude;
+@property (nonatomic,copy) NSString         *longitude;
+/**
+ *  Frequency of rowing
+ */
+@property (nonatomic,assign) NSInteger      frequencyRowing;
 
 @end
 
@@ -2980,6 +3051,26 @@
     ① See UTEModelSportOneSpeed
  */
 @property (nonatomic,strong) NSArray<UTEModelSportOneSpeed *>                 *speedArray;
+
+
+//Following parameters  Required isSportExtendedUpload=YES
+//The number of jump rope (tripped up)
+@property (nonatomic,assign) NSInteger               countRopeTripped;
+//Number of consecutive jumps(jump rope) or Number of swim round-trips
+@property (nonatomic,assign) NSInteger               countRound;
+//Total number of strokes(boating) or The number of strokes(swimming)
+@property (nonatomic,assign) NSInteger               countStroke;
+//average strokes(boating) or average swolf(swimming)
+@property (nonatomic,assign) NSInteger               aveSwolf;
+//maximum strokes(boating) or maximum swolf(swimming)
+@property (nonatomic,assign) NSInteger               maxSwolf;
+//minimum strokes(boating) or minimum swolf(swimming)
+@property (nonatomic,assign) NSInteger               minSwolf;
+//The average stroke frequency of swimming
+@property (nonatomic,assign) NSInteger               aveSwimStroke;
+//The maximum stroke frequency for swimming
+@property (nonatomic,assign) NSInteger               minSwimStroke;
+
 
 @end
 
@@ -3914,4 +4005,162 @@
 @property (nonatomic,copy  ) NSString               *des;
 @property (nonatomic,assign) UTEECGResultType        type;
 
+@end
+
+@interface UTEModelHengAiAccount : NSObject
+
+@property (nonatomic,copy  ) NSString               *key;
+@property (nonatomic,copy  ) NSString               *account;
+@property (nonatomic,copy  ) NSString               *name;
+@property (nonatomic,copy  ) NSString               *password;
+@property (nonatomic,assign) NSInteger              type;
+@property (nonatomic,assign) NSInteger              gender;
+//unit cm
+@property (nonatomic,assign) NSInteger              height;
+//unit kg
+@property (nonatomic,assign) NSInteger              weight;
+//yyyy-MM-dd
+@property (nonatomic,copy  ) NSString               *birthday;
+
+@end
+
+@interface UTEModelBloodGlucoseAlgorithm1 : NSObject
+
+//Format: yyyy-MM-dd-HH-mm
+@property (nonatomic,copy  ) NSString                   *time;
+//Current Steps
+@property (nonatomic,assign) NSInteger                  steps;
+//Current Calories
+@property (nonatomic,assign) NSInteger                  calories;
+//Current Sport Status
+@property (nonatomic,assign) NSInteger                  statusSport;
+//Current Sleep Status
+@property (nonatomic,assign) NSInteger                  statusSleep;
+//Skin temperature   e.g 36.5 celsius
+@property (nonatomic,assign) CGFloat                    tempSkin;
+//Ambient temperature e.g 36.5 celsius
+@property (nonatomic,assign) CGFloat                    tempAmbient;
+//A collection of heart rates
+@property (nonatomic,strong) NSArray<NSNumber *>        *hrms;
+//A collection of sport status
+@property (nonatomic,strong) NSArray<NSNumber *>        *sports;
+
+@end
+
+@interface UTEModelBloodGlucoseTIR : NSObject
+
+//Today Value
+@property (nonatomic,assign) NSInteger                  value;
+//Percentage of good level (0 ~ 100)
+@property (nonatomic,assign) NSInteger                  percentGood;
+//Percentage of normal level (0 ~ 100)
+@property (nonatomic,assign) NSInteger                  percentNormal;
+//Percentage of bad level (0 ~ 100)
+@property (nonatomic,assign) NSInteger                  percentBad;
+
+@end
+
+@interface UTEModelBloodGlucoseAccount1 : NSObject
+//The following parameters are filled in by the access server
+//See readUTEDeviceSN(method)
+@property (nonatomic,copy  ) NSString                   *sn;
+//See UTEModelDevices.addressStr
+@property (nonatomic,copy  ) NSString                   *addressStr;
+//Whether you have diabetes
+@property (nonatomic,assign) UTEDiabetesType             type;
+
+
+//The following parameters are returned by the server
+//Server ID
+@property (nonatomic,assign) NSInteger                  serverID;
+//msg
+@property (nonatomic,copy  ) NSString                   *msg;
+//msg code
+@property (nonatomic,copy  ) NSString                   *msgCode;
+//status,when 1 is success ,other is fail
+@property (nonatomic,copy  ) NSString                   *status;
+
+@end
+
+@interface UTEModelBloodGlucoseAlgorithm1Calibrate : NSObject
+//Server ID
+@property (nonatomic,assign) NSInteger                  serverID;
+//See readUTEDeviceSN(method)
+@property (nonatomic,copy  ) NSString                   *sn;
+//See UTEModelDevices.addressStr
+@property (nonatomic,copy  ) NSString                   *addressStr;
+//See UTEDietaryStatus
+@property (nonatomic,assign) UTEDietaryStatus           status;
+//Format: yyyy-MM-dd-HH-mm
+@property (nonatomic,copy  ) NSString                   *timeDietary;
+
+//Invasive blood glucose  e.g @"5.6"
+@property (nonatomic,copy  ) NSString                   *bloodGlucose;
+//Format: yyyy-MM-dd-HH-mm
+@property (nonatomic,copy  ) NSString                   *bloodGlucoseTime;
+
+
+@end
+
+@interface UTEModelBloodGlucoseAlgorithm1ServerData : NSObject
+//Server ID
+@property (nonatomic,assign) NSInteger                  serverID;
+//See readUTEDeviceSN(method)
+@property (nonatomic,copy  ) NSString                   *sn;
+//See UTEModelDevices.addressStr
+@property (nonatomic,copy  ) NSString                   *addressStr;
+
+//Format: yyyy-MM-dd-HH-mm
+@property (nonatomic,copy  ) NSString                   *startTime;
+//Format: yyyy-MM-dd-HH-mm
+@property (nonatomic,copy  ) NSString                   *endTime;
+
+
+
+@end
+
+@interface UTEModelBloodGlucoseAlgorithm1ServerCalibrate: NSObject
+
+//yyyy-MM-dd-HH-mm-ss
+@property (nonatomic,copy  ) NSString                 *lastTime;
+//yyyy-MM-dd-HH-mm-ss
+@property (nonatomic,copy  ) NSString                 *lastMealTime;
+//value
+@property (nonatomic,assign) CGFloat                  lastValue;
+//@property (nonatomic,assign) NSInteger                inputId;
+//How many times
+@property (nonatomic,assign) NSInteger                times;
+//See UTEDietaryStatus
+@property (nonatomic,assign) UTEDietaryStatus         type;
+
+@end
+
+@interface UTEModelBloodGlucoseAlgorithm1Status : NSObject
+//Device wearing duration
+@property (nonatomic,assign) CGFloat                  hours;
+//Has a data model been established
+@property (nonatomic,assign) BOOL                     isEstablished;
+//Calibration history of the server
+@property (nonatomic,strong) NSArray                  *calibrateServer;
+
+@end
+
+@interface UTEModelBloodGlucoseAlgorithm1Concentration : NSObject
+//yyyy-MM-dd-HH-mm-ss
+@property(nonatomic, copy  ) NSString                   *time;
+@property(nonatomic, assign) UTEConcentrationType       concentration;
+@end
+
+@interface UTEModelBloodGlucoseAlgorithm1Tir : NSObject
+//Is the data up to standard
+@property(nonatomic, assign) BOOL                       isAchieve;
+// 1 ~ 100
+@property(nonatomic, assign) NSInteger                  value;
+//yyyy-MM-dd
+@property(nonatomic, copy  ) NSString                   *time;
+@end
+
+@interface UTEModelBloodGlucoseAlgorithm1ServerHistory : NSObject
+@property(nonatomic, strong) NSArray<UTEModelBloodGlucoseAlgorithm1Concentration *> *sugars;
+@property(nonatomic, strong) NSArray<UTEModelBloodGlucoseAlgorithm1Tir *>           *tirs;
 @end
