@@ -158,6 +158,14 @@
 - (void)uteManagerReceiveHRMMaxValue:(NSInteger)max minValue:(NSInteger)min rhr:(NSInteger)rhr time:(NSString *)time;
 
 /**
+ *  @discussion Measure your heart rate manually on your watch
+ *
+ *  @param value Value may be 0
+ *  @param time  Time format yyyy-MM-dd-HH-mm
+ */
+- (void)uteManagerReceiveHRMManual:(NSInteger)value time:(NSString *)time;
+
+/**
  *  @discussion Progress of syncing data.
  *  @param process 0 to 100
  */
@@ -247,6 +255,14 @@
  *  @param result  Data transmitted successfully (no lost data)
  */
 - (void)uteManagerReceiveCustomData:(NSData *)data result:(BOOL)result;
+
+/**
+ *  @discussion Device returns custom data
+ *  This method is called frequently
+ *
+ *  @param data    In an interaction, the data is one by one
+ */
+- (void)uteManagerReceiveCustomProcessData:(NSData *)data;
 
 /**
  *  @discussion     Sport status of Headset.

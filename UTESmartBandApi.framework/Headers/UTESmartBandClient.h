@@ -91,6 +91,10 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  */
 @property (nonatomic,assign,readonly) BOOL  isCustomDataSending;
 /**
+ *  App is also receiving custom data
+ */
+@property (nonatomic,assign,readonly) BOOL  isCustomDataReceiving;
+/**
  *  Device sport mode status
  */
 @property (nonatomic,assign,readonly) UTEDeviceSportModeStatus  sportModeStatus;
@@ -207,6 +211,14 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *   Whether the device is FRQ platform
  */
 @property (nonatomic,assign,readonly) BOOL isFRQDevices;
+/**
+ *   Whether the device is 707 platform
+ */
+@property (nonatomic,assign,readonly) BOOL isAC707Devices;
+/**
+ *   Whether the device is 569x platform
+ */
+@property (nonatomic,assign,readonly) BOOL isAB569xDevices;
 /**
  *   Whether the device is ACX platform
  */
@@ -2391,6 +2403,33 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  */
 - (void)onNotifySportStart:(BOOL(^_Nullable)(UTEDeviceSportMode startMode,BOOL start))callback;
 
+#pragma mark - Sport Recognize
+/**
+ *  @discussion Open Sport Recognize
+ *  Required:isHasSportRecognizeAuto = YES
+ */
+- (BOOL)openSportRecognize:(BOOL)open callback:(void(^_Nullable)(BOOL success))callback;
+/**
+ *  @discussion Read Sport Recognize
+ *  Required:isHasSportRecognizeAuto = YES
+ */
+- (BOOL)readSportRecognizeStatus:(void(^_Nullable)(BOOL open))callback;
+/**
+ *  @discussion Device Sport Recognize (Initiative)
+ *  Required:isHasSportRecognizeAuto = YES
+ */
+- (void)onNotifyDeviceSportRecognizeInitiative:(void(^_Nullable)(BOOL open))callback;
+/**
+ *  @discussion Device AGPS  (Initiative)
+ *  Required:isHasRYAGPS = YES
+ */
+- (void)onNotifyDeviceAGPSInitiative:(void(^_Nullable)(BOOL isValid))callback;
+/**
+ *  @discussion Read Device AGPS  status
+ *  Required:isHasRYAGPS = YES
+ */
+- (BOOL)readSDeviceAGPSStatus:(void(^_Nullable)(BOOL isValid))callback;
+
 #pragma mark - Ali pay
 /**
  *  @discussion Check if Ali  has been activated
@@ -2519,6 +2558,12 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  */
 - (BOOL)showPrayInfo:(BOOL)show callback:(void(^_Nullable)(BOOL success))callback;
 
+#pragma mark - Chinese Medicine
+- (void)loginChMedicineAccount:(UTEModelChMedicineAccount * _Nonnull)account callback:(void(^_Nullable)(BOOL success ,UTEErrorCode code))callback;
+
+- (void)uploadChMedicineData:(NSData *_Nonnull)deviceData account:(UTEModelChMedicineAccount * _Nonnull)account callback:(void(^_Nullable)(BOOL success ,UTEErrorCode code))callback;
+
+- (void)getChMedicineReportURL:(NSInteger)page size:(NSInteger)size callback:(void(^_Nullable)(NSArray<UTEModelChMedicineReport *> * _Nullable reports ,UTEErrorCode code))callback;
 
 #pragma mark - Other
 /**

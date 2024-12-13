@@ -242,6 +242,11 @@
  */
 @property (nonatomic,assign) BOOL     isHasNewCalculate;
 /**
+ *  ①LM (platform) calorie calculation strategies
+ *   Note: When the sport is turned on, the calorie(from sport) burn is 18 kcal/min (18 kcal in 1 minute).  Please count the calories by the app.
+ */
+@property (nonatomic,assign) BOOL     isHasLMCalories;
+/**
  *  ①Support for multiple alarm clock (up to three)
  */
 @property (nonatomic,assign) BOOL     isHasMulClock;
@@ -586,6 +591,10 @@
  *  ①Support more sport time reminders
  */
 @property (nonatomic,assign) BOOL      isHasSportTimeGoal;
+/**
+ *  ①Support Sport Automatic Recognition
+ */
+@property (nonatomic,assign) BOOL      isHasSportRecognizeAuto;
 /**
  *  ①Support firmware UI version upgrade
  */
@@ -2820,11 +2829,8 @@
 /**
     ③ Price
  */
-@property (nonatomic,copy  ) NSString                *price;
-/**
-    ③ Currency
- */
-@property (nonatomic,assign) UTECurrencyType         currency;
+@property (nonatomic,copy  ) NSString                *priceCNY;
+@property (nonatomic,copy  ) NSString                *priceUSD;
 /**
     ③ Pay Status
  */
@@ -2907,6 +2913,10 @@
  */
 @property (nonatomic,copy) NSString         *speed;
 /**
+ *  e.g  9'30"
+ */
+@property (nonatomic,copy) NSString         *paceSwim;
+/**
  *  Step frequency (How many steps per minute)
  */
 @property (nonatomic,assign) NSInteger      spm;
@@ -2919,7 +2929,7 @@
  */
 @property (nonatomic,copy) NSString         *longitude;
 /**
- *  Frequency of rowing
+ *  Frequency of rowing / Frequency of swim(Swing your arms)
  */
 @property (nonatomic,assign) NSInteger      frequencyRowing;
 
@@ -3069,7 +3079,7 @@
 //The average stroke frequency of swimming
 @property (nonatomic,assign) NSInteger               aveSwimStroke;
 //The maximum stroke frequency for swimming
-@property (nonatomic,assign) NSInteger               minSwimStroke;
+@property (nonatomic,assign) NSInteger               maxSwimStroke;
 
 
 @end
@@ -3273,6 +3283,73 @@
 /** From left to right, third digit .   @"0" */
 @property(nonatomic, strong) UIImage            *imgHRM3;
 @property(nonatomic, assign) CGRect             rectHRM3;
+
+
+/**
+ *  Distance Icon
+ */
+@property (nonatomic,assign) BOOL               hasIconDistance;
+@property(nonatomic, strong) UIImage            *imgIconDistance;
+@property(nonatomic, assign) CGRect             rectIconDistance;
+// Distance Unit
+@property (nonatomic,assign) BOOL               hasDistanceUnit;
+@property(nonatomic, strong) UIImage            *imgDistanceUnit;
+@property(nonatomic, assign) CGRect             rectDistanceUnit;
+
+// Step e.g. 12085  Numbers are right aligned
+@property (nonatomic,assign) BOOL               hasDistance;
+
+/** From left to right, first digit .   @"1" */
+@property(nonatomic, strong) UIImage            *imgDistance1;
+@property(nonatomic, assign) CGRect             rectDistance1;
+
+/** From left to right, the second digit  .   @"2" */
+@property(nonatomic, strong) UIImage            *imgDistance2;
+@property(nonatomic, assign) CGRect             rectDistance2;
+
+/** From left to right, the third digit .   @"0" */
+@property(nonatomic, strong) UIImage            *imgDistance3;
+@property(nonatomic, assign) CGRect             rectDistance3;
+
+/** From left to right, the fourth digit.   @"8" */
+@property(nonatomic, strong) UIImage            *imgDistance4;
+@property(nonatomic, assign) CGRect             rectDistance4;
+
+/** From left to right, the fifth digit .   @"5" */
+@property(nonatomic, strong) UIImage            *imgDistance5;
+@property(nonatomic, assign) CGRect             rectDistance5;
+
+
+
+/**
+ *  Calories Icon
+ */
+@property (nonatomic,assign) BOOL               hasIconCalories;
+@property(nonatomic, strong) UIImage            *imgIconCalories;
+@property(nonatomic, assign) CGRect             rectIconCalories;
+// Calories Unit
+@property (nonatomic,assign) BOOL               hasCaloriesUnit;
+@property(nonatomic, strong) UIImage            *imgCaloriesUnit;
+@property(nonatomic, assign) CGRect             rectCaloriesUnit;
+
+// Step e.g. 1208  Numbers are right aligned
+@property (nonatomic,assign) BOOL               hasCalories;
+
+/** From left to right, first digit .   @"1" */
+@property(nonatomic, strong) UIImage            *imgCalories1;
+@property(nonatomic, assign) CGRect             rectCalories1;
+
+/** From left to right, the second digit  .   @"2" */
+@property(nonatomic, strong) UIImage            *imgCalories2;
+@property(nonatomic, assign) CGRect             rectCalories2;
+
+/** From left to right, the third digit .   @"0" */
+@property(nonatomic, strong) UIImage            *imgCalories3;
+@property(nonatomic, assign) CGRect             rectCalories3;
+
+/** From left to right, the fourth digit.   @"8" */
+@property(nonatomic, strong) UIImage            *imgCalories4;
+@property(nonatomic, assign) CGRect             rectCalories4;
 
 
 @end
@@ -4163,4 +4240,37 @@
 @interface UTEModelBloodGlucoseAlgorithm1ServerHistory : NSObject
 @property(nonatomic, strong) NSArray<UTEModelBloodGlucoseAlgorithm1Concentration *> *sugars;
 @property(nonatomic, strong) NSArray<UTEModelBloodGlucoseAlgorithm1Tir *>           *tirs;
+@end
+
+@interface UTEModelChMedicineAccount : NSObject
+
+@property (nonatomic,assign) NSInteger              userID;
+//@property (nonatomic,copy  ) NSString               *account;
+@property (nonatomic,copy  ) NSString               *name;
+//@property (nonatomic,copy  ) NSString               *password;
+@property (nonatomic,assign) UTEDeviceInfoSex       gender;
+//unit cm
+@property (nonatomic,assign) NSInteger              height;
+//unit kg
+@property (nonatomic,assign) NSInteger              weight;
+//yyyy-MM-dd
+@property (nonatomic,copy  ) NSString               *birthday;
+@property (nonatomic,assign) BOOL                   isDebug;
+
+@end
+
+@interface UTEModelChMedicineReport : NSObject
+
+@property (nonatomic,assign) NSInteger              count;
+@property (nonatomic,copy  ) NSString               *name;
+@property (nonatomic,copy  ) NSString               *h5URL;
+@property (nonatomic,assign) NSInteger              h5ID;
+@property (nonatomic,assign) NSInteger              score;
+//yyyy-MM-dd
+@property (nonatomic,copy  ) NSString               *startTime;
+@property (nonatomic,copy  ) NSString               *endTime;
+
+//The lower the data efficiency, the less fully it reflects the true state of health. When the effective rate is less than 80%, the report can no longer be used as a reference for intervention and conditioning.
+@property (nonatomic,assign) NSInteger              efficiency;
+
 @end

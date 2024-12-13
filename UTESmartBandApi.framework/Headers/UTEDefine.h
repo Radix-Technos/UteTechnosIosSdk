@@ -583,6 +583,49 @@ typedef NS_ENUM(NSInteger, UTECallBack) {
     UTECallBackOpenRemindSlack,
     UTECallBackOpenRemindSpotify,
     UTECallBackOpenRemindiOSMail,
+    UTECallBackOpenRemindYandex,
+
+    UTECallBackOpenRemindMagalu,
+    UTECallBackOpenRemindAmericanas,
+    UTECallBackOpenRemindEnjoei,
+    UTECallBackOpenRemindAliexpress,
+    UTECallBackOpenRemindShopee,
+    UTECallBackOpenRemindTikTok,
+    UTECallBackOpenRemind99Taxi,
+    UTECallBackOpenRemindIfood,
+    
+    UTECallBackOpenRemindMercadoLivre,
+    UTECallBackOpenRemindAlarm,
+    UTECallBackOpenRemindTechnosConnect,
+    UTECallBackOpenRemindNubank,
+    UTECallBackOpenRemindBradesco,
+    UTECallBackOpenRemindIta,
+    UTECallBackOpenRemindBancoDoBrasil,
+    UTECallBackOpenRemindCorreios,
+    
+    UTECallBackOpenRemindBancoInter,
+    UTECallBackOpenRemindCaixaEconomica,
+    UTECallBackOpenRemindNeon,
+    UTECallBackOpenRemindSantander,
+    UTECallBackOpenRemindNext,
+    UTECallBackOpenRemindGoogleCalendar,
+    UTECallBackOpenRemindShein,
+    UTECallBackOpenRemindGoogleTask,
+    
+    UTECallBackOpenRemindMicrosoftToDo,
+    UTECallBackOpenRemindTickTick,
+    UTECallBackOpenRemindTodoist,
+    UTECallBackOpenRemindMeesho,
+    UTECallBackOpenRemindZivame,
+    UTECallBackOpenRemindAjio,
+    UTECallBackOpenRemindUrbanic,
+    UTECallBackOpenRemindNykaa,
+
+    UTECallBackOpenRemindHealthifyme,
+    UTECallBackOpenRemindCultfit,
+    UTECallBackOpenRemindFlo,
+    UTECallBackOpenRemindHinge,
+    UTECallBackOpenRemindBumble,
     
     UTECallBackCloseRemindFacebook,
     UTECallBackCloseRemindFacebookMessenger,
@@ -650,6 +693,53 @@ typedef NS_ENUM(NSInteger, UTECallBack) {
     UTECallBackCloseRemindSlack,
     UTECallBackCloseRemindSpotify,
     UTECallBackCloseRemindiOSMail,
+    UTECallBackCloseRemindYandex,
+
+    UTECallBackCloseRemindMagalu,
+    UTECallBackCloseRemindAmericanas,
+    UTECallBackCloseRemindEnjoei,
+    UTECallBackCloseRemindAliexpress,
+    UTECallBackCloseRemindShopee,
+    UTECallBackCloseRemindTikTok,
+    UTECallBackCloseRemind99Taxi,
+    UTECallBackCloseRemindIfood,
+    
+
+    UTECallBackCloseRemindMercadoLivre,
+    UTECallBackCloseRemindAlarm,
+    UTECallBackCloseRemindTechnosConnect,
+    UTECallBackCloseRemindNubank,
+    UTECallBackCloseRemindBradesco,
+    UTECallBackCloseRemindIta,
+    UTECallBackCloseRemindBancoDoBrasil,
+    UTECallBackCloseRemindCorreios,
+    
+
+    UTECallBackCloseRemindBancoInter,
+    UTECallBackCloseRemindCaixaEconomica,
+    UTECallBackCloseRemindNeon,
+    UTECallBackCloseRemindSantander,
+    UTECallBackCloseRemindNext,
+    UTECallBackCloseRemindGoogleCalendar,
+    UTECallBackCloseRemindShein,
+    UTECallBackCloseRemindGoogleTask,
+    
+
+    UTECallBackCloseRemindMicrosoftToDo,
+    UTECallBackCloseRemindTickTick,
+    UTECallBackCloseRemindTodoist,
+    UTECallBackCloseRemindMeesho,
+    UTECallBackCloseRemindZivame,
+    UTECallBackCloseRemindAjio,
+    UTECallBackCloseRemindUrbanic,
+    UTECallBackCloseRemindNykaa,
+    
+
+    UTECallBackCloseRemindHealthifyme,
+    UTECallBackCloseRemindCultfit,
+    UTECallBackCloseRemindFlo,
+    UTECallBackCloseRemindHinge,
+    UTECallBackCloseRemindBumble,
     
     UTECallBackOpenUnitSitRemind,
     UTECallBackCloseSitRemind,
@@ -880,6 +970,7 @@ typedef NS_ENUM(NSInteger, UTEDevicesSate) {
     UTEDevicesSateHRVTestStop,              //Required:isHasBloodHengAi=NO,have value :dict = @{kUTEQueryHRV:UTEModelHRV}
     UTEDevicesSateHRVTestProcess,           //Required:isHasBloodHengAi=Yes
     UTEDevicesSateHRVTestDetectingError,    //There are errors, please see error.code(UTEErrorCode)
+    UTEDevicesSateReceiveCustomData,        //There are errors, please see error.code(UTEErrorCode)
 };
 
 /*!
@@ -1002,6 +1093,8 @@ typedef NS_ENUM(NSInteger, UTEErrorCode) {
     UTEErrorCodeInvalidParameter        = 61,
     UTEErrorCodeDialBusy                = 62,
     UTEErrorCodeBeingOTA                = 63,
+    UTEErrorCodeNetwork                 = 64,
+    UTEErrorCodeZip                     = 65,
 };
 
 /*!
@@ -2179,6 +2272,8 @@ typedef NS_ENUM(NSInteger, UTEMenuIcon) {
     UTEMenuIconAbout,
     UTEMenuIconAlipay,
     UTEMenuIconWorldClock,
+    UTEMenuIconAllTest,
+    UTEMenuIconVoiceAssistant,
 };
 
 /*!
