@@ -836,6 +836,15 @@ typedef void(^cardApduResponseBlock)(NSData * _Nullable data,BOOL success);
  *  @return It sends successfully or fails
  */
 - (BOOL)readUTEDisplayLocalDial:(void (^_Nullable)(UTEModelDeviceDisplayLocalModel *_Nullable model))result;
+/**
+ *  @discussion View Online 'Dial' information ID
+ *
+ *   dict( key: index ,value: ID)
+ *   e.g. @{@1:@1256855, @2:@365875}
+ *
+ *  @return It sends successfully or fails
+ */
+- (BOOL)readUTEDisplayOnlineIDs:(void (^_Nullable)(NSDictionary *_Nullable dict))result;
 
 /**
  *  @discussion Change the dial  currently displayed on the device

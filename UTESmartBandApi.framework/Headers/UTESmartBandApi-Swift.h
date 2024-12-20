@@ -280,6 +280,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreBluetooth;
 @import ObjectiveC;
 #endif
 
@@ -302,8 +303,68 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 
 #if defined(__OBJC__)
-@protocol SYDUpdateDelegate;
+
+
 @class CBCharacteristic;
+@class CBCentralManager;
+
+/// <code>OtaManager</code>代理，用于监听OTA事件。
+SWIFT_PROTOCOL("_TtP15UTESmartBandApi18OtaManagerDelegate_")
+@protocol OtaManagerDelegate
+/// OTA已经准备就绪，可以开始升级
+- (void)onReady;
+/// OTA已开始
+- (void)onStart;
+/// OTA进度
+/// \param progress 进度，[0, 1.0]
+///
+- (void)onProgress:(float)progress;
+/// OTA已停止
+- (void)onStop;
+/// TWS已完成一边升级，非TWS不会使用
+- (void)onOneFinish;
+/// OTA已全部完成
+- (void)onAllFinish;
+/// OTA已暂停
+- (void)onPause;
+/// OTA已继续
+- (void)onContinue;
+/// OTA遇到错误
+/// \param error 错误，<code>OTAError</code>
+///
+- (void)onError:(uint8_t)error;
+/// TWS断开事件
+- (void)onTWSDisconnected;
+/// 接收到设备当前固件版本号
+/// \param version 固件版本号，具体定义参见固件端说明文档
+///
+- (void)onReceiveVersion:(uint16_t)version;
+/// 是否TWS
+/// \param isTWS 是否TWS
+///
+- (void)onReceiveIsTWS:(BOOL)isTWS;
+/// TWS对耳是否已连接
+/// \param connected 是否已连接
+///
+- (void)onReceiveTWSConnected:(BOOL)connected;
+/// 声音左右通道，非TWS不用关注
+/// \param isLeftChannel true为左声道，false为右声道
+///
+- (void)onReceiveChannel:(BOOL)isLeftChannel;
+- (void)onBleConnect;
+- (void)onBleDiscoverServices;
+- (void)onBleDidDiscoverServices;
+- (void)onBleDisconverCharacteristics;
+- (void)onBleDidDiscoverCharacteristic:(CBCharacteristic * _Nonnull)characteristic;
+- (void)onBleSetNotify:(CBCharacteristic * _Nonnull)characteristic;
+- (void)onBleDidSetNotify:(CBCharacteristic * _Nonnull)characteristic;
+- (void)onBleNotPoweredOn:(CBCentralManager * _Nonnull)central;
+- (void)onBleDidConnectPeripheral;
+- (void)onBleDidDisconnectPeripheral;
+- (void)onBleDidFailToConnectPeripheral;
+@end
+
+@protocol SYDUpdateDelegate;
 @class CBPeripheral;
 @class NSData;
 
@@ -326,6 +387,63 @@ SWIFT_PROTOCOL("_TtP15UTESmartBandApi17SYDUpdateDelegate_")
 - (void)sydUpdateSuccess;
 - (void)sydUpdateFail;
 @end
+
+
+/// 抽象类，不直接实例化，请使用<code>BleOtaManager</code>。
+SWIFT_CLASS("_TtC15UTESmartBandApi13UTEOtaManager")
+@interface UTEOtaManager : NSObject
+/// 代理<code>OtaManagerDelegate</code>用以接收OTA状态
+@property (nonatomic, weak) id <OtaManagerDelegate> _Nullable delegate;
+/// 构造器
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+/// 开始进行OTA升级，升级之前必须先判断<code>isReadyToUpdate()</code>。
+- (void)startOTA;
+/// 判断是否已经就绪。
+///
+/// returns:
+/// 是否已就绪
+- (BOOL)isReadyToUpdate SWIFT_WARN_UNUSED_RESULT;
+- (void)initParam SWIFT_METHOD_FAMILY(none);
+/// 设置OTA数据。
+/// \param otaData OTA数据
+///
+- (void)setOtaData:(NSData * _Nonnull)otaData;
+@end
+
+
+/// BLE的OTA Manager。
+SWIFT_CLASS("_TtC15UTESmartBandApi16UTEBleOtaManager")
+@interface UTEBleOtaManager : UTEOtaManager
+/// 初始化一个BLB专用OtaManager，便利构造器。
+/// \param device 蓝牙设备
+///
+///
+/// returns:
+/// 返回OtaManager实例
+- (nonnull instancetype)initWithDevice:(CBPeripheral * _Nonnull)device center:(CBCentralManager * _Nonnull)center;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+@interface UTEBleOtaManager (SWIFT_EXTENSION(UTESmartBandApi)) <CBCentralManagerDelegate>
+- (void)centralManagerDidUpdateState:(CBCentralManager * _Nonnull)central;
+- (void)centralManager:(CBCentralManager * _Nonnull)central didConnectPeripheral:(CBPeripheral * _Nonnull)peripheral;
+- (void)centralManager:(CBCentralManager * _Nonnull)central didDisconnectPeripheral:(CBPeripheral * _Nonnull)peripheral error:(NSError * _Nullable)error;
+- (void)centralManager:(CBCentralManager * _Nonnull)central didFailToConnectPeripheral:(CBPeripheral * _Nonnull)peripheral error:(NSError * _Nullable)error;
+@end
+
+@class CBService;
+
+@interface UTEBleOtaManager (SWIFT_EXTENSION(UTESmartBandApi)) <CBPeripheralDelegate>
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didDiscoverServices:(NSError * _Nullable)error;
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didDiscoverCharacteristicsForService:(CBService * _Nonnull)service error:(NSError * _Nullable)error;
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didWriteValueForCharacteristic:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didUpdateValueForCharacteristic:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
+- (void)peripheralIsReadyToSendWriteWithoutResponse:(CBPeripheral * _Nonnull)peripheral;
+@end
+
 
 #endif
 #if __has_attribute(external_source_symbol)

@@ -2829,8 +2829,11 @@
 /**
     ③ Price
  */
-@property (nonatomic,copy  ) NSString                *priceCNY;
-@property (nonatomic,copy  ) NSString                *priceUSD;
+@property (nonatomic,copy  ) NSString                *price;
+/**
+    ③ Currency
+ */
+@property (nonatomic,assign) UTECurrencyType         currency;
 /**
     ③ Pay Status
  */

@@ -158,14 +158,6 @@
 - (void)uteManagerReceiveHRMMaxValue:(NSInteger)max minValue:(NSInteger)min rhr:(NSInteger)rhr time:(NSString *)time;
 
 /**
- *  @discussion Measure your heart rate manually on your watch
- *
- *  @param value Value may be 0
- *  @param time  Time format yyyy-MM-dd-HH-mm
- */
-- (void)uteManagerReceiveHRMManual:(NSInteger)value time:(NSString *)time;
-
-/**
  *  @discussion Progress of syncing data.
  *  @param process 0 to 100
  */

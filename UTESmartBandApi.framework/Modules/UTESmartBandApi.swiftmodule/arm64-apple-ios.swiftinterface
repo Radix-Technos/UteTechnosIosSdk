@@ -2,13 +2,121 @@
 // swift-compiler-version: Apple Swift version 6.0 effective-5.10 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
 // swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name UTESmartBandApi
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import CommonCrypto/*.CC_LONG*/
+import CommonCrypto/*.CC_MD5*/
+import CommonCrypto/*.CC_MD5_DIGEST_LENGTH*/
 import CoreBluetooth
+import Foundation
 import Swift
 import UIKit
 @_exported import UTESmartBandApi
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+import os.log
+import os
+@objc public protocol OtaManagerDelegate {
+  @objc func onReady()
+  @objc func onStart()
+  @objc func onProgress(_ progress: Swift.Float)
+  @objc func onStop()
+  @objc func onOneFinish()
+  @objc func onAllFinish()
+  @objc func onPause()
+  @objc func onContinue()
+  @objc func onError(_ error: Swift.UInt8)
+  @objc func onTWSDisconnected()
+  @objc func onReceiveVersion(_ version: Swift.UInt16)
+  @objc func onReceiveIsTWS(_ isTWS: Swift.Bool)
+  @objc func onReceiveTWSConnected(_ connected: Swift.Bool)
+  @objc func onReceiveChannel(_ isLeftChannel: Swift.Bool)
+  @objc func onBleConnect()
+  @objc func onBleDiscoverServices()
+  @objc func onBleDidDiscoverServices()
+  @objc func onBleDisconverCharacteristics()
+  @objc func onBleDidDiscoverCharacteristic(_ characteristic: CoreBluetooth.CBCharacteristic)
+  @objc func onBleSetNotify(_ characteristic: CoreBluetooth.CBCharacteristic)
+  @objc func onBleDidSetNotify(_ characteristic: CoreBluetooth.CBCharacteristic)
+  @objc func onBleNotPoweredOn(_ central: CoreBluetooth.CBCentralManager)
+  @objc func onBleDidConnectPeripheral()
+  @objc func onBleDidDisconnectPeripheral()
+  @objc func onBleDidFailToConnectPeripheral()
+}
+extension UTESmartBandApi.OtaManagerDelegate {
+  public func onBleConnect()
+  public func onBleDiscoverServices()
+  public func onBleDidDiscoverServices()
+  public func onBleDisconverCharacteristics()
+  public func onBleDidDiscoverCharacteristic(_ characteristic: CoreBluetooth.CBCharacteristic)
+  public func onBleSetNotify(_ characteristic: CoreBluetooth.CBCharacteristic)
+  public func onBleDidSetNotify(_ characteristic: CoreBluetooth.CBCharacteristic)
+  public func onBleNotPoweredOn(_ central: CoreBluetooth.CBCentralManager)
+  public func onBleDidConnectPeripheral()
+  public func onBleDidDisconnectPeripheral()
+  public func onBleDidFailToConnectPeripheral()
+}
+@_inheritsConvenienceInitializers @objc public class UTEOtaManager : ObjectiveC.NSObject {
+  public static let DEFAULT_TIMEOUT: Swift.Double
+  public static let UNDEFINED_FIRMWARE_VERSION: Swift.UInt16
+  @objc weak public var delegate: (any UTESmartBandApi.OtaManagerDelegate)?
+  public var otaFirmwareVersion: Swift.UInt16
+  public var needIdentification: Swift.Bool
+  @objc override dynamic public init()
+  public func initialize()
+  public func deinitialize()
+  @objc public func startOTA()
+  @objc public func isReadyToUpdate() -> Swift.Bool
+  public func setOTAFile(filePath: Swift.String)
+  @objc public func initParam()
+  @objc public func setOtaData(_ otaData: Foundation.Data)
+  public func isUpdating() -> Swift.Bool
+  public func isTwsDevice() -> Swift.Bool
+  public func isTWSConnected() -> Swift.Bool
+  @objc deinit
+}
+public enum UTEOTAError : Swift.Error {
+  case centralManagerNotPoweredOn
+  case deviceNotSupported
+  case deviceClosed
+  case refusedByDevice
+  case noDataAvailable
+  case deviceReport(code: Swift.UInt8)
+  case timeoutFindDevice
+  case timeoutWaitingResponse
+}
+extension UTESmartBandApi.UTEOTAError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@objc public class UTEBleOtaManager : UTESmartBandApi.UTEOtaManager {
+  @objc convenience public init(device: CoreBluetooth.CBPeripheral, center: CoreBluetooth.CBCentralManager)
+  public init(targetWithIdentifier device: CoreBluetooth.CBPeripheral, center: CoreBluetooth.CBCentralManager)
+  override public func initialize()
+  override public func deinitialize()
+  public func onFound(device: CoreBluetooth.CBPeripheral)
+  public func onError(_ error: UTESmartBandApi.UTEOTAError)
+  @objc deinit
+}
+extension UTESmartBandApi.UTEBleOtaManager : CoreBluetooth.CBCentralManagerDelegate {
+  @objc dynamic public func centralManagerDidUpdateState(_ central: CoreBluetooth.CBCentralManager)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didConnect peripheral: CoreBluetooth.CBPeripheral)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didDisconnectPeripheral peripheral: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didFailToConnect peripheral: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+}
+extension UTESmartBandApi.UTEBleOtaManager : CoreBluetooth.CBPeripheralDelegate {
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverServices error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverCharacteristicsFor service: CoreBluetooth.CBService, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateNotificationStateFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didWriteValueFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateValueFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheralIsReady(toSendWriteWithoutResponse peripheral: CoreBluetooth.CBPeripheral)
+}
+extension CoreBluetooth.CBManagerState : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
 @objc public protocol SYDUpdateDelegate {
   @objc optional func sydUpdateProccess(proccess: Swift.Float)
   @objc optional func sydUpdateSuccess()
