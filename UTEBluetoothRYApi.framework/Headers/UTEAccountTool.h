@@ -75,6 +75,12 @@
 */
 - (void)UnboundType:(NSInteger)type Block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+///是否在指定区域 cmd：0指定区域1不在指定区域2未知
+-(void)designatedAreaCMD:(NSInteger)cmd Block:(void(^)(NSInteger errorCode))block;
+
+///配对指令 state：1配对通过，0配对失败。通过后再调用phoneSendWatchAccountWith判断账号
+-(void)sendPairDevicesBlock:(void(^)(NSInteger state,NSInteger errorCode))block;
+
 @end
 
 

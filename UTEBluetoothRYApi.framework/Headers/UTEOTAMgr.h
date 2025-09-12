@@ -26,8 +26,8 @@
 ///1.1001 LOG 2023-06-02 type 0:全部文件下载 1:betaLog 2:beforeLog 3:afterLog
 //- (void)downloadBetaLogFiles:(NSInteger)type callback:(void(^)(NSInteger logType,CGFloat process,BOOL isSuccess ,NSInteger errorCode ,NSString *filePath,NSDictionary *uteDict))block;
 
-///1.1001 2023-06-10 LOG. filePathDic参数 type 1:betaLog 2:beforeLog 3:afterLog. filePath  完整路径的文件名（带后缀）保存格式为txt NSDictionary *dic = @{@"type":@1,@"filePath":filePath};
-- (void)downloadBetaLogFiles:(NSDictionary *)filePathDic callback:(void(^)(NSInteger logType,CGFloat process,BOOL isSuccess ,NSInteger errorCode ,NSString *filePath,NSDictionary *uteDict))block;
+///1.1001 2023-06-10 LOG. filePathDic参数 type 1:betaLog 2:beforeLog 3:afterLog. 4:打点数据信息  filePath  完整路径的文件名（带后缀）保存格式为txt NSDictionary *dic = @{@"type":@1,@"filePath":filePath};
+- (void)downloadBetaLogFiles:(NSDictionary *)filePathDic callback:(void(^)(NSInteger logType,CGFloat process,BOOL isComplete ,NSInteger errorCode ,NSString *filePath,NSDictionary *uteDict))block;
 
 /////1.1001 原厂死机前Log 2023-06-04
 //- (void)downloadBeforeLogFiles:(void (^)(NSString *uuid,NSString *filePath,NSInteger errorCode,BOOL success))callback;
@@ -105,6 +105,10 @@
 - (void)upgrade:(NSString *)filePath
        callback:(void (^)(NSString *uuid, CGFloat process,NSInteger errorCode,BOOL success))callback;
 
+///用于zip重复更新全量包
+- (void)upgradeFull:(NSString *)filePath
+        callback:(void (^)(NSString *uuid,CGFloat process,NSInteger errorCode,BOOL success))callback;
+
 //9.14
 - (void)notifyNewVersion:(NSString *)versionNumber
                     size:(NSInteger)size
@@ -123,6 +127,8 @@
 - (BOOL)compareCharacteristic:(CBCharacteristic *)cb;
 - (void)clearParams;
 
+///更新断开状态等回调给app
+-(void)otaBlock:(NSInteger)type;
 
 @end
 

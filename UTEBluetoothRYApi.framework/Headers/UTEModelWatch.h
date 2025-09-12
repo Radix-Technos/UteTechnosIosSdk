@@ -13,8 +13,9 @@
 typedef NS_ENUM(NSInteger, UTEWatchFaceTimePosition) {
     UTEWatchFaceTimePositionUp           = 0x01,
     UTEWatchFaceTimePositionDown         = 0x02,
-    UTEWatchFaceTimePositionLeft         = 0x03,
-    UTEWatchFaceTimePositionRight        = 0x04,
+    UTEWatchFaceTimePositionMiddle       = 0x03,
+    UTEWatchFaceTimePositionLeft         = 0x04,
+    UTEWatchFaceTimePositionRight        = 0x05,
 };
 
 typedef NS_ENUM(NSInteger, UTEWatchFaceType) {
@@ -157,7 +158,7 @@ typedef NS_ENUM(NSInteger, UTEWatchFaceTypeJLCategory) {
 ///暂定，获取到下发时候在发回给手环 Temporarily, when receiving the distribution, send it back to the bracelet
 @property (nonatomic,assign) NSInteger              transferNum;
 
-//相片表盘 时间 颜色RGB,如为NO, 则表示此参数无效 或 不设置
+///相片表盘 时间 颜色RGB,如为NO, 则表示此参数无效 或 不设置
 @property (nonatomic,assign) NSInteger              timeRGB_enable;
 ///相片表盘 时间 颜色RGB : red,
 @property (nonatomic,assign) NSInteger              timeRGB_R;
@@ -166,7 +167,7 @@ typedef NS_ENUM(NSInteger, UTEWatchFaceTypeJLCategory) {
 ///相片表盘 时间 颜色RGB : blue,
 @property (nonatomic,assign) NSInteger              timeRGB_B;
 
-//相片表盘 日期 颜色RGB,如为NO, 则表示此参数无效 或 不设置
+///相片表盘 日期 颜色RGB,如为NO, 则表示此参数无效 或 不设置
 @property (nonatomic,assign) NSInteger              dateRGB_enable;
 ///相片表盘 日期 颜色RGB : red
 @property (nonatomic,assign) NSInteger              dateRGB_R;
@@ -259,18 +260,31 @@ typedef NS_ENUM(NSInteger, UTEWatchFaceTypeJLCategory) {
 @property (nonatomic,assign) NSInteger               ID;
 //zip link e.g @"https://aaaaa.zip" or @"https://aaaaa.bin" or @"https://aaaaa.ufw"
 @property (nonatomic,copy  ) NSString                *firmwareURL;
-//Preview Picture Url (It may be nil)
+//Preview Picture Url (It may be nil) 默认参考背景图URL
 @property (nonatomic,assign) NSString                *previewBgUrl;
+
+///默认时间位置 1上 2下 3中 4左 5右
+@property (nonatomic,assign) NSInteger               defaultWidgetPosition;
 /**
     Time display position
     If the value is 0, the position change is not supported
+    支持的位置
+    比如if (model.timePosition & UTEWatchFaceTimePositionUp) {
+        支持上
+    }
 */
 @property (nonatomic,assign) UTEWatchFaceTimePosition  timePosition;
 
-//Preview Time Postion Url (It may be nil)
+/**Preview Time Postion Url (It may be nil) */
+///上
 @property (nonatomic,copy  ) NSString                *previewTimeUp;
+///下
 @property (nonatomic,copy  ) NSString                *previewTimeDown;
+///中
+@property (nonatomic,copy  ) NSString                *previewTimeMiddle;
+///左
 @property (nonatomic,copy  ) NSString                *previewTimeLeft;
+///右
 @property (nonatomic,copy  ) NSString                *previewTimeRight;
 
 

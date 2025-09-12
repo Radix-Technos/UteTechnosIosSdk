@@ -93,6 +93,12 @@
  *  Device connection status
  */
 @property(nonatomic, assign) BOOL               isConnected;
+
+/**
+ *  Device pair
+ */
+@property(nonatomic, assign) BOOL               isPair;
+
 /**
  *  Device name
  */
@@ -368,6 +374,200 @@
  *  ①Support Mood
  */
 @property(nonatomic,assign) BOOL                hasMood;
+/**
+ *  ①Support Game
+ */
+@property(nonatomic,assign) BOOL                hasGame;
+/**
+ *  ①Support ChatGPT
+ */
+@property(nonatomic,assign) BOOL                hasChatGPT;
+/**
+ *  ①Support Offline Voice Control
+ */
+@property(nonatomic,assign) BOOL                hasOVC;
+/**
+ *  ①Support TwoWaySet 双向设置
+
+ */
+@property(nonatomic,assign) BOOL                hasTwoWaySet;
+
+/**
+ *  ①Not Support hasNotBlue3
+ */
+@property(nonatomic,assign) BOOL                hasNotBlue3;
+
+/**
+ *  ①Support hasAIWatch AI表盘
+ */
+@property(nonatomic,assign) BOOL                hasAIWatch;
+/**
+ *  ① Support hasWaterClock 喝水提醒
+ */
+@property(nonatomic,assign) BOOL                hasWaterClock;
+/**
+ *  ① Support hasMenstrualGender 支持女性健康根据性别显示
+ */
+@property(nonatomic,assign) BOOL                hasMenstrualGender;
+/**
+ *  ① Support hasQueryContacts 支持查询通讯录信息
+ */
+@property(nonatomic,assign) BOOL                hasQueryContacts;
+/**
+ *  ① Support hasQueryAISDK 支持查询AI服务商
+ */
+@property(nonatomic,assign) BOOL                hasQueryAISDK;
+/**
+ *  ① Support hasSNWarranty 支持设置SN质量保修
+ */
+@property(nonatomic,assign) BOOL                hasSNWarranty;
+
+/**
+ *  ① Support hasIntelligentAgent 支持AI智能体
+ */
+@property(nonatomic,assign) BOOL                hasIntelligentAgent;
+
+/**
+ *  ① Support hasAITranslate 支持AI翻译官
+ */
+@property(nonatomic,assign) BOOL                hasAITranslate;
+/**
+ *  ① Support hasButtonWakeUpVoice 支持按键唤醒语音助手功能
+ */
+@property(nonatomic,assign) BOOL                hasButtonWakeUpVoice;
+/**
+ *  ① Support hasAILargeModelSelect 支持AI大模型选择功能
+ */
+@property(nonatomic,assign) BOOL                hasAILargeModelSelect;
+/**
+ *  ① Support hasWeChatPay 支持微信支付功能
+ */
+@property(nonatomic,assign) BOOL                hasWeChatPay;
+/**
+ *  ① Support hasOfflineMap 支持离线地图功能
+ */
+@property(nonatomic,assign) BOOL                hasOfflineMap;
+/**
+ *  ① Support hasAlipayCode 支持支付宝乘车码
+ */
+@property(nonatomic,assign) BOOL                hasAlipayCode;
+/**
+ *  ① Support hasAITrainingCourses AI训练课程
+ */
+@property(nonatomic,assign) BOOL                hasAITrainingCourses;
+/**
+ *  ① Support hasALI ALI 支持PAI功能
+ */
+@property(nonatomic,assign) BOOL                hasALI;
+/**
+ *  ① Support Glasses
+ */
+@property(nonatomic,assign) BOOL                hasGlasses;
+/**
+ *  ① Support WiFi
+ */
+@property(nonatomic,assign) BOOL                hasWiFi;
+/**
+ *  ① Support Earphone
+ */
+@property(nonatomic,assign) BOOL                hasEarphone;
+/**
+ *  ① Support Step(Individual devices)
+ */
+@property(nonatomic,assign) BOOL                hasExtraStep;
+/**
+ *  ① Support HRM(Individual devices)
+ */
+@property(nonatomic,assign) BOOL                hasExtraHRM;
+/**
+ *  ① Support Sleep(Individual devices)
+ */
+@property(nonatomic,assign) BOOL                hasExtraSleep;
+/**
+ *  ① Support Earphone Acoustics (Individual devices)
+ */
+@property(nonatomic,assign) BOOL                hasEarphoneAcoustics;
+/**
+ *  ① Support LED (Individual devices)
+ */
+@property(nonatomic,assign) BOOL                hasExtraLED;
+/**
+ *  ① Support hasPoolLength 支持泳池长度设置功能
+ */
+@property(nonatomic,assign) BOOL                hasPoolLength;
+/**
+ *  ① Support hasRunwayLength 支持跑道长度设置功能
+ */
+@property(nonatomic,assign) BOOL                hasRunwayLength;
+/**
+ *  ① Support hasWearingHands 支持用户体征信息佩戴左右手设置
+ */
+@property(nonatomic,assign) BOOL                hasWearingHands;
+/**
+ *  ① Support hasHealthAnalysis 支持健康分析报告功能
+ */
+@property(nonatomic,assign) BOOL                hasHealthAnalysis;
+/**
+ *  ① Support hasAIRecordRealTime 支持AI功能录音数据实时上报功能
+ */
+@property(nonatomic,assign) BOOL                hasAIRecordRealTime;
+/**
+ *  ① Support hasNewANCS 支持新第三方APP消息通知控制功能
+ */
+@property(nonatomic,assign) BOOL                hasNewANCS;
+/**
+ *  ① Support hasAlarmClockGetSet 支持获取闹钟个数和闹钟支持设置项功能
+ */
+@property(nonatomic,assign) BOOL                hasAlarmClockGetSet;
+/**
+ *  ① Support hasPathNavigation 支持路径导航功能
+ */
+@property(nonatomic,assign) BOOL                hasPathNavigation;
+/**
+ *  ① Support hasElectronicCard 支持电子卡包功能
+ */
+@property(nonatomic,assign) BOOL                hasElectronicCard;
+/**
+ *  ① Support hasPauseDialTransmission 支持中断云表盘传输功能
+ */
+@property(nonatomic,assign) BOOL                hasPauseDialTransmission;
+/**
+ *  ① Support hasFileTransfer 支持通用文件传输功能
+ */
+@property(nonatomic,assign) BOOL                hasFileTransfer;
+/**
+ *  ① Support hasPaceKM 支持每公里配速获取功能
+ */
+@property(nonatomic,assign) BOOL                hasPaceKM;
+/**
+ *  ① Support hasLocalMusic 支持本地音乐功能
+ */
+@property(nonatomic,assign) BOOL                hasLocalMusic;
+/**
+ *  ① Support hasNoCallFunction  不支持通话功能，需隐藏通讯录、蓝牙通话、快捷回复、sos页面功能
+ */
+@property(nonatomic,assign) BOOL                hasNoCallFunction;
+/**
+ *  ① Support hasNoScreen 支持无屏设备，需隐藏对应有屏相关界面功能
+ */
+@property(nonatomic,assign) BOOL                hasNoScreen;
+/**
+ *  ① Support hasBodyTemperature 支持体温模块功能
+ */
+@property(nonatomic,assign) BOOL                hasBodyTemperature;
+/**
+ *  ① Support hasOneClickMeasurement 支持APP发起一键测量功能
+ */
+@property(nonatomic,assign) BOOL                hasOneClickMeasurement;
+/**
+ *  ① Support hasHeartRateVariability 支持心率变异性功能
+ */
+@property(nonatomic,assign) BOOL                hasHeartRateVariability;
+/**
+ *  ① Support hasDesignatedArea 支持区域锁定功能
+ */
+@property(nonatomic,assign) BOOL                hasDesignatedArea;
+
 @end
 
 /*!
@@ -673,7 +873,7 @@
  *  UTEModelActivity
  */
 @interface UTEModelActivity : NSObject
-//true:开 false:关
+///true:开 false:关
 @property (nonatomic,assign) BOOL                   enable;
 /** 间隔时长 Unit: min */
 @property (nonatomic,assign) NSInteger              interval;
@@ -729,6 +929,38 @@
 @property (nonatomic,assign) NSInteger              diastolicPressure;
 ///情绪，1: 消极 2: 中性 3: 积极  Mood，1: Negative 2: Neutral 3: Positive
 @property (nonatomic,assign) NSInteger              mood;
+//新增2025/03/10
+///低强度PAI
+@property (nonatomic,assign) NSInteger              LowPAI;
+///中强度PAI
+@property (nonatomic,assign) NSInteger              midPAI;
+///高强度PAI
+@property (nonatomic,assign) NSInteger              highPAI;
+///低强度PAI时长 单位:分钟
+@property (nonatomic,assign) NSInteger              LowPAIDuration;
+///中强度PAI时长 单位:分钟
+@property (nonatomic,assign) NSInteger              midPAIDuration;
+///高强度PAI时长 单位:分钟
+@property (nonatomic,assign) NSInteger              highPAIDuration;
+///心率变异性数值 1-29低 30-60正常 61-101良好 102及以上优秀
+@property (nonatomic,assign) NSInteger              heartRateVariability;
+
+//设备主动上报的数据类型，枚举对应以上列出的数据类型
+@property (nonatomic,assign) UTEHealthType0         healthType0;
+@property (nonatomic,assign) UTEHealthType1         healthType1;
+@property (nonatomic,assign) UTEHealthType2         healthType2;
+@property (nonatomic,copy  ) NSString               *time;//yyyy-MM-dd-HH-mm
+
+@end
+
+/*!
+ *  UTEModelMotionPressureDataModel
+ */
+@interface UTEModelMotionPressureDataModel : NSObject
+
+@property (nonatomic,copy  ) NSString               *time;//yyyy-MM-dd-HH-mm
+
+@property (nonatomic,assign) NSInteger              pressure;
 @end
 
 /*!
@@ -826,6 +1058,27 @@
 @property (nonatomic,assign) UTEWeekType            cycle;
 ///标签 name
 @property (nonatomic,copy  ) NSString               *name;
+///提醒方式（预留） 0：响铃并震动 1：仅响铃 2：仅震动
+@property (nonatomic,assign) NSInteger              remindType;
+
+@end
+
+/*!
+ *  UTEModelClockInfo
+ */
+@interface UTEModelClockInfo : NSObject
+///闹钟支持数量
+@property (nonatomic,assign) NSInteger              supportCount;
+///是否支持索引(预留)
+@property (nonatomic,assign) BOOL                   hasIndex;
+///是否时间（小时分钟）(预留)
+@property (nonatomic,assign) BOOL                   hasTime;
+///是否支持循环(预留)
+@property (nonatomic,assign) BOOL                   hasCycle;
+///是否支持名称(预留)
+@property (nonatomic,assign) BOOL                   hasName;
+///是否支持提醒方式(预留)
+@property (nonatomic,assign) BOOL                   hasRemind;
 
 @end
 
@@ -1084,9 +1337,9 @@
 @property (nonatomic,assign) NSInteger              hrABSMinPeak;
 ///心率最大值 Maximum heart rate
 @property (nonatomic,assign) NSInteger              hrABSMaxPeak;
-///运动负荷 Exercise load
+///运动负荷 Exercise load 2byte
 @property (nonatomic,assign) NSInteger              loadPeak;
-///运动效果 Motion Effects
+///运动效果(有氧训练效果 [0-5] ) Motion Effects  1byte
 @property (nonatomic,assign) NSInteger              trainingEffect;
 ///最大耗氧量 Maximum oxygen consumption
 @property (nonatomic,assign) NSInteger              oxygenConsumption;
@@ -1102,11 +1355,11 @@
 @property (nonatomic,assign) NSInteger              swimType;
 ///划水次数 Number of strokes
 @property (nonatomic,assign) NSInteger              swimPullTimes;
-///均划水频率：次/分钟 Average water frequency: times/minute
+///平均划水频率：次/分钟 Average water frequency: times/minute
 @property (nonatomic,assign) NSInteger              swimPullRate;
 ///泳池游泳：泳池长度（厘米） Swimming in the pool: Pool length (centimeters)
 @property (nonatomic,assign) NSInteger              swimPoolLength;
-///泳池游泳趟数,滑雪趟数（复用）Number of swimming and skiing trips in the swimming pool (reuse)
+///泳池游泳趟数,滑雪趟数，操场跑圈（复用）Number of swimming and skiing trips in the swimming pool (reuse)
 @property (nonatomic,assign) NSInteger              tripTimes;
 ///单趟泳池长度所需时间 （以秒为单位） The time required for a single swimming pool length (in seconds)
 @property (nonatomic,assign) NSInteger              swimAverageSwolf;
@@ -1120,7 +1373,7 @@
 @property (nonatomic,assign) NSInteger              swolfBaseKilometerSwolf;
 ///基于英里距离计算，单位分米 Based on mile distance calculation , Unit: Decimeter
 @property (nonatomic,assign) NSInteger              swolfBaseMileSwolf;
-///无氧运动效果 Effects of anaerobic exercise
+///无氧训练效果（[0-5]） Effects of anaerobic exercise 1byte
 @property (nonatomic,assign) NSInteger              anaerobicSportsEffect;
 ///半马用时：秒 Half Horse Time,unit:second
 @property (nonatomic,assign) NSInteger              halfMarathonTime;
@@ -1166,7 +1419,7 @@
 @property (nonatomic,assign) NSInteger              golfAvgDownSwingTime;
 /// 高尔夫：平均挥杆速度 单位：厘米/秒2byte; Golf: Average swing speed Unit: centimeters/second
 @property (nonatomic,assign) NSInteger              golfAvgSwingSpeed;
-/// 高尔夫：最大挥杆速度 单位：厘米/秒2byte; Golf: Maximum swing speed，Unit: centimeters/second
+/// 高尔夫/羽毛球：最大挥杆速度 单位：米/秒 2byte; Golf: Maximum swing speed，Unit: centimeters/second
 @property (nonatomic,assign) NSInteger              golfMaxSwingSpeed;
 ///高尔夫：平均挥杆节奏，2byte; Golf: Average swing rhythm
 @property (nonatomic,assign) NSInteger              golfTempo;
@@ -1214,16 +1467,54 @@
 @property (nonatomic,assign) NSInteger              stepFrequency;
 /// 平均步幅，单位：cm  2byte; Average stride，Unit: cm
 @property (nonatomic,assign) NSInteger              avgStride;
-/// 拉浆时间 单位：秒 2byte; Slurry pulling time，Unit: seconds
+/// 拉浆时间 单位：毫秒  app转换保留2位小数的秒，不用四舍五入 2byte; Slurry pulling time，Unit: seconds
 @property (nonatomic,assign) NSInteger              pullTime;
-/// 收桨时间 单位：秒 2byte; Harvest time，Unit: seconds
+/// 收桨时间 单位：毫秒 app转换保留2位小数的秒，不用四舍五入 2byte; Harvest time，Unit: seconds
 @property (nonatomic,assign) NSInteger              freeTime;
 /// 上楼层数 2byte; Number of upper floors
 @property (nonatomic,assign) NSInteger              floorsUp;
 /// 下楼层数 2byte; Number of floors downstairs
 @property (nonatomic,assign) NSInteger              floorsDown;
+/// 正手挥击次数 2b
+@property (nonatomic,assign) NSInteger              forehandCounts;
+/// 反手挥击次数 2b
+@property (nonatomic,assign) NSInteger              backhandCounts;
+///上挥击次数 2b
+@property (nonatomic,assign) NSInteger              overhandCounter;
+///下手挥击次数 2b
+@property (nonatomic,assign) NSInteger              underhandCounter;
+///最长连拍 2b
+@property (nonatomic,assign) NSInteger              contSwingCnt;
+///平均坡度 1b 单位：百分比
+@property (nonatomic,assign) NSInteger              avgSlope;
+///平均跑步功率 2b 单位：瓦特
+@property (nonatomic,assign) NSInteger              avgRuningPower;
+///平均触地时间 2b 单位:毫秒
+@property (nonatomic,assign) NSInteger              avgGroundContactTime;
+///平均垂直振幅 1b 单位:厘米
+@property (nonatomic,assign) NSInteger              avgVosc;
 
-
+//新增
+///平均海拔 4b 单位：分米（有正负值）
+@property (nonatomic,assign) NSInteger              avgAltitude;
+///最大速度 2b 单位:dm/s
+@property (nonatomic,assign) NSInteger              maxSpeed;
+///最小速度 2b 单位:dm/s
+@property (nonatomic,assign) NSInteger              minSpeed;
+///最快配速，数值越小配速越快 2b 单位:s/km
+@property (nonatomic,assign) NSInteger              maxPace;
+///最慢配速，数值越大配速越慢 2b 单位:s/km
+@property (nonatomic,assign) NSInteger              minPace;
+///最大步频（划船机桨频\游泳划水频率复用） 2b 单位:次/分
+@property (nonatomic,assign) NSInteger              maxStepFrequency;
+///最小步频（划船机桨频\游泳划水频率复用） 2b 单位:次/分
+@property (nonatomic,assign) NSInteger              minStepFrequency;
+///最佳Swolf 2b
+@property (nonatomic,assign) NSInteger              minSwolf;
+///最差Swolf 2b
+@property (nonatomic,assign) NSInteger              maxSwolf;
+///平均心率值 1b
+@property (nonatomic,assign) NSInteger              HrAbsAvgPeak;
 
 @end
 
@@ -1240,9 +1531,9 @@
 @property (nonatomic,assign) NSInteger              pace;
 @property (nonatomic,assign) NSInteger              distance;
 @property (nonatomic,assign) NSInteger              calorie;
-@property (nonatomic,assign) NSInteger              totalRise; //累计爬升,单位: dm，2byte
-@property (nonatomic,assign) NSInteger              totalDescend;//累计下降,单位: dm，2byte
-@property (nonatomic,assign) NSInteger              altitude;//高度 单位:dm 2byte
+@property (nonatomic,assign) NSInteger              totalRise; //累计爬升,单位: dm，4byte
+@property (nonatomic,assign) NSInteger              totalDescend;//累计下降,单位: dm，4byte
+@property (nonatomic,assign) NSInteger              altitude;//高度 单位:dm 4byte
 @property (nonatomic,assign) NSInteger              aerobicEffect;
 @property (nonatomic,assign) NSInteger              anaerobicEffect;
 @property (nonatomic,assign) NSInteger              performanceCondition;
@@ -1264,14 +1555,30 @@
 @property (nonatomic,assign) NSInteger              swimPullRate;//29划水频率，1byte
 @property (nonatomic,assign) NSInteger              swimType;//30泳姿1: 蛙泳 2: 自由泳 3: 蝶泳 4: 仰泳 5: 混合泳，1byte
 @property (nonatomic,assign) NSInteger              swimSwolf;//31单趟泳池长度所需时间 （以秒为单位）2byte
-@property (nonatomic,assign) NSInteger              pullTime;//32拉浆时间 单位：秒 2byte
-@property (nonatomic,assign) NSInteger              freeTime;//33收桨时间 单位：秒 2byte
+@property (nonatomic,assign) NSInteger              pullTime;//32拉浆时间 单位：毫秒  app转换保留2位小数的秒，不用四舍五入 2byte
+@property (nonatomic,assign) NSInteger              freeTime;//33收桨时间 单位：毫秒  app转换保留2位小数的秒，不用四舍五入 2byte
 @property (nonatomic,assign) NSInteger              tripped;//34绊绳次数 2byte
 @property (nonatomic,assign) NSInteger              maxRopeCombo;//35最大连跳 2byte
 @property (nonatomic,assign) NSInteger              CurrRopeCombo;//36当前连跳 2byte
 @property (nonatomic,assign) NSInteger              floorsUp;//37上楼层数 2byte
 @property (nonatomic,assign) NSInteger              floorsDown;//38下楼层数 2byte
-
+@property (nonatomic,assign) NSInteger              forehandCounts;//39 正手挥击次数 2
+@property (nonatomic,assign) NSInteger              backhandCounts;//40反手 2byte
+@property (nonatomic,assign) NSInteger              overhandCounter;//41上手 2byte
+@property (nonatomic,assign) NSInteger              underhandCounter;//42下手 2byte
+@property (nonatomic,assign) NSInteger              contSwingCnt;//43最长连拍 2byte
+///实时速度 4b dm/s
+@property (nonatomic,assign) NSInteger              realTimeSpeed;//44
+///最大挥击速度 dm/s 45 1b
+@property (nonatomic,assign) NSInteger              swingMaxSpeed;
+///坡度 百分比  46 1b
+@property (nonatomic,assign) NSInteger              slope;
+///跑步功率 瓦特 47 2b
+@property (nonatomic,assign) NSInteger              runingPower;
+///触地时间 毫秒 48 2b
+@property (nonatomic,assign) NSInteger              groundContactTime;
+///垂直振幅 cm 49 1b
+@property (nonatomic,assign) NSInteger              vosc;
 
 @end
 
@@ -1281,7 +1588,24 @@
 @interface UTEModelDeviceWorkoutAbility : NSObject
 
 @property (nonatomic,assign) BOOL              treadmill;
-
+//新增2024/06/25
+///GPS
+@property (nonatomic,assign) BOOL              hasGPS;
+///气压计 Barometer
+@property (nonatomic,assign) BOOL              hasBarometer;
+//新增2025/3/10
+///支持羽毛球专项数据
+@property (nonatomic,assign) BOOL              hasBadminton;
+///支持哑铃专项数据 需显示二头弯举次数
+@property (nonatomic,assign) BOOL              hasDumbbell;
+///支持拳击专项数据 需显示拳击次数
+@property (nonatomic,assign) BOOL              hasBoxing;
+///支持划船机专项数据 需显示拉桨和收桨
+@property (nonatomic,assign) BOOL              hasRowingMachine;
+///思百特专用算法 需要按照思百特运动表显示
+@property (nonatomic,assign) BOOL              hasKospetAlgorithm;
+///思百特专用算法 需要按照思百特运动表显示V2
+@property (nonatomic,assign) BOOL              hasKospetAlgorithmV2;
 @end
 
 /*!
@@ -1346,7 +1670,7 @@
 @property (nonatomic,assign) NSInteger              calorie;
 ///距离，单位：米 Distance in meters
 @property (nonatomic,assign) NSInteger              distance;
-///步数（踏数、桨数） Steps (steps, paddles)
+///步数（踏数、桨数,跳绳数） Steps (steps, paddles，skip)
 @property (nonatomic,assign) NSInteger              step;
 ///总时长，单位：秒 Total duration, in seconds
 @property (nonatomic,assign) NSInteger              totalTime;
@@ -1360,7 +1684,7 @@
 @property (nonatomic,assign) NSInteger              hrABSMinPeak;
 ///运动负荷 Exercise load
 @property (nonatomic,assign) NSInteger              sportsLoad;
-///运动效果（有氧压力）Exercise effect (aerobic pressure)
+///运动效果(有氧训练效果 [0-5] ) Exercise effect (aerobic pressure)
 @property (nonatomic,assign) NSInteger              sportsEffect;
 ///最大耗氧量 Maximum oxygen consumption
 @property (nonatomic,assign) NSInteger              epoc;
@@ -1382,7 +1706,7 @@
 @property (nonatomic,assign) NSInteger              swimPoolLength;
 ///泳池游泳趟数,滑雪趟数（复用） Number of swimming and skiing trips in the swimming pool (reuse)
 @property (nonatomic,assign) NSInteger              tripTimes;
-///单趟泳池长度所需时间 （以秒为单位）The time required for a single swimming pool length (in seconds)
+///单趟泳池长度所需时间 （以秒为单位）The time required for a single swimming pool length (in seconds) SWOLF设备目前用这个
 @property (nonatomic,assign) NSInteger              swimAverageSwolf;
 ///累计下降高度，单位分米 Accumulated descent height in decimeters
 @property (nonatomic,assign) NSInteger              totalDropHeight;
@@ -1394,7 +1718,7 @@
 @property (nonatomic,assign) NSInteger              swolfBaseKilometer;
 ///Swolf 基于英里距离计算，单位分米 Swolf is calculated based on miles, in decimeters
 @property (nonatomic,assign) NSInteger              swolfBaseMile;
-///无氧运动效果 Effects of anaerobic exercise
+///无氧训练效果（[0-5]） Effects of anaerobic exercise
 @property (nonatomic,assign) NSInteger              anaerobicSportsEffect;
 ///半马用时：秒 Half horse time: seconds
 @property (nonatomic,assign) NSInteger              halfMarathonTime;
@@ -1440,7 +1764,7 @@
 @property (nonatomic,assign) NSInteger              golfAvgDownSwingTime;
 ///高尔夫：平均挥杆速度 单位：厘米/秒 Golf: Average swing speed in centimeters per second
 @property (nonatomic,assign) NSInteger              golfAvgSwingSpeed;
-///高尔夫：最大挥杆速度 单位：厘米/秒 Golf: Maximum swing speed in centimeters per second
+///高尔夫/羽毛球：最大挥杆速度 单位：米/秒 Golf: Maximum swing speed in centimeters per second
 @property (nonatomic,assign) NSInteger              golfMaxSwingSpeed;
 ///高尔夫：平均挥杆节奏 Golf: Average swing rhythm
 @property (nonatomic,assign) NSInteger              golfTempo;
@@ -1486,14 +1810,54 @@
 @property (nonatomic,assign) NSInteger              stepFrequency;
 ///平均步幅，单位：cm Average stride, unit: cm
 @property (nonatomic,assign) NSInteger              avgStride;
-///拉浆时间 单位：秒（暂无） Slurry pulling time unit: seconds (currently unavailable)
+///拉浆时间 单位：毫秒 app转换保留2位小数的秒，不用四舍五入（暂无） Slurry pulling time unit: seconds (currently unavailable)
 @property (nonatomic,assign) NSInteger              pullTime;
-///收桨时间 单位：秒（暂无） Harvest time unit: seconds (currently unavailable)
+///收桨时间 单位：毫秒 app转换保留2位小数的秒，不用四舍五入（暂无） Harvest time unit: seconds (currently unavailable)
 @property (nonatomic,assign) NSInteger              freeTime;
 ///上楼层数 Number of upper floors
 @property (nonatomic,assign) NSInteger              floorsUp;
 ///下楼层数 Number of floors downstairs
 @property (nonatomic,assign) NSInteger              floorsDown;
+/// 正手挥击次数 2b
+@property (nonatomic,assign) NSInteger              forehandCounts;
+/// 反手挥击次数 2b
+@property (nonatomic,assign) NSInteger              backhandCounts;
+///上挥击次数 2b
+@property (nonatomic,assign) NSInteger              overhandCounter;
+///下手挥击次数 2b
+@property (nonatomic,assign) NSInteger              underhandCounter;
+///最长连拍 2b
+@property (nonatomic,assign) NSInteger              contSwingCnt;
+///平均坡度 1b 单位：百分比
+@property (nonatomic,assign) NSInteger              avgSlope;
+///平均跑步功率 2b 单位：瓦特
+@property (nonatomic,assign) NSInteger              avgRuningPower;
+///平均触地时间 2b 单位:毫秒
+@property (nonatomic,assign) NSInteger              avgGroundContactTime;
+///平均垂直振幅 1b 单位:厘米
+@property (nonatomic,assign) NSInteger              avgVosc;
+
+//新增
+///平均海拔 4b 单位：分米（有正负值）
+@property (nonatomic,assign) NSInteger              avgAltitude;
+///最大速度 2b 单位:dm/s
+@property (nonatomic,assign) NSInteger              maxSpeed;
+///最小速度 2b 单位:dm/s
+@property (nonatomic,assign) NSInteger              minSpeed;
+///最快配速，数值越小配速越快 2b 单位:s/km
+@property (nonatomic,assign) NSInteger              maxPace;
+///最慢配速，数值越大配速越慢 2b 单位:s/km
+@property (nonatomic,assign) NSInteger              minPace;
+///最大步频（划船机桨频\游泳划水频率复用） 2b 单位:次/分
+@property (nonatomic,assign) NSInteger              maxStepFrequency;
+///最小步频（划船机桨频\游泳划水频率复用） 2b 单位:次/分
+@property (nonatomic,assign) NSInteger              minStepFrequency;
+///最佳Swolf 2b
+@property (nonatomic,assign) NSInteger              minSwolf;
+///最差Swolf 2b
+@property (nonatomic,assign) NSInteger              maxSwolf;
+///平均心率值 1b
+@property (nonatomic,assign) NSInteger              HrAbsAvgPeak;
 
 //不涉及，暂时为空
 @property (nonatomic,strong) NSMutableArray<UTEModeSportRecordSummaryRelation*> *motionRelationList;
@@ -1524,7 +1888,7 @@
  */
 @interface UTEModeSportRecordDetailList : NSObject
 
-///配速，单位：分米/秒 Pacing speed, in decimeters per second
+///配速(根据标识新项目运动为羽毛球时是挥击速度)，单位：分米/秒 Pacing speed, in decimeters per second
 @property (nonatomic,assign) NSInteger              speed;
 ///卡路里，单位：卡/5秒 Calories, in calories/5 seconds
 @property (nonatomic,assign) NSInteger              calorie;
@@ -1532,7 +1896,7 @@
 @property (nonatomic,assign) NSInteger              elevation;
 ///划水频率，单位：次/分钟 Swinging frequency, unit: times/minute
 @property (nonatomic,assign) NSInteger              trashFrequency;
-///步频，单位：步/5秒 Step frequency, unit: steps/5 seconds
+///步频，单位：步/分钟 Step frequency, unit: steps/minute
 @property (nonatomic,assign) NSInteger              stepFrequency;
 ///心率，单位：次/分钟 Heart rate, unit: beats per minute
 @property (nonatomic,assign) NSInteger              heartRate;
@@ -1550,6 +1914,9 @@
 @property (nonatomic,assign) NSInteger              runningPosture;
 ///配速 s/km（新增2023/10/10），单位：s/km Pace, unit: s/km
 @property (nonatomic,assign) NSInteger              pace;
+///距离，当前点总距离 单位：米
+@property (nonatomic,assign) NSInteger              currentDistance;
+
 @end
 /*!
  *  UTEModeSportRecordDetail
@@ -1758,7 +2125,7 @@
 @interface UTEModeRecordDetailParam : NSObject
 ///单次运动记录ID
 @property (nonatomic,assign) NSInteger      ID;
-///单次运动索引
+///单次运动索引 根据条数循环调用到0同步完成一个完整运动 如果需要用到currentDistance必须从0开始
 @property (nonatomic,assign) NSInteger      index;
 ///是否请求新算法的步频数据 默认为0
 @property (nonatomic,assign) NSInteger      newAlgorithm;
@@ -1810,7 +2177,7 @@
 
 @end
 
-@interface UTEModelContactInfo : NSObject
+@interface UTEModelContactCommon : NSObject
 ///姓名 full name
 @property (nonatomic,copy  ) NSString      *name;
 ///电话号码 phone number
@@ -1845,6 +2212,17 @@
 @end
 
 /*!
+ *  UTEModelANCSAPPInfo
+ */
+@interface UTEModelANCSAPPInfo : NSObject
+///查看枚举
+@property (nonatomic,assign) UTEApp                app;
+///获取状态目前没有不支持返回。 是否开启 0：关闭，1：开启 0：close ,1:open
+@property (nonatomic,assign) NSInteger               enable;
+
+@end
+
+/*!
  *  UTEModelBaseInfo
  */
 @interface UTEModelBaseInfo : NSObject
@@ -1872,9 +2250,15 @@
  */
 @property (nonatomic,assign) BOOL          forceUpdate;
 /**
- *  e.g. @"MH03BV000133"
+ *  e.g. @"MH03BV000133"  特殊用途
  */
 @property (nonatomic,copy  ) NSString      *version;
+
+/**
+ *  e.g. @"MH03BV000133" 常规用途显示版本号
+ */
+@property (nonatomic,copy  ) NSString      *versionNew;
+
 /**
  *  Description. Language follows mobile phone system language
  */
@@ -1960,4 +2344,628 @@
 /// 重力加速度Y
 @property (nonatomic,assign) NSInteger                 Y_Move_Distance;
 
+@end
+
+/*!
+ *  UTEModelTwoWaySet
+ */
+@interface UTEModelTwoWaySet : NSObject
+///支持双向心率定时测量时间间隔 Support bidirectional heart rate timed measurement time interval
+@property (nonatomic,assign) BOOL          isSupport1HRMTimeinterval;
+///支持双向血氧定时测量时间间隔 Support bidirectional blood oxygen timing measurement time interval
+@property (nonatomic,assign) BOOL          isSupport2BloodOxygenTimeinterval;
+///支持双向压力定时测量时间间隔 Support bidirectional pressure timed measurement time interval
+@property (nonatomic,assign) BOOL          isSupport3PressureTimeinterval;
+///支持双向情绪定时测量时间间隔 Support bidirectional emotional timed measurement time interval
+@property (nonatomic,assign) BOOL          isSupport4MoodTimeinterval;
+///支持双向血压定时测量时间间隔 Support bidirectional blood pressure timed measurement time interval
+@property (nonatomic,assign) BOOL          isSupport5BloodTimeinterval;
+///支持双向心率连续（自动）测量开关 Supports bidirectional continuous (automatic) heart rate measurement switch
+@property (nonatomic,assign) BOOL          isSupport6HRMSwitch;
+///支持双向血氧自动测量开关 Supports bidirectional blood oxygen automatic measurement switch
+@property (nonatomic,assign) BOOL          isSupport7BloodOxygenSwitch;
+///支持双向压力自动测量开关 Support bidirectional pressure automatic measurement switch
+@property (nonatomic,assign) BOOL          isSupport8PressureSwitch;
+///支持双向情绪自动测量开关 Support bidirectional emotion automatic measurement switch
+@property (nonatomic,assign) BOOL          isSupport9MoodSwitch;
+///支持双向血压自动测量开关 Supports bidirectional blood pressure automatic measurement switch
+@property (nonatomic,assign) BOOL          isSupport10BloodSwitch;
+///支持双向心率升高预警值设置 Support setting of bidirectional heart rate increase warning values
+@property (nonatomic,assign) BOOL          isSupport11HRMRiseValue;
+///支持双向心率降低预警值设置 Support setting of bidirectional heart rate reduction warning values
+@property (nonatomic,assign) BOOL          isSupport12HRMDownValue;
+///支持双向血氧低预警值设置 Support setting of bidirectional low blood oxygen warning values
+@property (nonatomic,assign) BOOL          isSupport13BloodOxygenDownValue;
+///支持双向抬腕亮屏设置 Supports bidirectional wrist lifting and screen lighting settings
+@property (nonatomic,assign) BOOL          isSupport14LightUpScreen;
+///支持双向勿扰模式开关&时间段设置 Supports bidirectional undisturbed mode switch and time period setting
+@property (nonatomic,assign) BOOL          isSupport15DoNotDisturbSwitchTime;
+///支持双向亮屏时长设置 Support bidirectional bright screen duration setting
+@property (nonatomic,assign) BOOL          isSupport16ScreenDuration;
+///支持双向语言设置 Supports bidirectional language settings
+@property (nonatomic,assign) BOOL          isSupport17language;
+///支持双向密码设置 Supports device Password
+@property (nonatomic,assign) BOOL          isSupport18Password;
+///支持双向屏幕设置 Supports Screen settings
+@property (nonatomic,assign) BOOL          isSupport19Screen;
+///支持双向运动识别设置 Supports Motion Recognition
+@property (nonatomic,assign) BOOL          isSupport20MotionRecognition;
+///支持双向声音与震动设置 Supports Sound and Vibration
+@property (nonatomic,assign) BOOL          isSupport21SoundVibration;
+
+@end
+
+/*!
+ *  UTEModelWaterClock
+ */
+@interface UTEModelWaterClock : NSObject
+///开关状态 1：开 0：关 Switch status 1: On 0: Off
+@property (nonatomic, assign) NSInteger         status;
+///开始的小时 Starting hour
+@property (nonatomic, assign) NSInteger         startHH;
+///开始的分钟 Starting minutes
+@property (nonatomic, assign) NSInteger         startMM;
+///结束的小时 End hour
+@property (nonatomic, assign) NSInteger         endHH;
+///结束的分钟 Ending minutes
+@property (nonatomic, assign) NSInteger         endMM;
+///周期 单位：分钟 Cycle unit: minutes
+@property (nonatomic, assign) NSInteger         cycle;
+
+@end
+
+/*!
+ *  UTEModelWaterDoNotDisturb
+ */
+@interface UTEModelWaterDoNotDisturb : NSObject
+///开关状态 1：开 0：关 Switch status 1: On 0: Off
+@property (nonatomic, assign) NSInteger         status;
+///开始的小时 Starting hour
+@property (nonatomic, assign) NSInteger         startHH;
+///开始的分钟 Starting minutes
+@property (nonatomic, assign) NSInteger         startMM;
+///结束的小时 End hour
+@property (nonatomic, assign) NSInteger         endHH;
+///结束的分钟 Ending minutes
+@property (nonatomic, assign) NSInteger         endMM;
+
+@end
+
+@interface UTEUploadStatusModel : NSObject
+
+@property(nonatomic, copy) NSString *appkey;
+@property(nonatomic, copy) NSString *btname;
+@property(nonatomic, copy) NSString *package;
+@property(nonatomic, copy) NSString *type;
+@property(nonatomic, copy) NSString *versionBefore;
+@property(nonatomic, copy) NSString *versionAfter;
+@property(nonatomic, copy) NSString *mac;
+@property(nonatomic, copy) NSString *status;
+@property(nonatomic, copy) NSString *time;
+@property(nonatomic, copy) NSString *binUrl;
+@property(nonatomic, copy) NSString *downloadBinStatus;
+@property(nonatomic, copy) NSString *language;
+@property(nonatomic, copy) NSString *note;
+@property(nonatomic, copy) NSString *isocode;
+
+@end
+
+@interface UTEServiceAGPSPostModel : NSObject
+
+/** 必须 */
+@property(nonatomic, copy) NSString      *appkey;
+/** 必须 项目名 比如AT345 */
+@property(nonatomic, copy) NSString      *btname;
+/** 必须 APP包名 */
+@property (nonatomic,copy) NSString      *package;
+/** 如果不填接口默认获取 国家简写*/
+@property (nonatomic,copy) NSString      *country;
+/** 如果不填接口默认获取判断 指定需要那种定位，一般使用1、5、6 ，国内建议使用6，获取多个使用逗号隔开*/
+@property (nonatomic,copy) NSString      *constellation;
+/** 必须 agps平台 2洛达 3芯与物 通过接口sendAGPSInfoBlock 获取version*/
+@property (nonatomic,copy) NSString      *gpsPlatform;
+
+@end
+
+@interface UTEPathNavigationInfoModel : NSObject
+
+///最大路径条数
+@property(nonatomic, assign) NSInteger      maxPathCount;
+///每条路径数据点数
+@property(nonatomic, assign) NSInteger       pathCoordinateCount;
+///已同步路径条数
+@property (nonatomic,assign) NSInteger       syncPathCount;
+
+@end
+
+@interface UTEPathNavigationModel : NSObject
+
+///开始时间戳 单位：秒
+@property(nonatomic, assign) NSInteger      startTime;
+///距离 单位：米
+@property(nonatomic, assign) NSInteger      distance;
+///记录名 utf-8 最大128byte
+@property (nonatomic,copy) NSString         *noteName;
+///坐标点 WGS84 [纬度值,经度值] 小数点后精度保留 7 位 @[@[@"20.1234567",@"123.1234567"],@[@"20.1234567",@"123.1234567"]]
+@property(nonatomic, copy) NSArray          *coordinateArray;
+
+
+@end
+
+/*!
+ *  UTEModelDevicePassword
+ */
+@interface UTEModelDevicePassword : NSObject
+///开关状态 1：开 0：关 Switch status 1: On 0: Off
+@property (nonatomic, assign) NSInteger         status;
+///密码 password
+@property (nonatomic,copy) NSString             *password;
+
+
+@end
+
+/*!
+ *  UTEModelScreenFunction
+ */
+@interface UTEModelScreenFunction : NSObject
+///类型 1：设备屏幕亮度 2:设备自动亮度开关 3：设备支持亮度列表 4：设备触摸亮屏开关 5：设备覆盖熄屏开关
+@property (nonatomic, assign) NSInteger         type;
+/**数值 类型对应值1：范围[0,25,50,75,100] 获取支持亮度列表得到 2：1开0关 3：@"0,25,50,75,100" 4：1开0关 5：1开0关
+ 类型3仅用于获取亮度列表返回，设置无效
+ */
+@property (nonatomic,copy) NSString             *value;
+
+
+@end
+
+/*!
+ *  UTEModelSoundVibration
+ */
+@interface UTEModelSoundVibration : NSObject
+///类型 1：设备媒体音频开关 2:设备静音模式开关 3：设备铃声音量大小
+@property (nonatomic, assign) NSInteger         type;
+///数值 类型对应值1：1开0关 2：1开0关 3：子类型1：来电和闹钟默认音量[0-15] 2：来电音量[0-15] 3：闹钟音量[0-15] 例子@"1,15;2,0;3,0"代表来电和闹钟默认铃声音量15,用;号分割
+@property (nonatomic,copy) NSString             *value;
+
+
+@end
+
+/*!
+ *  UTEModelOfflineMapInfo
+ */
+@interface UTEModelOfflineMapInfo : NSObject
+///大小
+@property (nonatomic,assign) NSInteger              size;
+///目录名
+@property (nonatomic,copy) NSString               *fileName;
+
+
+@end
+
+/*!
+ *  UTEModelTimeInfo
+ */
+@interface UTEModelTimeInfo : NSObject
+//since 1970
+@property (nonatomic,assign) NSInteger              time1970;
+@property (nonatomic,assign) UTEDisplayTimeType     timeFormat;
+@property (nonatomic,assign) UTEDisplayDateType     dateFormat;
+@end
+/**
+ *  UTEModelPlanInfo
+ */
+@interface UTEModelPlanInfo : NSObject
+///索引
+@property (nonatomic,assign) NSInteger               fileIndex;
+///crc
+@property (nonatomic,assign) NSInteger               crc32;
+///文件大小
+@property (nonatomic,assign) NSInteger               size;
+
+@end
+
+/*!
+ *  UTEModelCourseInfo
+ */
+@interface UTEModelCourseInfo : NSObject
+///索引
+@property (nonatomic,assign) NSInteger               fileIndex;
+///crc
+@property (nonatomic,assign) NSInteger               crc32;
+///文件大小
+@property (nonatomic,assign) NSInteger               size;
+
+@end
+
+/*!
+ *  UTECourseModel
+ */
+@interface UTECourseModel : NSObject
+
+///课程组别
+@property (nonatomic,assign) NSInteger courseIndex;
+///是否是循环组 0单纯课程, >=1 (也是循环次数)（必填）
+@property (nonatomic,assign) NSInteger courseType;
+
+
+///动作类型 名字
+@property (nonatomic,strong) NSString *ActionName;
+///动作类型 值 8热身 9训练 10休息11恢复12其他 （必填）
+@property (nonatomic,assign) NSInteger ActionType;
+
+///持续目标 名字
+@property (nonatomic,strong) NSString *SustainName;
+///持续目标 类型 1时间 2距离 3卡路里 0点击按键（无目标） 7层数 8个数 9趟数 （必填，对应数值也必填）
+@property (nonatomic,assign) NSInteger SustainType;
+///持续目标 时间值 单位秒
+@property (nonatomic,assign) NSInteger timeValue;
+///持续目标 距离值 单位km
+@property (nonatomic,assign) CGFloat disValue;
+///持续目标 卡路里值 单位kcal
+@property (nonatomic,assign) NSInteger kcalValue;
+///持续目标 层值
+@property (nonatomic,assign) NSInteger floorValue;
+///持续目标 个值
+@property (nonatomic,assign) NSInteger numberValue;
+///持续目标 趟值
+@property (nonatomic,assign) NSInteger countValue;
+///持续目标 单位
+@property (nonatomic,strong) NSString *SustainUnit;
+
+
+///强度目标 名字
+@property (nonatomic,strong) NSString *StrengthName;
+///强度目标 类型 1配速 3心率区间 4自定义心率 5步频 0无目标 2速度（必填，对应数值也必填）
+@property (nonatomic,assign) NSInteger StrengthType;
+///强度目标 配速 左值 单位秒/公里
+@property (nonatomic,assign) NSInteger minPaceValue;
+///强度目标 配速 右值 单位秒/公里
+@property (nonatomic,assign) NSInteger maxPaceValue;
+///强度目标 速度 左值 单位公里/小时
+@property (nonatomic,assign) NSInteger minSpeedValue;
+///强度目标 速度 右值 单位公里/小时
+@property (nonatomic,assign) NSInteger maxSpeedValue;
+///强度目标 自定义心率 左值 bpm
+@property (nonatomic,assign) NSInteger minCustomValue;
+///强度目标 自定义心率 右值 bpm
+@property (nonatomic,assign) NSInteger maxCustomValue;
+///强度目标 步频 左值 步/分钟
+@property (nonatomic,assign) NSInteger minStepValue;
+///强度目标 步频 右值 步/分钟
+@property (nonatomic,assign) NSInteger maxStepValue;
+///强度目标 心率区间 0热身 1燃脂 2有氧耐力 3无氧耐力 4极限
+@property (nonatomic,assign) NSInteger heartValue;
+///强度目标 单位
+@property (nonatomic,strong) NSString *StrengthUnit;
+
+@end
+
+/*!
+ *  UTECourseListModel
+ */
+@interface UTECourseListModel : NSObject
+
+///保存时间（仅app使用当前时区时间戳）
+@property (nonatomic,strong) NSString *time;
+///保存时间（0时区utc时间戳,用来匹配固件数据）
+@property (nonatomic,assign) NSInteger utcTime;
+///课程索引（用不到）
+@property (nonatomic,assign) NSInteger planIndex;
+///课程名
+@property (nonatomic,strong) NSString *courseName;
+///副标题
+@property (nonatomic,strong) NSString *noteName;
+///课程类型 （运动类型）（必填）
+@property (nonatomic,assign) NSInteger type;
+///课程动作数量 （必填）
+@property (nonatomic,assign) NSInteger count;
+
+///保存课程 UTECourseModel (循环组数，单独动作也是一个循环组) （必填）
+@property (nonatomic,strong) NSMutableArray <NSMutableArray<UTECourseModel *>*>*courseArray;
+
+@end
+
+/*!
+ *  UTEPlanDayModel
+ */
+@interface UTEPlanDayModel : NSObject
+
+///计划的某天yyyy/MM/dd （必填）
+@property (nonatomic,strong) NSString *date;
+
+///星期几 全称
+//@property (nonatomic,strong) NSString *weekDay;
+
+///星期几 type
+//@property (nonatomic,assign) NSInteger weekDayType;
+
+///某天有什么课程 UTECourseListModel （必填）
+@property (nonatomic,strong) NSMutableArray<UTECourseListModel*>*courseArray;
+
+@end
+
+/*!
+ *  UTEPlanListModel
+ */
+/**保存到数据最终的计划模型*/
+@interface UTEPlanListModel : NSObject
+
+///计划存储
+@property (nonatomic,strong) NSString *time;
+
+///计划索引 预留
+@property (nonatomic,assign) NSInteger planIndex;
+
+///同步设备名 未同步不赋值 终止计划清除
+@property (nonatomic,strong) NSString *syncDeviceName;
+
+///计划开始日期（必填）yyyy/MM/dd
+@property (nonatomic,strong) NSString *startDate;
+
+///计划结束日期（必填）yyyy/MM/dd
+@property (nonatomic,strong) NSString *endDate;
+
+///计划名称（必填）
+@property (nonatomic,strong) NSString *planName;
+
+///计划备注
+@property (nonatomic,strong) NSString *planNote;
+
+///计划周数（必填）
+@property (nonatomic,assign) NSInteger weekCount;
+
+///存在数据的日期yyyy/MM/dd
+@property (nonatomic,strong) NSMutableArray *existArray;
+
+///存时间段所有天数模型数组 UTEPlanDayModel （必填）
+@property (nonatomic,strong) NSMutableArray <UTEPlanDayModel *>*allDayModelArray;
+
+///共有几天（必填）
+@property (nonatomic,assign) NSInteger dayCount;
+///所有天的课程数量（必填）
+@property (nonatomic,assign) NSInteger courseCount;
+@end
+
+/*!
+ *  UTEModelPlanDayModel 仅解析时临时用
+ */
+@interface UTEModelPlanDayModel : NSObject
+
+///计划的某天yyyy/MM/dd
+@property (nonatomic,strong) NSString *date;
+@property (nonatomic,assign) NSInteger uteTime;
+///课程数据偏移值
+@property (nonatomic,assign) NSInteger courseIndex;
+
+///运动类型
+@property (nonatomic,assign) NSInteger sportType;
+
+///某天有什么课程 UTECourseListModel
+//@property (nonatomic,strong) NSMutableArray<UTECourseListModel*>*courseArray;
+
+
+@end
+
+@interface UTEModelDeviceExtraInfo : NSObject
+
+@property (nonatomic,copy) NSData           *address;
+//e.g. @"aabbcc112233"
+@property (nonatomic,copy) NSString         *addressStr;
+@property (nonatomic,copy) NSString         *certifiedModel;
+@property (nonatomic,copy) NSString         *glassesSN;
+@property (nonatomic,copy) NSString         *glassesID;
+@property (nonatomic,copy) NSString         *glassesSoftwareVer;
+@property (nonatomic,copy) NSString         *earphoneVer;
+@property (nonatomic,copy) NSString         *earphoneSoftwareVer;
+@property (nonatomic,copy) NSString         *earphoneSN;
+@property (nonatomic,copy) NSString         *hardwareVer;
+@property (nonatomic,copy) NSString         *deviceVer;
+@property (nonatomic,assign) UTERegionType  regionOTA;
+@property (nonatomic,assign) NSInteger      battery;
+
+@end
+
+@interface UTEModelStorageInfo : NSObject
+
+@property (nonatomic,assign) UTEStorageType     type;
+@property (nonatomic,assign) NSInteger          count;
+
+@end
+
+@interface UTEModelGlassesInfo : NSObject
+
+@property (nonatomic,assign) UTEGlassesStatus               status;
+@property (nonatomic,assign) UTEDirectionType               direction;
+@property (nonatomic,assign) NSInteger                      videoDuration;
+@property(nonatomic, strong) NSArray<UTEModelStorageInfo *> *storageInfos;
+
+@end
+
+@interface UTEModelEarphoneInfo : NSObject
+
+@property (nonatomic,assign) UTEAudioType              audioType;
+@property (nonatomic,assign) UTELedLevel               ledLevel;
+
+
+@end
+
+/*!
+ *  UTEModelAffirs 事务模型
+ */
+@interface UTEModelAffirs : NSObject
+///当前索引 0<index<=255
+@property (nonatomic,assign) NSInteger              index;
+
+///开关 1开启 2关闭  1:on 2:off
+@property (nonatomic,assign) NSInteger              enable;
+///范围0 ~ 23 Range 0~23
+@property (nonatomic,assign) NSInteger              timeHour;
+///范围0 ~ 59 Range0~59
+@property (nonatomic,assign) NSInteger              timeMin;
+/*周期 cycle
+循环说明：Loop description:
+/// 0：不循环，仅执行一次 0: No loop, only execute once
+ 某些天循环相加即可
+ 如周一和周二循环相加0x02+0x04 = 0x06
+*/
+@property (nonatomic,assign) UTEWeekType            cycle;
+///标签 name 
+@property (nonatomic,copy  ) NSString               *name;
+
+@end
+
+/*!
+ *  UTEModelElectronicCard 电子卡包model
+ */
+@interface UTEModelElectronicCard : NSObject
+///标签 name 名称不能太长建议20个中英文限制
+@property (nonatomic,copy  ) NSString               *name;
+
+///二维码数据
+@property (nonatomic,copy  ) NSString               *QRCodeInfo;
+
+@end
+
+/**
+ *  UTEModelFilesDirectoryInfo
+ */
+@interface UTEModelFilesDirectoryInfo : NSObject
+///是否是文件 1文件0目录
+@property (nonatomic,assign) NSInteger               type;
+///文件或者目录名
+@property (nonatomic,copy) NSString                  *name;
+///文件大小，如果是目录为0
+@property (nonatomic,assign) NSInteger               size;
+
+@end
+
+/**
+ *  UTEModelFileInfo
+ */
+@interface UTEModelFileInfo : NSObject
+///状态 0查询成功1文件不存在2其他错误(文件系统错误)3参数错误
+@property (nonatomic,assign) NSInteger               state;
+///文件大小 查询成功有才值
+@property (nonatomic,assign) NSInteger               size;
+///crc
+@property (nonatomic,assign) NSInteger               crc32;
+@end
+
+@interface UTEModelFileItem : NSObject
+///文件数量
+@property (nonatomic,assign) NSInteger               fileCount;
+///总文件大小
+@property (nonatomic,assign) NSInteger               totalSize;
+
+@end
+
+@interface UTEModelFileTransferInfo : NSObject
+///设置到设备文件路径 NSString *pathStr = [NSString stringWithFormat:@"D:/music/%@.mp3",model.fileName];
+@property (nonatomic,copy) NSString               *toBleFilePath;
+///获取app文件路径 [NSData dataWithContentsOfFile:model.filePath]
+@property (nonatomic,copy) NSString               *getFilePath;
+
+@end
+
+@interface UTEModelMusicList : NSObject
+///歌单内容(不需要后缀)  @[@"歌曲名0",@"歌曲名1"]
+@property (nonatomic,copy) NSArray                   *listArray;
+
+/// 设置到设备文件路径(在准备发送接口才传,如果上传的话没有数据)
+@property (nonatomic,copy) NSString               *toBleFilePath;
+
+@end
+
+@interface UTEModelFactoryFuntion : NSObject
+///是否支持心率漏光
+@property (nonatomic,assign) BOOL               isSupportHeartRateLeakage;
+///是否支持屏幕常亮测试
+@property (nonatomic,assign) BOOL               isSupportScreenIlluminationTest;
+///是否支持蓝牙音频测试功能
+@property (nonatomic,assign) BOOL               isSupportBluetoothAudioTesting;
+///是否支持RF射频测试功能
+@property (nonatomic,assign) BOOL               isSupportRFTesting;
+///是否支持修改蓝牙地址功能
+@property (nonatomic,assign) BOOL               isSupportModifyBluetooth;
+///是否支持按键测试
+@property (nonatomic,assign) BOOL               isSupportKeyTest;
+///是否支持屏幕RGB测试
+@property (nonatomic,assign) BOOL               isSupportScreenRGBTest;
+///是否支持TP触摸测试
+@property (nonatomic,assign) BOOL               isSupportTPTouchTest;
+///是否支持g-sensor测试
+@property (nonatomic,assign) BOOL               isSupportG_sensorTest;
+///是否支持陀螺仪测试
+@property (nonatomic,assign) BOOL               isSupportGyroscopeTest;
+///是否支持地磁测试
+@property (nonatomic,assign) BOOL               isSupportGeomagnetismTest;
+///是否支持支付宝加密IC测试
+@property (nonatomic,assign) BOOL               isSupportAlipayEncryptionICTest;
+///是否支持GPS测试
+@property (nonatomic,assign) BOOL               isSupportGPSTest;
+///是否支持NFC测试
+@property (nonatomic,assign) BOOL               isSupportNFCTest;
+///是否支持PSRAM测试
+@property (nonatomic,assign) BOOL               isSupportPSRAMTest;
+///是否支持咪头和喇叭测试
+@property (nonatomic,assign) BOOL               isSupportMicHeadAndHornTest;
+///是否支持马达开关测试
+@property (nonatomic,assign) BOOL               isSupportMotorSwitchTest;
+///是否支持Gsensor测试
+@property (nonatomic,assign) BOOL               isSupportGsensorTest;
+///是否支持体温采样测试
+@property (nonatomic,assign) BOOL               isSupportBodyTemperatureTest;
+///是否支持充电状态测试
+@property (nonatomic,assign) BOOL               isSupportChargeTest;
+///是否支持PCBA模式TP快速测试
+@property (nonatomic,assign) BOOL               isSupportTPFastTest;
+///是否支持代表无屏手表工厂测试(活体和漏光、红外,船运)
+@property (nonatomic,assign) BOOL               isSupportScreenlessWtchTest;
+///是否支持LED灯测试
+@property (nonatomic,assign) BOOL               isSupportLEDTest;
+///是否支持心率测试
+@property (nonatomic,assign) BOOL               isSupportHeartRateTest;
+///是否支持血氧测试
+@property (nonatomic,assign) BOOL               isSupportBloodOxygenTest;
+
+
+
+@end
+
+
+@interface UTEModelRYBodyTemperature : NSObject
+///自动测试开关
+@property (nonatomic,assign) BOOL                 AutoTest;
+///测试间隔时间 单位：分钟
+@property (nonatomic,assign) NSInteger            interval;
+///时间段自动测试开关
+@property (nonatomic,assign) BOOL                 timePeriodAutoTest;
+///开始时间 单位：分钟
+@property (nonatomic,assign) NSInteger            startTime;
+///结束时间 单位：分钟
+@property (nonatomic,assign) NSInteger            endTime;
+///过高过低提醒开关
+@property (nonatomic,assign) BOOL                 reminderSwitch;
+///过低值 如35.20 *100转换成3520
+@property (nonatomic,assign) NSInteger            lowValue;
+///过高值 如35.20 *100转换成3520
+@property (nonatomic,assign) NSInteger            highValue;
+
+@end
+
+@interface UTEModelRYBodyTemperatureValue : NSObject
+///时间戳
+@property (nonatomic,assign) NSInteger            time;
+///体温
+@property (nonatomic,assign) NSInteger            Value;
+
+@end
+
+@interface UTEModelBatteryInfo : NSObject
+///充电状态 0：未充电 1：充电 2：充满 Charging status 0: Not charged 1: Charged 2: Fully charged
+@property (nonatomic,assign) NSInteger            state;
+///电量 power level
+@property (nonatomic,assign) NSInteger            value;
+///低电提醒 Low battery alert
+@property (nonatomic,assign) NSInteger            lowBattery;
 @end

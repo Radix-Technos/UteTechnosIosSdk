@@ -15,7 +15,8 @@
 #import "UTEDeviceMgr.h"
 #import "RYUTELogTool.h"
 #import "UTEDeviceError.h"
-
+#import "UTEAiOfflineVoice.h"
+#import "RYUTEServerDataTool.h"
 
 typedef void (^uteDevicesStatusBlock)(UTEDevicesStatus status,NSError *error, NSDictionary *info);
 typedef void (^uteBluetoothStatusBlock)(UTEBluetoothStatus status);
@@ -27,7 +28,7 @@ typedef void (^syncOrderBlock)(BOOL ok);
 @property (nonatomic,strong,readonly) RYUTELogTool           *mgrLog;
 @property (nonatomic,strong,readonly) UTEOTAMgr              *mgrOTA;
 @property (nonatomic,strong,readonly) UTEDeviceMgr           *mgrDevice;
-
+@property (nonatomic,strong,readonly) UTEAiOfflineVoice      *mgrAiOfflineVoice;
 /**
  *  Scan devices repeatedly, default NO.
  *  Note:If yes,the signal value of the device is updated in real time during the scanning process.
@@ -48,11 +49,15 @@ typedef void (^syncOrderBlock)(BOOL ok);
  *  (Lightblue has key value Service UUIDs in Adverisement Data)
  */
 @property (nonatomic,strong) NSArray       *filerServersArray;
+/**
+ *  The status is Scanning
+ */
+@property (nonatomic,assign,readonly) BOOL          isScanning;
 
 @property (nonatomic,assign) BOOL                   isOpenBluetooth;
 @property (nonatomic,assign) UTEBluetoothStatus     bluetoothStatus;
 @property (nonatomic,assign) BOOL                   ancsAuthorized;
-
+@property (nonatomic,assign) UTEDevicesStatus       connectStatus;
 /**
  *  Delegate
  */
@@ -75,6 +80,8 @@ typedef void (^syncOrderBlock)(BOOL ok);
 @property(nonatomic, copy  ) syncOrderBlock syncOrderBlock;
 
 @property (nonatomic,assign) BOOL                    isFactoryMode;
+
+@property (nonatomic,strong) NSString *SERVICE_UUID;
 
 /**
  *  @return UTEBluetoothMgr
@@ -140,7 +147,7 @@ typedef void (^syncOrderBlock)(BOOL ok);
  */
 - (void)readDeviceRSSI:(void(^)(NSInteger rssi))result;
 /**
- *  @discussion return e.g. @" 1.0.27"
+ *  @discussion return e.g. @"1.0.27"
  */
 - (NSString *)sdkVersion;
 
@@ -156,8 +163,13 @@ typedef void (^syncOrderBlock)(BOOL ok);
 ///同步机制
 - (void)syncOrder:(void(^)(BOOL ok))block;
 
+///支付宝乘车码相关
+- (void)setMtu:(NSInteger)mtu;
+- (NSUInteger)getMtuForType:(CBCharacteristicWriteType)type;
+
 #pragma mark - Tool
 + (NSData *)strToData:(NSString *)hexString;
 + (NSString *)dataToStr:(NSData *)data;
+
 
 @end
