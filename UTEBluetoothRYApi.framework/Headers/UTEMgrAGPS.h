@@ -15,11 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) NSInteger              interval;
 ///方案版本 0:VERSION_BROADCOM 博通。1:VERSION_SONY 索尼。2:VERSION_AIROHA 洛达。3:VERSION_ICOE 芯与物  Plan version 0:VERSION_BROADCOM。1:VERSION_SONY 。2:VERSION_AIROHA 。3:VERSION_ICOE
 @property (nonatomic,assign) NSInteger               version;
-///要ble需要的文件列表，使用";"隔开 List of files required for ble, separated by ";"
+///ble需要的文件列表，使用";"隔开 List of files required for ble, separated by ";"
 @property (nonatomic,copy) NSString               *fileList;
 
 @end
 
+@class UTEServiceAGPSPostModel;
+@class UTEPathNavigationInfoModel;
+@class UTEPathNavigationModel;
 
 @interface UTEMgrAGPS : NSObject
 
@@ -46,9 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
  1: After receiving the current command, the APP issues the ephemeris file through 31.1000
  2: Query the preparation status of the ephemeris file. After receiving the current command, the APP will issue the ephemeris file status through 31.3
  
- @block errorCode
- 请求成功:100000 其他:错误码
- Request successful: 100000 Other: Error code
  */
 -(void)onNotifyAGPS:(void(^)(NSInteger status))block;
 
@@ -88,8 +88,8 @@ NS_ASSUME_NONNULL_BEGIN
  According to the number of files reported by 31.2 ble, after calling the backend interface to download and save the files to the sandbox, retrieve the sandbox path and file name again and send them to ble
  
  NSMutableArray *fileArray = [[NSMutableArray alloc] init];
- filePath：下载的AGPS文件的沙盒地址
- name:文件名
+ filePath：下载的AGPS文件的完整沙盒地址包括后缀 The complete sandbox address of the downloaded AGPS file, including the suffix
+ name:文件名 不需要后缀（如果调用31.2获取的直接用）No need for suffix (if obtained by calling 31.2, use directly)
  NSDictionary *dic = @{@"filePath":filePath,
                        @"fileName":name
  };
@@ -108,8 +108,38 @@ NS_ASSUME_NONNULL_BEGIN
      失败
      fail
  }
+ 
+ errorCode 请求成功:100000 文件为空：701
+ 
  */
 - (void)sendAGPSFileDataToBLE:(NSArray *)fileArray block:(void(^)(NSString *uuid, CGFloat process,BOOL isSuccess ,NSInteger errorCode))block;
+
+/** 从服务器获取AGPS文件地址信息
+    Retrieve AGPS file address information from the server
+ 
+    获取到url再去下载对应的文件
+    Obtain the URL and then download the corresponding file
+ 
+    UTEServiceAGPSPostModel *model = [UTEServiceAGPSPostModel new];
+    model.appkey = Default_App_key;
+    model.btname = @"AT346";
+    model.package = [[NSBundle mainBundle] bundleIdentifier];
+    model.gpsPlatform = @"2";
+ 
+ */
+- (void)getUTEServerAGPSFile:(UTEServiceAGPSPostModel *)model
+                       block:(void(^)(NSArray *array, NSError *error))block;
+
+
+/** 路径导航功能*/
+
+/**
+ 获取路径导航功能相关参数（需要支持路径导航功能hasPathNavigation）
+ */
+-(void)getPathNavigationInfoBlock:(void(^)(UTEPathNavigationInfoModel *model,NSInteger errorCode))block;
+
+///设置路径到设备（坐标点信息数据） state 1成功 2轨迹已存在
+-(void)setPathNavigationInfo:(UTEPathNavigationModel *)model Block:(void(^)(NSInteger state,NSInteger errorCode))block;
 
 @end
 

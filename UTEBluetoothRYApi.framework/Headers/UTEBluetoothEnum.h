@@ -46,6 +46,7 @@ typedef NS_ENUM(NSInteger, UTEDevicePlatformType) {
     UTEDevicePlatformTypeAC7012x,
     UTEDevicePlatformTypeATS308x,
     UTEDevicePlatformTypeATS3085S,
+    UTEDevicePlatformTypeATS3028Sigmastar,
 };
 
 typedef NS_ENUM(NSInteger, UTEDeviceDialType) {
@@ -102,6 +103,8 @@ typedef NS_ENUM(NSInteger, UTEDevicesStatus) {
                                             //if error=14 or 15,Please ignore the device in the system Bluetooth interface.
     ///连接超时 Connection Timed out
     UTEDevicesStatusConnectionTimedout,
+    UTEDevicesStatusConnecting,
+    UTEDevicesStatusDisconnecting,
 //    UTEDevicesStatusSyncBegin,
 //    UTEDevicesStatusSyncSuccess,
 //    UTEDevicesStatusSyncError,
@@ -152,115 +155,115 @@ typedef NS_ENUM(NSInteger, UTEFindWearStatus) {
 };
 
 /*!
- *  @enum UTEDeviceLanguage
+ *  @enum UTERYDeviceLanguage
  */
-typedef NS_ENUM(NSInteger, UTEDeviceLanguage) {
+typedef NS_ENUM(NSInteger, UTERYDeviceLanguage) {
     
-    UTEDeviceLanguageChinese    = 1,        //中文
-    UTEDeviceLanguageEnglish    = 2,        //英语
-    UTEDeviceLanguageKorean     = 3,        //韩语
-    UTEDeviceLanguageJapanese   = 4,        //日语
-    UTEDeviceLanguageGerman     = 5,        //德语
-    UTEDeviceLanguageSpanish    = 6,        //西班牙语
-    UTEDeviceLanguageFrench     = 7,        //法语
-    UTEDeviceLanguageItalian    = 8,        //意大利语
-    UTEDeviceLanguagePortuguese  = 9,       //葡萄牙语
-    UTEDeviceLanguageArabic     = 10,       //阿拉伯语
-    UTEDeviceLanguageIndia      = 11,       //印度语
-    UTEDeviceLanguageHindi      = 12,       //印地语
-    UTEDeviceLanguagePolish     = 13,       //波兰语
-    UTEDeviceLanguageRussian    = 14,       //俄语
-    UTEDeviceLanguageDutch      = 15,       //荷兰语
-    UTEDeviceLanguageTurkey     = 16,       //土耳其
-    UTEDeviceLanguageBengal     = 17,       //孟加拉语
-    UTEDeviceLanguageUrdu       = 18,       //乌尔都语
-    UTEDeviceLanguageIndonesia  = 19,       //印度尼西亚语
-    UTEDeviceLanguagePunjabi    = 20,       //旁遮普语
-    UTEDeviceLanguageThai       = 21,       //泰语
-    UTEDeviceLanguageCzech      = 22,       //捷克语
-    UTEDeviceLanguageChinese_t  = 23,       //中文繁体
-    UTEDeviceLanguageHebrew     = 24,       //希伯来语
-    UTEDeviceLanguageSlovakia   = 25,       //斯洛伐克
-    UTEDeviceLanguageHungary    = 26,       //匈牙利
-    UTEDeviceLanguageRomania    = 27,       //罗马尼亚
-    UTEDeviceLanguageBelarus    = 28,       //白俄罗斯
-    UTEDeviceLanguageEesti      = 29,       //爱沙尼亚
-    UTEDeviceLanguageAlgeria    = 30,       //阿尔及利亚
-    UTEDeviceLanguageAmharic    = 31,       //阿姆哈拉
-    UTEDeviceLanguageAzerbaijan = 32,       //阿塞拜疆
-    UTEDeviceLanguageIreland    = 33,       //爱尔兰
-    UTEDeviceLanguageOccitan    = 34,       //欧西坦语(奥克语)
-    UTEDeviceLanguageOriya      = 35,       //奥里亚语
-    UTEDeviceLanguageOromoo     = 36,       //奥罗莫语
-    UTEDeviceLanguageEuskera    = 37,       //巴斯克语
-    UTEDeviceLanguageBulgaria   = 38,       //保加利亚
-    UTEDeviceLanguageBosnia     = 39,       //波斯尼亚
-    UTEDeviceLanguagePersian    = 40,       //波斯语
-    UTEDeviceLanguagePhilippines   = 41,    //菲律宾
-    UTEDeviceLanguageKhmer      = 42,       //高棉语
-    UTEDeviceLanguageGujarat    = 43,       //古吉拉特语
-    UTEDeviceLanguageKazakhstan = 44,       //哈萨克斯坦
-    UTEDeviceLanguageAyisyen    = 45,       //海地克里奥语(海地语/克里奥耳语)
-    UTEDeviceLanguageHausa      = 46,       //豪萨语
-    UTEDeviceLanguageMontenegrin = 47,      //黑山语
-    UTEDeviceLanguageCatalunya  = 48,       //加泰罗尼亚语
-    UTEDeviceLanguageKannada    = 49,       //卡纳达语
-    UTEDeviceLanguageXhosa      = 50,       //科萨语
-    UTEDeviceLanguageHrvatska   = 51,       //克罗地亚语
-    UTEDeviceLanguageQuechua    = 52,       //克丘亚语
-    UTEDeviceLanguageKurdish    = 53,       //库尔德语
-    UTEDeviceLanguageLatin      = 54,       //拉丁语
-    UTEDeviceLanguageTzebuergesch = 55,     //卢森堡语
-    UTEDeviceLanguageKinyarwanda  = 56,     //卢旺达语
-    UTEDeviceLanguageDenmark    = 57,       //丹麦语
-    UTEDeviceLanguageRome       = 58,       //罗马语
-    UTEDeviceLanguageRomansh    = 59,       //罗曼什语
-    UTEDeviceLanguageMalagasy   = 60,       //马达加斯加
-    UTEDeviceLanguageMarathi    = 61,       //马拉地语(मराठी)
-    UTEDeviceLanguageMarathi_1  = 62,       //马拉提语
-    UTEDeviceLanguageMalayalam  = 63,       //马拉雅拉姆语
-    UTEDeviceLanguageMalaysia   = 64,       //马来西亚
-    UTEDeviceLanguageMacedonia  = 65,       //马其顿语
-    UTEDeviceLanguageMaithili   = 66,       //迈蒂利语
-    UTEDeviceLanguageGaelg      = 67,       //曼克斯(曼岛语)
-    UTEDeviceLanguageMyanmar    = 68,       //缅甸语
-    UTEDeviceLanguageNaples     = 69,       //那不勒斯语
-    UTEDeviceLanguageNepal      = 70,       //尼泊尔语
-    UTEDeviceLanguageNorge      = 71,       //挪威语
-    UTEDeviceLanguagePashto     = 72,       //普什图语
-    UTEDeviceLanguageChichewa   = 73,       //齐切瓦语
-    UTEDeviceLanguageSverige    = 74,       //瑞典
-    UTEDeviceLanguageSerbia     = 75,       //赛尔维亚语
-    UTEDeviceLanguageSinhalese  = 76,       //僧伽罗语
-    UTEDeviceLanguageSlovenski  = 77,       //斯洛文尼亚语
-    UTEDeviceLanguageKiswahili  = 78,       //斯瓦希里语
-    UTEDeviceLanguageCebu       = 79,       //宿务语
-    UTEDeviceLanguageSomali     = 80,       //索马里语
-    UTEDeviceLanguageSamoan     = 81,       //萨摩亚语
-    UTEDeviceLanguageTagalog    = 82,       //他加禄语
-    UTEDeviceLanguageTajik      = 83,       //塔吉克语
-    UTEDeviceLanguageTelangana  = 84,       //泰卢固语
-    UTEDeviceLanguageTamil      = 85,       //泰米尔语
-    UTEDeviceLanguageTigray     = 86,       //提格利尼亚语
-    UTEDeviceLanguageTurkmen    = 87,       //土库曼语
-    UTEDeviceLanguageUkraine    = 88,       //乌克兰语
-    UTEDeviceLanguageUzbekistan = 89,       //乌兹别克语
-    UTEDeviceLanguageGreek      = 90,       //希腊语
-    UTEDeviceLanguageSindhi     = 91,       //信德语
-    UTEDeviceLanguageShona      = 92,       //修纳语
-    UTEDeviceLanguageSyriac     = 93,       //叙利亚语
-    UTEDeviceLanguageIgbo       = 94,       //伊博语
-    UTEDeviceLanguageIlokano    = 95,       //伊洛卡诺语
-    UTEDeviceLanguagePending2   = 96,       //预留、待定
-    UTEDeviceLanguageYoruba     = 97,       //约鲁巴语
-    UTEDeviceLanguageFinnish    = 98,       //芬兰语
-    UTEDeviceLanguageVietnam    = 99,       //越南语
-    UTEDeviceLanguageIsiZulu    = 100,      //祖鲁语
-    UTEDeviceLanguageMongolia   = 101,      //蒙古语
-    UTEDeviceLanguageSpanisha   = 102,      //西班牙（拉丁美洲）
+    UTERYDeviceLanguageChinese    = 1,        //中文
+    UTERYDeviceLanguageEnglish    = 2,        //英语
+    UTERYDeviceLanguageKorean     = 3,        //韩语
+    UTERYDeviceLanguageJapanese   = 4,        //日语
+    UTERYDeviceLanguageGerman     = 5,        //德语
+    UTERYDeviceLanguageSpanish    = 6,        //西班牙语
+    UTERYDeviceLanguageFrench     = 7,        //法语
+    UTERYDeviceLanguageItalian    = 8,        //意大利语
+    UTERYDeviceLanguagePortuguese  = 9,       //葡萄牙语
+    UTERYDeviceLanguageArabic     = 10,       //阿拉伯语
+    UTERYDeviceLanguageIndia      = 11,       //印度语
+    UTERYDeviceLanguageHindi      = 12,       //印地语
+    UTERYDeviceLanguagePolish     = 13,       //波兰语
+    UTERYDeviceLanguageRussian    = 14,       //俄语
+    UTERYDeviceLanguageDutch      = 15,       //荷兰语
+    UTERYDeviceLanguageTurkey     = 16,       //土耳其
+    UTERYDeviceLanguageBengal     = 17,       //孟加拉语
+    UTERYDeviceLanguageUrdu       = 18,       //乌尔都语
+    UTERYDeviceLanguageIndonesia  = 19,       //印度尼西亚语
+    UTERYDeviceLanguagePunjabi    = 20,       //旁遮普语
+    UTERYDeviceLanguageThai       = 21,       //泰语
+    UTERYDeviceLanguageCzech      = 22,       //捷克语
+    UTERYDeviceLanguageChinese_t  = 23,       //中文繁体
+    UTERYDeviceLanguageHebrew     = 24,       //希伯来语
+    UTERYDeviceLanguageSlovakia   = 25,       //斯洛伐克
+    UTERYDeviceLanguageHungary    = 26,       //匈牙利
+    UTERYDeviceLanguageRomania    = 27,       //罗马尼亚
+    UTERYDeviceLanguageBelarus    = 28,       //白俄罗斯
+    UTERYDeviceLanguageEesti      = 29,       //爱沙尼亚
+    UTERYDeviceLanguageAlgeria    = 30,       //阿尔及利亚
+    UTERYDeviceLanguageAmharic    = 31,       //阿姆哈拉
+    UTERYDeviceLanguageAzerbaijan = 32,       //阿塞拜疆
+    UTERYDeviceLanguageIreland    = 33,       //爱尔兰
+    UTERYDeviceLanguageOccitan    = 34,       //欧西坦语(奥克语)
+    UTERYDeviceLanguageOriya      = 35,       //奥里亚语
+    UTERYDeviceLanguageOromoo     = 36,       //奥罗莫语
+    UTERYDeviceLanguageEuskera    = 37,       //巴斯克语
+    UTERYDeviceLanguageBulgaria   = 38,       //保加利亚
+    UTERYDeviceLanguageBosnia     = 39,       //波斯尼亚
+    UTERYDeviceLanguagePersian    = 40,       //波斯语
+    UTERYDeviceLanguagePhilippines   = 41,    //菲律宾
+    UTERYDeviceLanguageKhmer      = 42,       //高棉语
+    UTERYDeviceLanguageGujarat    = 43,       //古吉拉特语
+    UTERYDeviceLanguageKazakhstan = 44,       //哈萨克斯坦
+    UTERYDeviceLanguageAyisyen    = 45,       //海地克里奥语(海地语/克里奥耳语)
+    UTERYDeviceLanguageHausa      = 46,       //豪萨语
+    UTERYDeviceLanguageMontenegrin = 47,      //黑山语
+    UTERYDeviceLanguageCatalunya  = 48,       //加泰罗尼亚语
+    UTERYDeviceLanguageKannada    = 49,       //卡纳达语
+    UTERYDeviceLanguageXhosa      = 50,       //科萨语
+    UTERYDeviceLanguageHrvatska   = 51,       //克罗地亚语
+    UTERYDeviceLanguageQuechua    = 52,       //克丘亚语
+    UTERYDeviceLanguageKurdish    = 53,       //库尔德语
+    UTERYDeviceLanguageLatin      = 54,       //拉丁语
+    UTERYDeviceLanguageTzebuergesch = 55,     //卢森堡语
+    UTERYDeviceLanguageKinyarwanda  = 56,     //卢旺达语
+    UTERYDeviceLanguageDenmark    = 57,       //丹麦语
+    UTERYDeviceLanguageRome       = 58,       //罗马语
+    UTERYDeviceLanguageRomansh    = 59,       //罗曼什语
+    UTERYDeviceLanguageMalagasy   = 60,       //马达加斯加
+    UTERYDeviceLanguageMarathi    = 61,       //马拉地语(मराठी)
+    UTERYDeviceLanguageMarathi_1  = 62,       //马拉提语
+    UTERYDeviceLanguageMalayalam  = 63,       //马拉雅拉姆语
+    UTERYDeviceLanguageMalaysia   = 64,       //马来西亚
+    UTERYDeviceLanguageMacedonia  = 65,       //马其顿语
+    UTERYDeviceLanguageMaithili   = 66,       //迈蒂利语
+    UTERYDeviceLanguageGaelg      = 67,       //曼克斯(曼岛语)
+    UTERYDeviceLanguageMyanmar    = 68,       //缅甸语
+    UTERYDeviceLanguageNaples     = 69,       //那不勒斯语
+    UTERYDeviceLanguageNepal      = 70,       //尼泊尔语
+    UTERYDeviceLanguageNorge      = 71,       //挪威语
+    UTERYDeviceLanguagePashto     = 72,       //普什图语
+    UTERYDeviceLanguageChichewa   = 73,       //齐切瓦语
+    UTERYDeviceLanguageSverige    = 74,       //瑞典
+    UTERYDeviceLanguageSerbia     = 75,       //赛尔维亚语
+    UTERYDeviceLanguageSinhalese  = 76,       //僧伽罗语
+    UTERYDeviceLanguageSlovenski  = 77,       //斯洛文尼亚语
+    UTERYDeviceLanguageKiswahili  = 78,       //斯瓦希里语
+    UTERYDeviceLanguageCebu       = 79,       //宿务语
+    UTERYDeviceLanguageSomali     = 80,       //索马里语
+    UTERYDeviceLanguageSamoan     = 81,       //萨摩亚语
+    UTERYDeviceLanguageTagalog    = 82,       //他加禄语
+    UTERYDeviceLanguageTajik      = 83,       //塔吉克语
+    UTERYDeviceLanguageTelangana  = 84,       //泰卢固语
+    UTERYDeviceLanguageTamil      = 85,       //泰米尔语
+    UTERYDeviceLanguageTigray     = 86,       //提格利尼亚语
+    UTERYDeviceLanguageTurkmen    = 87,       //土库曼语
+    UTERYDeviceLanguageUkraine    = 88,       //乌克兰语
+    UTERYDeviceLanguageUzbekistan = 89,       //乌兹别克语
+    UTERYDeviceLanguageGreek      = 90,       //希腊语
+    UTERYDeviceLanguageSindhi     = 91,       //信德语
+    UTERYDeviceLanguageShona      = 92,       //修纳语
+    UTERYDeviceLanguageSyriac     = 93,       //叙利亚语
+    UTERYDeviceLanguageIgbo       = 94,       //伊博语
+    UTERYDeviceLanguageIlokano    = 95,       //伊洛卡诺语
+    UTERYDeviceLanguagePending2   = 96,       //预留、待定
+    UTERYDeviceLanguageYoruba     = 97,       //约鲁巴语
+    UTERYDeviceLanguageFinnish    = 98,       //芬兰语
+    UTERYDeviceLanguageVietnam    = 99,       //越南语
+    UTERYDeviceLanguageIsiZulu    = 100,      //祖鲁语
+    UTERYDeviceLanguageMongolia   = 101,      //蒙古语
+    UTERYDeviceLanguageSpanisha   = 102,      //西班牙（拉丁美洲）
     
-    UTEDeviceLanguageOther      = UTEDeviceLanguageEnglish, //other
-    UTEDeviceLanguageNone       = -1,
+    UTERYDeviceLanguageOther      = UTERYDeviceLanguageEnglish, //other
+    UTERYDeviceLanguageNone       = -1,
 };
 
 /*!
@@ -283,7 +286,8 @@ typedef NS_ENUM(NSInteger, UTEMotionType) {
  *  @enum UTEWeekType
  */
 typedef NS_ENUM(NSInteger, UTEWeekType) {
-
+    UTEWeekTypeNoLoop   = 0,
+    
     UTEWeekTypeMon      = 0x01,
     UTEWeekTypeTue      = 0x02,
     UTEWeekTypeWed      = 0x04,
@@ -658,6 +662,56 @@ typedef NS_ENUM(NSUInteger,EnumRYSDKSportType) {
     EnumRYSDKSportType178TILT=222,                       //倾斜
     EnumRYSDKSportType179WHEELCHAIR_MOBILITY=223,        //轮椅移动
     
+    //补充，仅338使用的枚举
+    EnumRYSDKSportType9WALKING=9,//健走
+    EnumRYSDKSportType18SPINNING=18,//动感单车
+    EnumRYSDKSportType20SIT_UP=20,//仰卧起坐
+    EnumRYSDKSportType24JUMPING_JACK=24,//开合跳
+    EnumRYSDKSportType27INDOOR_RUN=27,//室内跑步
+    EnumRYSDKSportType40VO2MAX_TEST=40,//最大摄氧量测试
+    EnumRYSDKSportType43HIKING=43,//徒步
+    EnumRYSDKSportType44ATHLETICS=44,//田径
+    EnumRYSDKSportType45WAIST_TRAINING=45,//腰腹训练
+    EnumRYSDKSportType47COOLDOWN=47,//整理放松
+    EnumRYSDKSportType50CROSS_FIT=50,//交叉配合
+    EnumRYSDKSportType54FLEXIBILITY=54,//柔韧度
+    EnumRYSDKSportType55MIXED_CARDIO=55,//混合有氧
+    EnumRYSDKSportType60AUSTRALIAN_FOOTBALL=60,//澳式足球
+    EnumRYSDKSportType70AMERICAN_FOOTBALL=70,//美式橄榄球
+    EnumRYSDKSportType71HAND_CYCLING=71,//手摇车
+    EnumRYSDKSportType74RUGGER=74,//橄榄球
+    EnumRYSDKSportType75GOLF=75,//高尔夫
+    EnumRYSDKSportType76FOLK_DANCE=76,//民族舞
+    EnumRYSDKSportType77DOWNHILL_SKIING=77,//高山滑雪
+    EnumRYSDKSportType79MIND_BODY=79,//舒缓冥想类运动
+    EnumRYSDKSportType86LACROSSE=86,//长曲棍球
+    EnumRYSDKSportType87ROLLING=87,//泡沫轴筋膜放松
+    EnumRYSDKSportType98SHOOTING=98,//射击
+    EnumRYSDKSportType99JUDO=99,//柔道
+    EnumRYSDKSportType100TRAMPOLINE=100,//蹦床
+    EnumRYSDKSportType102HOVERBOARD=102,//平衡车
+    EnumRYSDKSportType103BLADING=103,//溜旱冰
+    EnumRYSDKSportType107SNORKELING=107,//浮潜
+    EnumRYSDKSportType108PULL_UP=108,//引体向上
+    EnumRYSDKSportType109PUSH_UP=109,//俯卧撑
+    EnumRYSDKSportType110PLANKING=110,//平板支撑
+    EnumRYSDKSportType112HIGHTJUMP=112,//跳高
+    EnumRYSDKSportType114LONGJUMP=114,//跳远
+    EnumRYSDKSportType115MARATHON=115,//马拉松
+    //以下是目前所没有的运动类型
+    EnumRYSDKSportType116FLEXIBILITY_TRAINING=116,//灵活性训练116
+    EnumRYSDKSportType117SIDEPLANK=117,//侧板118
+    EnumRYSDKSportType129ENDURANCE_RUN=129,//耐力跑
+    EnumRYSDKSportType130FAT_BURN_RUN=130,//燃脂跑
+    EnumRYSDKSportType133GOLF_DRIVING_RANGE_MODE=133,//高尔夫练习场模式
+    EnumRYSDKSportType137KAYAKING=137,//皮划艇
+    EnumRYSDKSportType138KICK_BOXING=138,//搏击操
+    EnumRYSDKSportType139MOTOR_BOAT=139,//摩托艇
+    EnumRYSDKSportType152FITNESS=152,//健身
+    
+    //p10项目
+    EnumRYSDKSportType228DUMBBELL=228,//哑铃
+    EnumRYSDKSportType243TRACKRUN=243,//操场跑圈
 };
 
 /*!
@@ -753,7 +807,7 @@ typedef NS_ENUM(NSInteger, UTEApp) {
     UTEAppSMS,
     UTEAppQQ,
     UTEAppWechat,
-//    UTEAppPhone,//通过来电设置接口设置
+//    UTEAppPhone,//不使用该枚举设置来电，通过来电设置接口设置
     UTEAppFacebook,
     UTEAppTwitter,
     UTEAppWhatsApp,
@@ -850,6 +904,11 @@ typedef NS_ENUM(NSInteger, UTEApp) {
     UTEAppMicrosoft_to_do,
     UTEAppTickTick,
     UTEAppTodoist,
+    
+    UTEAppDouYin,
+    ///需要固件支持否则无效，还是属于其他提醒通知
+    UTEAppAlipay,
+    
 };
 
 /*!
@@ -860,5 +919,357 @@ typedef NS_ENUM(NSInteger, UTEModeSportRunningPostureType) {
     
 };
 
+typedef NS_ENUM(NSInteger, UTEHealthType0) {
+    UTEHealthType0Step                  = 0x01,
+    UTEHealthType0Calorie               = 0x02,
+    UTEHealthType0Distance              = 0x04,
+    UTEHealthType1RestingHeartRate      = 0x08,
+    UTEHealthType0HRMMax                = 0x10,
+    UTEHealthType0HRMMin                = 0x20,
+    UTEHealthType0HRMDynamic            = 0x40,
+};
+
+typedef NS_ENUM(NSInteger, UTEHealthType1) {
+    UTEHealthType1BloodOxygen           = 0x01,
+    UTEHealthType1RestingHeartRateV2    = 0x02,
+    UTEHealthType1Height                = 0x04,
+    UTEHealthType1HRMAve                = 0x08,
+    UTEHealthType1RestingHeartRateV3    = 0x10,
+};
+
+typedef NS_ENUM(NSInteger, UTEHealthType2) {
+    UTEHealthType2BloodPressure         = 0x01,
+    UTEHealthType2Mood                  = 0x02,
+
+};
+
+/*!
+ *  @enum UTEAIDialStatus
+ */
+typedef NS_ENUM(NSInteger, UTEAIDialStatus) {
+    ///进入ai表盘
+    UTEAIDialStatusEnterAIDial                 = 0x01,
+    ///开始录音
+    UTEAIDialStatusStartRecording              = 0x02,
+    ///结束录音
+    UTEAIDialStatusEndRecording                = 0x03,
+    ///退出ai表盘
+    UTEAIDialStatusExitAIDial                  = 0x04,
+    ///提醒打开APP
+    UTEAIDialStatusReminderOpenApp             = 0x05,
+    ///识别失败
+    UTEAIDialStatusIdentificationFailed        = 0x06,
+    ///识别成功
+    UTEAIDialStatusIdentificationSuccessful    = 0x07,
+    ///重新录入
+    UTEAIDialStatusReEnter                     = 0x08,
+    ///开始生成
+    UTEAIDialStatusStartGenerating             = 0x09,
+    ///app等待超时
+    UTEAIDialStatusWaitingForTimeout           = 0x0a,
+    ///AI服务器繁忙
+    UTEAIDialStatusAIServerBusy                = 0x0b,
+    ///设为表盘
+    UTEAIDialStatusSetDial                     = 0x0c,
+    ///重新生成
+    UTEAIDialStatusRegeneration                = 0x0d,
+    ///剩余次数用完（250515新增）
+    UTEAIDialStatusNoNumberTimes               = 0x0e,
+};
+
+/*!
+ *  @enum UTEChatGPTStatus
+ */
+typedef NS_ENUM(NSInteger, UTEChatGPTStatus) {
+    ///进入ChatGPT
+    UTEChatGPTStatusEnterChatGPT                 = 0x01,
+    ///开始录音
+    UTEChatGPTStatusStartRecording               = 0x02,
+    ///结束录音
+    UTEChatGPTStatusEndRecording                 = 0x03,
+    ///退出ChatGPT
+    UTEChatGPTStatusExitChatGPT                  = 0x04,
+    ///提醒打开APP
+    UTEChatGPTStatusReminderOpenApp              = 0x05,
+    ///识别失败
+    UTEChatGPTStatusIdentificationFailed         = 0x06,
+    ///识别成功
+    UTEChatGPTStatusIdentificationSuccessful     = 0x07,
+    ///确认内容
+    UTEChatGPTStatusConfirmContent               = 0x08,
+    ///开始回答
+    UTEChatGPTStatusStartAnswer                  = 0x09,
+    ///回答完成
+    UTEChatGPTStatusAnswerCompleted              = 0x0a,
+    ///APP正在回复上个问题
+    UTEChatGPTStatusAnswering                    = 0x0b,
+
+};
+
+/*!
+ *  @enum UTEChatGPTMemorandumStatus
+ */
+typedef NS_ENUM(NSInteger, UTEChatGPTMemorandumStatus) {
+    ///准备发送数据,app端发送
+    UTEChatGPTMemorandumStatusReadySending              = 0x00,
+    ///准备完成，固件返回
+    UTEChatGPTMemorandumStatusReadyComplete             = 0x01,
+    ///当前一组数据处理完成
+    UTEChatGPTMemorandumStatusCurrentDataComplete       = 0x02,
+    ///校验不通过
+    UTEChatGPTMemorandumStatusCRCError                  = 0x03,
+    
+    
+};
+
+/*!
+ *  @enum Offline Voice Control (Activate Status)
+ */
+typedef NS_ENUM(NSInteger, UTEOVControlActivateStatus) {
+    UTEOVControlActivateStatusAuthorized,
+    UTEOVControlActivateStatusServerAuthorizationFailed,
+    UTEOVControlActivateStatusUnauthorized,
+    UTEOVControlActivateStatusAuthorizationFailed,
+    UTEOVControlActivateStatusTimingAnomalies,
+};
+
 @end
 
+/*!
+ *  @enum UTEIntelligentAgentType
+ */
+typedef NS_ENUM(NSInteger, UTEIntelligentAgentType) {
+    ///默认ChatGPT
+    UTEIntelligentAgentTypeChatGPT                 = 0x00,
+    ///十万个为什么
+    UTEIntelligentAgentTypeWhys                    = 0x01,
+    ///命题小作文
+    UTEIntelligentAgentTypeProposition             = 0x02,
+    ///掌上科技馆
+    UTEIntelligentAgentTypeScience                 = 0x03,
+    ///植物学家
+    UTEIntelligentAgentTypeBotanist                = 0x04,
+    ///动物学家
+    UTEIntelligentAgentTypeZoologist               = 0x05,
+    ///历史常识
+    UTEIntelligentAgentTypeHistorical              = 0x06,
+    ///儿童百科全书
+    UTEIntelligentAgentTypeEncyclopedia            = 0x07,
+    ///英语词典
+    UTEIntelligentAgentTypeEnglishDictionary       = 0x08,
+    ///数学解题
+    UTEIntelligentAgentTypeMathematics             = 0x09,
+    ///提示词大师
+    UTEIntelligentAgentTypeCueWord                 = 0x0a,
+    ///故事大王
+    UTEIntelligentAgentTypeStoryKing               = 0x0b,
+    ///诗句编写
+    UTEIntelligentAgentTypeVerse                   = 0x0c,
+    ///写作助手
+    UTEIntelligentAgentTypeWriting                 = 0x0d,
+    ///情绪疏解
+    UTEIntelligentAgentTypeEmotional               = 0x0e,
+    ///悄悄话
+    UTEIntelligentAgentTypeWhisper                 = 0x0f,
+    ///讲笑话
+    UTEIntelligentAgentTypeTellJokes               = 0x10,
+    ///数字炸弹
+    UTEIntelligentAgentTypeDigitalBomb             = 0x11,
+    ///魔镜
+    UTEIntelligentAgentTypeMagicMirror             = 0x12,
+    ///今天吃什么
+    UTEIntelligentAgentTypeEatToday                = 0x13,
+    ///星座运势
+    UTEIntelligentAgentTypeConstellation           = 0x14,
+    ///社交技巧
+    UTEIntelligentAgentTypeSocialSkills            = 0x15,
+    ///食物热量查询
+    UTEIntelligentAgentTypeFoodCalorieInquiry      = 0x16,
+    ///MBTI性格测试
+    UTEIntelligentAgentTypeMBTI                    = 0x17,
+    ///广告狂人
+    UTEIntelligentAgentTypeMADMEN                  = 0x18,
+    ///PAS销售文案
+    UTEIntelligentAgentTypePAS                     = 0x19,
+    ///活动策划
+    UTEIntelligentAgentTypeEventPlanning           = 0x1a,
+    ///周报生成
+    UTEIntelligentAgentTypeWeeklyReport            = 0x1b,
+    ///海绵
+    UTEIntelligentAgentTypeSponge                  = 0x1c,
+    ///小鳄鱼
+    UTEIntelligentAgentTypeBabyCrocodile           = 0x1d,
+    ///抱抱熊
+    UTEIntelligentAgentTypeTeddyBear               = 0x1e,
+    ///拼写改错
+    UTEIntelligentAgentTypeSpellingCorrection      = 0x1f,
+    ///嘲讽大师
+    UTEIntelligentAgentTypeTaunt                   = 0x20,
+    ///塔罗牌大师
+    UTEIntelligentAgentTypeTarotCard               = 0x21,
+    ///说唱歌手
+    UTEIntelligentAgentTypeRAPPER                  = 0x22,
+
+
+};
+
+/*!
+ *  @enum UTEAILargeModelType
+ */
+typedef NS_ENUM(NSInteger, UTEAILargeModelType) {
+    ///不支持模型
+    UTEAILargeModelTypeEmpty                             = -1,
+    ///豆包
+    UTEAILargeModelTypeDouBao                            = 0x00,
+    ///DeepSeek
+    UTEAILargeModelTypeDeepSeek                          = 0x01,
+    ///智谱
+    UTEAILargeModelTypeZhipu                             = 0x02,
+    ///文心一言
+    UTEAILargeModelTypeERNIEBot                          = 0x03,
+    ///通义千问
+    UTEAILargeModelTypeQWen                              = 0x04,
+    ///星火
+    UTEAILargeModelTypeStarfire                          = 0x05,
+    ///Kimi
+    UTEAILargeModelTypeKimi                              = 0x06,
+};
+
+/*!
+ *  @enum UTEALICMD
+ */
+typedef NS_ENUM(NSInteger, UTEALICMD) {
+    UTEALICMDERROR                                       = -1,
+    ///01
+    UTEALICMDCONNECT                                     = 0x01,
+    ///02
+    UTEALICMDWRITEDATA                                   = 0x02,
+    ///03
+    UTEALICMDREADDATA                                    = 0x03,
+    ///04
+    UTEALICMDCLOSE                                       = 0x04,
+    
+    
+};
+
+/*!
+ *  @enum Offline Voice Control (Activate Status)
+ */
+typedef NS_ENUM(NSInteger, UTERegionType) {
+    UTERegionTypeChina               = 1,
+    UTERegionTypeEurope,
+    UTERegionTypeMideast,
+    UTERegionTypeJapanKorea,
+    UTERegionTypeTaiwanMacauHK,
+    UTERegionTypeOther,
+};
+
+/*!
+ *  @enum Device Settings Type
+ */
+typedef NS_ENUM(NSInteger, UTESystemSettingsType) {
+    ///恢复出厂设置
+    UTESystemSettingsTypeRestore       = 0x01, //Restore factory settings
+    ///关机
+    UTESystemSettingsTypeShutdown      = 0x02,
+    ///重启
+    UTESystemSettingsTypeReboot        = 0x04,
+
+};
+
+/*!
+ *  @enum Glasses Status
+ */
+typedef NS_ENUM(NSInteger, UTEGlassesStatus) {
+    ///眼镜支架已折叠
+    UTEGlassesStatusBracketFolded          = 0x01, //The bracket has been folded.
+    ///眼镜支架已打开
+    UTEGlassesStatusBracketUnfolded        = 0x02,
+    ///眼镜录像模式
+    UTEGlassesStatusVideo                  = 0x03,
+    ///眼镜拍照模式
+    UTEGlassesStatusPhoto                  = 0x04,
+    ///眼镜录音模式
+    UTEGlassesStatusRecord                 = 0x05,
+    ///眼镜正常待机模式
+    UTEGlassesStatusNormal                 = 0x06,
+    ///眼镜已佩戴
+    UTEGlassesStatusWearing                = 0x07,       //Glasses have been worn.
+    ///眼镜未佩戴
+    UTEGlassesStatusNotWearing             = 0x08,
+    ///眼镜升级中
+    UTEGlassesStatusOTA                    = 0x09,        //Glasses are being upgraded
+    
+    ///眼镜工作异常
+    UTEGlassesStatusAbnormal               = 0xff,
+};
+
+/*!
+ *  @enum Device Storage Type
+ */
+typedef NS_ENUM(NSInteger, UTEStorageType) {
+    ///存储的总图片数量
+    UTEStorageTypePhotoTotal          = 0x01, //The total number of photos
+    ///新增拍的图片数量（未同步）
+    UTEStorageTypePhotoNew            = 0x02,   //The number of new photos(Not syncing)
+    ///录音的总数量
+    UTEStorageTypeRecordingTotal      = 0x03,
+    ///新增录音的数量
+    UTEStorageTypeRecordingNew        = 0x04,
+    ///录制视频的总数
+    UTEStorageTypeVideoTotal          = 0x05,
+    ///新增录制视频的数量
+    UTEStorageTypeVideoNew            = 0x06,
+    ///存储的总内存
+    UTEStorageTypeTotalSize           = 0x07,
+    ///存储的剩余内存
+    UTEStorageTypeTotalAvailable      = 0x08,
+};
+
+/*!
+ *  @enum Device direction Type
+ */
+typedef NS_ENUM(NSInteger, UTEDirectionType) {
+    ///横屏
+    UTEDirectionTypeLandscape    = 0x01,
+    ///竖屏
+    UTEDirectionTypePortrait     = 0x02,
+
+};
+
+/*!
+ *  @enum Device Audio Type
+ */
+typedef NS_ENUM(NSInteger, UTEAudioType) {
+    ///音效标准模式
+    UTEAudioTypeNormal           = 0x01,
+    ///音效轻柔模式
+    UTEAudioTypeSoft             = 0x02,
+    ///音效增强模式
+    UTEAudioTypeStrengthen       = 0x03,
+    ///音效降噪模式
+    UTEAudioTypeNoiseReduction   = 0x04,
+    
+    ///耳机工作异常
+    UTEAudioTypeAbnormal         = 0xff,
+
+};
+
+/*!
+ *  @enum Device Led Level
+ */
+typedef NS_ENUM(NSInteger, UTELedLevel) {
+    UTELedLevelLow       = 1,
+    UTELedLevelNormal,
+    UTELedLevelHigh,
+
+};
+
+/*!
+ *  @enum PasswordType
+ */
+typedef NS_ENUM(NSInteger, UTEPasswordStatus) {
+    UTEPasswordStatusSame,      //Same as the previous account password
+    UTEPasswordStatusNoAccount, //The device did not have an account password before
+    UTEPasswordStatusDifferent, //Wrong password
+};

@@ -16,6 +16,22 @@ typedef NS_ENUM(NSInteger, UTEAbilityType) {
     UTEAbilityTypePregnancyEndBtn           = 0x10,
 };
 
+/*!
+ *  @enum UTEMenstruationType
+ *
+ *  @discussion Menstruation Cycle Type
+ *
+ */
+typedef NS_ENUM(NSInteger, UTEMenstruationType) {
+    ///安全期
+    UTEMenstruationTypeSafe,
+    ///经期
+    UTEMenstruationTypeMenstruation,
+    ///排卵/易孕期
+    UTEMenstruationTypeOvulation,
+    
+};
+
 @interface UTEModelMenstrualNotifyAbility : NSObject
 
 @property (nonatomic,assign) UTEAbilityType     abilityType;
@@ -23,15 +39,61 @@ typedef NS_ENUM(NSInteger, UTEAbilityType) {
 
 @end
 
+/*!
+ *  UTEModelMenstruationInfo
+ *  Female physiological cycle
+ */
+@interface UTEModelMenstruationInfo : NSObject
+/**
+ *  Date of the first day of the last menstrual period
+ *  e.g. @"2018-08-22"
+ */
+@property (nonatomic,copy  ) NSString       *firstTime;
+/**
+ *  Duration of menstruation. Range:3 ~ 8 (day)
+ */
+@property (nonatomic,assign) NSInteger      duration;
+/**
+ *  Menstrual cycle. Range:24 ~ 40 (day)
+ */
+@property (nonatomic,assign) NSInteger      cycle;
+
+@end
+
+
+/*!
+ *  UTEModelMenstruationCycle
+ *  Female physiological cycle
+ */
+@interface UTEModelMenstruationCycle : NSObject
+/**
+ *  Current day
+ *  e.g. @"2018-08-22"
+ */
+@property (nonatomic,copy  ) NSString               *time;
+/**
+ *  See UTEMenstruationType
+ */
+@property (nonatomic,assign) UTEMenstruationType     type;
+/**
+ *  The first day of the next menstruation
+ *  e.g. @"2018-09-18"
+ */
+@property (nonatomic,copy) NSString               *nextMenstruationTime;
+
+
+@end
+
+
 
 @interface UTEModelMenstrualData : NSObject
 ///开始时间戳
 @property (nonatomic,assign) NSInteger     menstrualStartTime;
 ///结束时间戳（开始时间+长度）
 @property (nonatomic,assign) NSInteger     menstrualEndTime;
-///易孕期开始时间戳 （经期后4天）
+///易孕期开始时间戳 （比如经期后4天）
 @property (nonatomic,assign) NSInteger     easyToPregnantStartTime;
-///易孕期结束时间戳 （共10天）
+///易孕期结束时间戳 （比如共10天）
 @property (nonatomic,assign) NSInteger     easyToPregnantEndTime;
 ///生理期周期
 @property (nonatomic,assign) NSInteger     cycleDays;
@@ -116,6 +178,7 @@ typedef NS_ENUM(NSInteger, UTEAbilityType) {
  以下是例子时间，自行修改真实设置生理周期开始时间（按开始天的00:00开始转时间戳）
  The following is an example time, modify the actual setting of the physiological cycle start time (according to the timestamp from 00:00 on the start day)
  NSTimeInterval startTimeStamp = [[NSDate date] timeIntervalSince1970];
+ NSInteger menstrualStartTime = startTimeStamp;
  
  //长度
  Menstrual length
@@ -124,8 +187,6 @@ typedef NS_ENUM(NSInteger, UTEAbilityType) {
  //周期
  Menstrual cycle
  NSInteger cycleDays = storageTool.profileModel.menstruationCycle;
- 
- NSInteger menstrualStartTime = startTimeStamp;
  
  //结束时间戳
  End timestamp
@@ -154,7 +215,7 @@ typedef NS_ENUM(NSInteger, UTEAbilityType) {
  cycleModel.futureCycleSize = cycleDays;
  cycleModel.modifyTime = modifyTime;
  cycleModel.menstrualDays = menstrualDays;
- cycleModel.cycleDays = cycleDays;
+ cycleModel.manualCycleDays = cycleDays;
  
  UTEModelMenstrualData *listModel = [UTEModelMenstrualData new];
  listModel.menstrualStartTime = menstrualStartTime;
@@ -180,5 +241,22 @@ typedef NS_ENUM(NSInteger, UTEAbilityType) {
 - (void)setMenstrualCapability:(NSInteger)capability block:(void(^)(NSInteger errorCode,NSDictionary *uteDict))block;
 ///主动让设备发通知
 - (void)getnotify:(NSInteger)dd;
+
+#pragma mark - Tool
+/**
+ *  @discussion Physiological type of each day in a cycle
+ *
+ *  @param  model See UTEModelMenstruationInfo
+ *
+ *  e.g.
+ *  model.firstTime = @"2022-10-01"
+ *  model.duration = 7
+ *  model.cycle = 28
+ *  Array returns data from No. 1 to No. 28
+ *
+ *  If the parameter is incorrect, the returned data is nil
+ */
+- (NSArray<UTEModelMenstruationCycle *> *)getPhysiologicalFemaleCycle:(UTEModelMenstruationInfo *)model;
+
 @end
 

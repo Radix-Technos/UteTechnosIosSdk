@@ -64,8 +64,9 @@ typedef NS_ENUM(NSInteger, UTEDeviceErrorType) {
     UTEDeviceErrorOTA_JLFailNotInBin        = -702, //耳机未在充电仓
     UTEDeviceErrorOTA_JLReconnectWithMacAddr= -701, //OTA需重连设备(mac方式)
     
-    
     UTEDeviceErrorOTAFail               = -700,  //升级失败了，原因要看Log
+    
+    UTEDeviceErrorParamNotStandardized  = -100, //数据不符合规范
     
     UTEDeviceErrorCommonFail            = -2,    //操作失败
     UTEDeviceErrorOTAUnknow             = -1,    //其他未知不能升级
@@ -75,6 +76,8 @@ typedef NS_ENUM(NSInteger, UTEDeviceErrorType) {
     UTEDeviceErrorFileEmpty             = 701,      //文件为空
     UTEDeviceErrorParamEmpty            = 40003,    //参数为空
     UTEDeviceErrorNil                   = 100000,   //正常（无错误）
+    
+    UTEDeviceErrorNotSupport            = -600,   //不支持功能指令
     
     UTEDeviceErrorOTALowPower           = 109002,//ota传输错误手表电量低
     UTEDeviceErrorOTAProgress           = 109019,//设备ota升级中

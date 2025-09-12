@@ -13,6 +13,17 @@
 #import "UTEAccountTool.h"
 #import "UTEMgrAGPS.h"
 #import "UTEMgrGame.h"
+#import "UTEMgrAIDial.h"
+#import "UTEMgrChatGPT.h"
+#import "UTEMgrOfflineMap.h"
+#import "UTEMgrAlipay.h"
+
+#import "UTEMgrGlassesEarphone.h"
+#import "UTEMgrWiFi.h"
+
+#import "UTEMgrPlanCourse.h"
+
+#import "UTEFileTransferMgr.h"
 
 typedef NS_ENUM(NSInteger, UTEDeviceDateType) {
     UTEDeviceDateTypeYMD  = 1,
@@ -26,6 +37,10 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
     UTEDeviceTimeType24,
 };
 
+typedef NS_ENUM(NSInteger, UTEFactoryType) {
+    UTEFactoryTypePressure,
+    UTEFactoryTypePower,
+};
 
 @interface UTEDeviceMgr : NSObject
 
@@ -36,6 +51,19 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 
 @property(nonatomic, strong, readonly) UTEMgrAGPS                *agps;
 @property(nonatomic, strong, readonly) UTEMgrGame                *game;
+
+@property(nonatomic, strong, readonly) UTEMgrAIDial                *aiDial;
+@property(nonatomic, strong, readonly) UTEMgrChatGPT               *chatGPT;
+@property(nonatomic, strong, readonly) UTEMgrOfflineMap            *offlineMap;
+@property(nonatomic, strong, readonly) UTEMgrAlipay                *alipayCode;
+
+@property(nonatomic, strong, readonly) UTEMgrGlassesEarphone       *glassesEarphone;
+@property(nonatomic, strong, readonly) UTEMgrWiFi                  *wifiMgr;
+
+@property(nonatomic, strong, readonly) UTEMgrPlanCourse            *planCourse;
+
+@property(nonatomic, strong, readonly) UTEFileTransferMgr           *fileMgr;
+
 /**
  *  @discussion KEY
  *  If there is a key, you must set it every time you turn on the App.
@@ -87,6 +115,9 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  @parma eventCode
  0:手机进入相机   1：手机打开相机   2：手机退出相机
  0: Phone enters camera 1: Phone opens camera 2: Phone exits camera
+ 
+ @discussion 当app进入相机页面 先发1再发0状态给设备
+ When the app enters the camera page, first send a 1 and then send a 0 status to the device
  
  @block errorCode
  请求成功:100000 其他:错误码
@@ -235,11 +266,28 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  电池电量百分比
  Battery level percentage
  
+ @discussion uteDict
+ 新增低电提醒 lowBattery 1是低电量提醒
+ Add low battery reminder
+ 
  @block errorCode
  请求成功:100000 其他:错误码
  Request successful: 100000 Other: Error code
  */
 - (void)getBatteryInfo:(void(^)(NSInteger percent,NSInteger errorCode ,NSDictionary *uteDict))block;
+
+/**1.8-1 获取电池电量百分比
+ Obtain battery level percentage
+ 
+ @discussion model
+ 参考UTEModelBatteryInfo注释
+ Refer to UTEModelBatteryInfo comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getBatteryInfoModel:(void(^)(UTEModelBatteryInfo *model,NSInteger errorCode))block;
 
 /** 监听电池电量 通知事件ID 为固定的 264
  Monitor battery level
@@ -247,8 +295,22 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  @block battery
  电池电量百分比
  Battery level percentage
+ 
+ @discussion uteDict
+ 新增低电提醒 lowBattery 1是低电量提醒
+ Add low battery reminder
  */
 - (void)onNofityBattery:(void(^)(NSInteger battery,NSDictionary *uteDict))block;
+
+/** 监听电池电量 通知事件ID 为固定的 264
+ Monitor battery level
+ 
+ @discussion model
+ 参考UTEModelBatteryInfo注释
+ Refer to UTEModelBatteryInfo comments
+ 
+ */
+- (void)onNofityBatteryModel:(void(^)(UTEModelBatteryInfo *model))block;
 
 /**1.9 设置抬腕亮屏开关状态
  Set the status of the wrist lifting and screen lighting switch
@@ -307,6 +369,17 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)notifyFindMyPhoneNotifyReal:(void(^)(UTEFindWearStatus status,NSInteger errorCode ,NSDictionary *uteDict))block;
 
+/**APP端收到查找手机回复操作
+ 
+ @parma cmd
+ 0:关闭查找手机功能 1:点击开启查找手机功能
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)setFindMyPhoneNotifyCMD:(NSInteger)cmd block:(void(^)(NSInteger errorCode))block;
+
 /**11.2 设置手机防丢报警
  Set phone loss prevention alarm
  
@@ -343,8 +416,8 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  Set bracelet language
  
  @parma language
- 参考UTEDeviceLanguage
- Refer to UTEDeviceLanguage
+ 参考UTERYDeviceLanguage
+ Refer to UTERYDeviceLanguage
  
  @parma unit
  0: 公制；1：英制
@@ -354,11 +427,11 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  请求成功:100000 其他:错误码
  Request successful: 100000 Other: Error code
  */
-- (void)setLanguageEnum:(UTEDeviceLanguage)language
+- (void)setLanguageEnum:(UTERYDeviceLanguage)language
                    unit:(NSInteger)unit
                   block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
-- (void)setLanguageOnly:(UTEDeviceLanguage)language
+- (void)setLanguageOnly:(UTERYDeviceLanguage)language
                   block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 - (void)setUnitOnly:(NSInteger)unit
                   block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
@@ -408,17 +481,36 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)incomingEnable:(BOOL)incomingEnable block:(void(^)(NSInteger errorCode))block;
 
+/**获取来电提醒开关状态
+ Get the status of the incoming call reminder switch
+ 
+ @block enable
+ 来电通知开关状态，NO：关，YES：开
+ Call notification switch status, NO: off, YES: on
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getIncomingEnableBlock:(void(^)(BOOL enable, NSInteger errorCode))block;
+
 //2.5 查询设备支持消息推送类型
 - (void)getSupportMessageType:(void(^)(NSDictionary *dict,NSInteger errorCode ,NSDictionary *uteDict))block;
 
 //2.10
 - (void)getNotifyAppListCount:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+///查询设备支持APP通知类型列表
+- (void)getNotifyAppTypeList:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
 //2.11
 - (void)setNotifyAppList:(NSArray<NSDictionary *> *)list block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
 /**2.11 设置app消息单独控制名单(ANCS通知控制)
  Set up a separate control list for app messages (ANCS notification control)
+ 
+ 如果设置APP数多个，因数据量限制，建议list数据拆分5个一组调用接口设置
+ If multiple apps are set, due to data volume limitations, it is recommended to split the list data into 5 groups and call the interface settings
  
  @parma list
  参考UTEModelANCSInfo
@@ -459,6 +551,9 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)setNotifyAppListModel:(NSArray<UTEModelANCSInfo *> *)list block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+///总开关和app通知状态一起发送
+- (void)setNotifyAppListAndNotifOpen:(NSArray<NSDictionary *> *)list block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
 //listOpen/listOpen see UTEAppMsgType
 - (void)setNotifyAppEnumOpen:(NSArray<NSNumber *> *)listOpen
                    listClose:(NSArray<NSNumber *> *)listClose
@@ -475,6 +570,26 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  appId
  */
 + (NSString *)getBundleIDFromApp:(UTEApp)app;
+
+/** 获取设备支持app通知类型（需要判断hasNewANCS是否支持才能调用该接口）
+ @block list
+ 参考UTEModelANCSAPPInfo
+ Refer to UTEModelANCSAPPInfo
+ 如果获取到app=-1，代表SDK没有或者屏蔽掉了，如果需要某个app请反馈后SDK再开放出来
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)getSupportAPPNoticeBlock:(void(^)(NSInteger errorCode ,NSArray<UTEModelANCSAPPInfo *>*list))block;
+
+/** 设置设备支持app通知类型（需要判断hasNewANCS是否支持才能调用该接口）
+ 
+ 根据getSupportAPPNoticeBlock接口获取到对应APP来设置
+ 
+ */
+-(void)setSupportAPPNotice:(NSArray<UTEModelANCSAPPInfo *>*)list Block:(void(^)(NSInteger errorCode))block;
+
 
 ///7.1
 - (void)setMotionGoal:(NSArray<NSDictionary *> *)array
@@ -578,6 +693,25 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
                     cycle:(UInt8)cycle
                     block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+/**ble通知上报活动提醒信息(久坐，喝水统称) 2024.5.14固件支持可用
+ Can notification reporting activity reminder information (long sitting, drinking water collectively referred to as)
+ 
+ @block model
+ 参考UTEModelActivity
+ Refer to UTEModelActivity
+ 
+ 提示：
+ 时间段和周期是预留功能，不一定可用
+ Tip:
+ Time periods and cycles are reserved functions and may not necessarily be available
+
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)onNotifyActivityRemind:(void(^)(UTEModelActivity *model,NSInteger errorCode))block;
+
+
 /**7.10 获取采样点数据帧数(即同步步数/心率/血氧)
  Obtain the frame number of sampling point data (i.e. synchronization steps/heart rate/blood oxygen)
  
@@ -590,7 +724,7 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  End timestamp
 
  @block frameCount
- 总帧序
+ 总帧序，请继续调用getSampleDetailData接口
  Total frame order
  
  @block errorCode
@@ -666,10 +800,58 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 /**7.15 监听手环数据通知主动上报 通知事件ID 为固定的 1807
  Monitor bracelet data notifications and proactively report
  
- 通过监听此接口来主动触发调用同步今日活动数据或者运动历史记录、其他测量数据等接口
- Actively trigger calls to synchronize today's activity data, motion history, other measurement data, and other interfaces by listening to this interface
+ @block type(NSNumber):
+ 
+ if (type & 0x01) {
+     
+ }
+ 
+ if (type & 0x02) {
+     
+ }
+ 
+ if (type & 0x04) {
+     
+ }
+ 
+ if (type & 0x08) {
+     
+ }
+ 
+ if (type & 0x10) {
+     
+ }
+ 
+ 
+ 0x01:运动总计数据, 同上触发条件;调用getCurrentDayTotalWorkoutData接口和getSampleFrameList(getSampleFrameListNew)回复ble
+ Total exercise data, same as triggering conditions; Call the getCurrentDayTotalWorkoutData interface and getSampleFrameList (getSampleFrameListNew) to reply with ble
+ 
+ 0x02:运动实时数,1）总步数达到每隔“步数500步”未同步；2）总热量100千卡路里；3）1公里未同步数据；4）1小时未同步数据；。调用getCurrentDayTotalWorkoutData接口和getSampleFrameList(getSampleFrameListNew)回复ble
+ Real time exercise count, 1) The total number of steps reaches every "500 steps" without synchronization; 2) Total calories of 100 thousand calories; 3) 1 kilometer of unsynchronized data; 4) 1 hour of unsynchronized data;. Call the getCurrentDayTotalWorkoutData interface and getSampleFrameList (getSampleFrameListNew) to reply with ble
+ 
+ 0x04:科学睡眠数据, 有数据更新;调用getSciSleepModelWithStartTime接口回复ble
+ Scientific sleep data with updated data; Call the getSciSleepModelWithStartTime interface to reply with ble
+ 
+ 0x08:单次运动数据,有新的运动结束;调用getRecordList接口回复ble
+ Single exercise data with new exercise ends; Call the getRecordList interface to reply with ble
+ 
+ 0x10:入睡通知数据,入睡（链接才有）;调用getSciSleepModelWithStartTime接口回复ble
+ Sleep notification data, sleep (link only); Call the getSciSleepModelWithStartTime interface to reply with ble
+ 
+ 通过监听此接口来主动触发调用同步今日活动数据或者运动历史记录、其他测量数据等接口，收到对应type需要回复对应接口调用，否则ble认为没同步会间隔重复上报告诉APP
+ Actively trigger calls to synchronize today's activity data, motion history, other measurement data, and other interfaces by listening to this interface，Upon receiving the corresponding type, it is necessary to reply to the corresponding interface call. Otherwise, BLE will assume that there is no synchronization and will repeatedly report to the APP
  */
 - (void)onNotifySportData:(void(^)(NSInteger type,NSDictionary *uteDict))block;
+
+/** 主动上报当前分钟的健康数据帧，主动上报当前分钟的健康数据帧，用于点击测试等健康数据的实时上报
+ Real time data for monitoring device initiated testing
+ */
+- (void)onNotifyCurrentData:(void(^)(UTEModelMotionFrameItemContent *currentModel))block;
+
+/** 主动上报当前分钟的压力值
+ Real time data for monitoring device initiated Pressure testing
+ */
+- (void)onNotifyCurrentPressureData:(void(^)(UTEModelMotionPressureDataModel *currentModel))block;
 
 /**7.22 设置科学睡眠检测开关
  Set scientific sleep detection switch
@@ -759,6 +941,31 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)setPeriodSpo2Enable:(BOOL)enable block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+/**获取设备血氧自动测量开关状态
+ Obtain the status of the device's automatic blood oxygen measurement switch
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getPeriodSpo2Enable:(void(^)(NSInteger errorCode, BOOL enble))block;
+
+/**通知APP血氧自动检测开关 2024.5.14固件支持可用
+ Notify the APP of the automatic blood oxygen detection switch
+ 
+ @block enable
+ true:开 false:关
+ True: on false: off
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)onNotifyPeriodSpo2EnableBlock:(void(^)(NSInteger errorCode ,BOOL enable))block;
+
 /** 设置周期血氧测量间隔
  Set cycle blood oxygen measurement interval
  
@@ -785,6 +992,15 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)getPeriodSpo2EnableIntervalBlock:(void(^)(NSInteger errorCode,NSInteger interval))block;
 
+/**监听周期血氧测量间隔
+ Nofity automatic measurement of blood oxygen interval
+ 
+ @block interval
+ 单位：分钟
+ unit:minute
+ */
+- (void)onNofityPeriodSpo2EnableInterval:(void(^)(NSInteger interval))block;
+
 /**7.36 设置血氧低于下限提醒开关 和最低值
  Set the reminder switch and minimum value for blood oxygen below the lower limit
  
@@ -804,6 +1020,36 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
                 remindLimit:(NSInteger)remindLimit
                       block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+/**获取血氧低于下限提醒开关 和最低值
+ Get the reminder switch and minimum value for blood oxygen below the lower limit
+ 
+ @block enable
+ true:开 false:关
+ True: on false: off
+ 
+ @block remindLimit
+ 血氧低于下限提醒值
+ Reminder value for blood oxygen below lower limit
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getPeriodSpo2EnableRemindLimitBlock:(void(^)(NSInteger errorCode ,BOOL enable ,NSInteger remindLimit))block;
+
+/**监听血氧低于下限提醒开关 和最低值
+ Nofity the reminder switch and minimum value for blood oxygen below the lower limit
+ 
+ @block enable
+ true:开 false:关
+ True: on false: off
+ 
+ @block remindLimit
+ lower limit
+ */
+- (void)onNofityPeriodSpo2LowEnable:(void(^)(BOOL enable,NSInteger remindLimit))block;
+
+
 //7.40
 - (void)setPaceZoneConfig:(NSDictionary *)dict
                     block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
@@ -817,8 +1063,25 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 /**7.1000 下载科学睡眠文件（即睡眠数据）
  Download scientific sleep files (i.e. sleep data)
 
+ if (isSuccess) {
+     睡眠 同步完毕
+ }else{
+     if (errorCode == UTEDeviceErrorNil) {
+         //进度没问题
+     } else {
+        睡眠同步有问题
+     }
+ }
+ 
+ @block uteDict
+ 请使用 uteDict 这个解析好的数据 设备睡眠时长不计算清醒时间进来
+ Please use parameter uteDict : {kSDKQuerySleepDayByDay : array}
+ The sleep duration of the device is not included in the awake time
+ 
+ @discussion [20:00-20:00) 睡眠时间范围昨天20:00-今天20:00 比如7月9号睡眠时间是7月8号20点00分-7月9号20点00分 如果有小睡会有多段睡眠
+ The sleep time range is from 20:00 yesterday to 20:00 today. For example, on July 9th, the sleep time is from 20:00 on July 8th to 20:00 on July 9th. If there is a nap, there will be multiple periods of sleep
  */
-- (void)getSciSleepModelWithStartTime:(NSInteger)startTime endTime:(NSInteger)endTime block:(void(^)(NSArray<UTEModelSciSleepFileData *> *array,CGFloat process,BOOL isSuccess ,NSInteger errorCode ,NSString *filePath,NSDictionary *uteDict))block;
+- (void)getSciSleepModelWithStartTime:(NSInteger)startTime endTime:(NSInteger)endTime block:(void(^)(NSArray<UTEModelSciSleepFileData *> *debugArray,CGFloat process,BOOL isSuccess ,NSInteger errorCode ,NSString *filePath,NSDictionary *uteDict))block;
 
 ///7.1000 bin文件解析
 - (void)getSciSleepBinFilePath:(NSString *)filePath block:(void(^)(NSArray *uteArray))block;
@@ -886,6 +1149,14 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)getAlarmArrayModel:(void(^)(NSInteger errorCode ,NSArray<UTEModelClock *> *modelArray))block;
 
+///获取手表支持的闹钟个数（支持个数）
+- (void)getAlarmInfo:(void(^)(NSInteger errorCode ,UTEModelClockInfo *model))block;
+
+/* 手表修改闹钟通知app获取闹钟（固件支持才会上报）
+ 收到通知后调用获取闹钟接口getAlarmArrayModel
+ */
+- (void)onNotifyAlarmChange:(void (^)(NSInteger errorCode))block;
+
 /**7.23 设置自动测量心率开关
  Set automatic heart rate measurement switch
  
@@ -926,8 +1197,17 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)getAutoHeartRateIntervalBlock:(void(^)(NSInteger errorCode,NSInteger interval))block;
 
-/**7.28 设置连续测量心率开关
- Set continuous heart rate measurement switch
+/**监听心率自动测量间隔
+ Nofity automatic measurement of heart rate interval
+ 
+ @block interval
+ 单位：分钟
+ unit:minute
+ */
+- (void)onNofityAutoHeartRateInterval:(void(^)(NSInteger interval))block;
+
+/**7.28 设置连续测量心率开关（健康测量设置开关用这个接口）
+ Set continuous heart rate measurement switch(This interface is used for the health measurement setting switch)
  
  @parma enable
  true:开 false:关
@@ -939,6 +1219,26 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)setContinueMeasureHeartRateSwitch:(BOOL)enable
                                     block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
+/**获取设备心率连续测量开关状态
+ Obtain the status of the device's heart rate continuous measurement switch
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getContinueMeasureHeartRateSwitch:(void(^)(NSInteger errorCode, BOOL enble))block;
+
+/**监听设备心率连续自动测量开关状态
+ Monitoring device ContinueMeasureHeartRate automatic measurement switch status
+ @block enable
+ true:开 false:关
+ */
+- (void)onNotifyContinueMeasureHeartRateStatus:(void(^)(BOOL enable))block;
+
 /**7.29 设置心率升高提醒
  Set heart rate increase reminder
  
@@ -958,6 +1258,30 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
                                 limit:(NSInteger)limit
                                 block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+/**获取心率升高开关+提醒值
+ Obtain heart rate increase switch+reminder value
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getHeartrateRaiseRemindSwitch:(void(^)(NSInteger errorCode, BOOL enble, NSInteger limit))block;
+
+/**监听心率升高开关+提醒值
+ Nofity heart rate increase switch+reminder value
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block limit
+ 提醒值
+ reminder value
+ */
+- (void)onNofityHeartrateRaiseRemind:(void(^)(BOOL enable, NSInteger limit))block;
+
 /**7.34 设置心率降低提醒
  Set heart rate decrease reminder
  
@@ -975,6 +1299,31 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 - (void)setLowestRemind:(BOOL)enable
                   limit:(NSInteger)limit
                   block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
+/**获取心率降低开关+提醒值
+ Obtain heart rate decrease switch+reminder value
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getHeartrateLowestRemind:(void(^)(NSInteger errorCode, BOOL enble, NSInteger limit))block;
+
+/**监听心率降低开关+提醒值
+ Nofity heart rate decrease switch+reminder value
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block limit
+ 提醒值
+ reminder value
+ */
+- (void)onNofityHeartrateLowestRemind:(void(^)(BOOL enable, NSInteger limit))block;
+
 
 //10.11 通知事件ID 为固定的 2571  type:1需要马上读取，0可以稍后读取   info:1代表手表所有日志；2代表重启日志；3代表死机日志；4代表抓取打点历史数据
 - (void)onNofityDeviceBtn:(void(^)(NSDictionary *uteDict))block;
@@ -1020,8 +1369,8 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  Set temperature units
  
  @parma unit
- 1 摄氏度   2 华氏度
- 1: Celsius 2: Fahrenheit
+ 0 摄氏度   1 华氏度
+ 0: Celsius 1: Fahrenheit
  
  @block errorCode
  请求成功:100000 其他:错误码
@@ -1041,6 +1390,29 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 /**15.8 设置未来天气信息
  Set future weather information
  
+ 注意：未来小时天气数据和未来7天数据需要分开调用发送，同时发送有可能设置失败
+ Notice:Future hourly weather data and future 7-day data need to be separately called and sent，Simultaneously sending may result in setting failure
+ 
+ 注意24小时天气限制24条
+ Pay attention to the 24-hour weather restrictions with 24 rules
+ 
+ Example:
+ [[UTEDeviceMgr sharedInstance] setFutureWeatherModel:hourFuture weekForecastListModel:nil block:^(NSInteger errorCode, NSDictionary *uteDict) {
+     if (errorCode == UTEDeviceErrorNil) {
+         
+     }else{
+         VVLogError(@"setFutureWeatherModel 发送失败");
+     }
+ }];
+ 
+ [[UTEDeviceMgr sharedInstance] setFutureWeatherModel:nil weekForecastListModel:mFuture block:^(NSInteger errorCode, NSDictionary *uteDict) {
+     if (errorCode == UTEDeviceErrorNil) {
+         
+     }else{
+         VVLogError(@"setFutureWeatherModel 发送失败");
+     }
+ }];
+ 
  @parma hourForecastList
  未来小时天气，参考UTEModelWeatherHourForecast注释
  Future hourly weather, refer to UTEModelWeatherHourForecast notes
@@ -1056,11 +1428,14 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 - (void)setFutureWeatherModel:(NSArray <UTEModelWeatherHourForecast *>*)hourForecastList
         weekForecastListModel:(NSArray <UTEModelWeatherWeekForecast *>*)weekForecastList
                    block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
-//天气code转换对应UTEWeather
+//天气code (SDK使用的是第三方和风天气code，如果不是和风天气，请自行转换对应的枚举)转换对应UTEWeather
 + (UTEWeather)getSDKWeatherType:(NSInteger)code;
 
-- (void)setFutureHourWeather:(NSArray <NSDictionary *>*)hourForecastDict
+
+/*
+- (void)setFutureHourWeather:(NSArray <UTEModelWeatherHourForecast *>*)hourForecastDict
                        block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+*/
 
 //15.9  1：未来天气；2：日出日落，月相，潮汐；3：两者都支持 目前设备不支持能力设置，只有 1 功能
 - (void)setFutureWeatherCapability:(NSInteger)item block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
@@ -1139,6 +1514,23 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  @parma ID
  通过23.7获取到ID查询对应运动记录
  Retrieve ID through 23.7 to query corresponding motion records
+ 
+ 显示逻辑
+ *户外骑行 越野滑雪 单板滑雪显示平均速度，其他显示平均配速
+ *游泳平均配速单位（秒/百米），其他（秒/公里）
+ *先判断以下类型有哪些，在判断是否有该属性值再显示
+ 1、户外跑步、户外走路、室内跑步、室内走路：总时间、距离、卡路里、心率、步数、平均步频、平均步幅、平均配速
+ 2、户外骑行 ：总时间、距离、卡路里、心率、平均速度、带气压计设备（最高海拔、累计上升、累计下降）
+ 3、登山、越野跑：总时间、距离、步数、卡路里、心率、平均配速、带气压计设备（最高海拔、累计上升、累计下降），没有气压计数据同步户外走路跑步
+ 4、越野滑雪：总时间、距离、卡路里、平均速度，带气压计设备（最高海拔、累计上升、累计下降）
+ 5、单板滑雪：总时间、距离、卡路里、平均速度，带气压计设备（最高海拔、累计上升、累计下降）
+ 6、泳池游泳：划水次数、泳姿（自由式，蛙式，仰式，蝶式、混合式、未知）、趟数、卡路里、swolf、总时间、划水频率、心率、平均配速（秒/百米）
+ 7、开放域游泳：划水次数、卡路里、总时间、划水频率、泳姿、心率
+ 8、椭圆机：总时间、步数、步频、卡路里、心率
+ 9、划船机：总时间、次数、划桨频率（平均步频就是桨频）
+ 10、跳绳：总时间、跳绳数（次数）、绊绳（次数）、连跳（次数），最大连跳（次数）、卡路里、心率
+ 11、爬楼梯：总时间、上楼层数、下楼层数、卡路里、心率
+ 12、其他运动：总时间、卡路里、心率
  
  @block model
  参考UTEModeSportRecordSummary注释
@@ -1262,16 +1654,36 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)setIsOpenWorkoutOperatorReport:(BOOL)enable block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
-//23.21 目前只支持跑步机联动
+//23.21 运动workout 子能力集
 - (void)getWorkoutAbility:(void(^)(UTEModelDeviceWorkoutAbility *model,NSInteger errorCode ,NSDictionary *uteDict))block;
+
 //23.23
 - (void)setWorkoutAbility:(NSInteger)capability enable:(BOOL)enable block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
 //23.1000 文件路径注意要加上后缀
 - (void)downloadRecordGpsFile:(NSInteger)recordId filePath:(NSString *)filePath block:(void(^)(CGFloat process,BOOL isSuccess ,NSInteger errorCode ,NSString *filePath))block;
+
+/**23.1000-0 获取运动记录GPS数据（返回数据参数比较多）
+ Obtaining GPS data for sports records
+ 
+ @parma recordId
+ 运动记录ID获取对应GPS数据
+ Obtain corresponding GPS data for motion record ID
+ 
+ @filePath 已弃用填nil
+ discard
+ 
+ @block isSuccess
+ 请求成功:YES 其他:错误码
+ Request successful: YES Other: Error code
+ 
+ @block uteArray
+ 数据格式返回经纬度数组[[纬度,经度]]
+ Data format returns an array of latitude and longitude [[latitude, longitude]]
+ */
 - (void)downloadRecordGpsFileModel:(NSInteger)recordId filePath:(NSString *)filePath block:(void(^)(CGFloat process,BOOL isSuccess ,NSInteger errorCode,NSArray<UTEModeGpsParam *> *arrayModels))block;
 
-/**23.1000-1 获取运动记录GPS数据
+/**23.1000-1 获取运动记录GPS数据（仅坐标数据返回）
  Obtaining GPS data for sports records
  
  @parma recordId
@@ -1314,6 +1726,15 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  Request successful: 100000 Other: Error code
  */
 - (void)setGpsParamsModel:(UTEModeGpsParam*)model block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
+/**24.6 监听当前网络地址请求
+ 监听到手环请求，需要调用setCurrentGPSModel下发gps数据给手环
+ 
+ @block state
+ 1请求网络定位
+ 
+ */
+- (void)onNotifyCurrentGPS:(void(^)(NSInteger state))block;
 
 /**24.7 下发当前网络位置
  Distribute current network location
@@ -1364,6 +1785,25 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 - (void)setAutoStress:(BOOL)enable
                 block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+/**获取设备压力自动测量开关状态
+ Obtain the status of the device pressure automatic measurement switch
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getAutoStress:(void(^)(NSInteger errorCode, BOOL enble))block;
+
+/**监听设备压力自动测量开关状态
+ Monitoring device pressure automatic measurement switch status
+ @block enable
+ true:开 false:关
+ */
+- (void)onNotifyAutoStressStatus:(void(^)(BOOL enable))block;
+
 /** 设置压力自动检测间隔
  Set pressure automatic detection interval
  
@@ -1389,6 +1829,151 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  Request successful: 100000 Other: Error code
  */
 - (void)getAutoStressIntervalBlock:(void(^)(NSInteger errorCode,NSInteger interval))block;
+
+/**监听压力自动检测间隔
+ Nofity automatic measurement of pressure interval
+ 
+ @block interval
+ 单位：分钟
+ unit:minute
+ */
+- (void)onNofityAutoStressInterval:(void(^)(NSInteger interval))block;
+
+/**设置情绪自动检测开关
+ Set automatic Mood detection switch
+ 
+ @param enable
+ true:开启 false:关闭
+ True: enable false: disable
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setAutoMood:(BOOL)enable
+                block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
+/**获取设备情绪自动测量开关状态
+ Obtain the automatic emotional measurement switch status of the device
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getAutoMood:(void(^)(NSInteger errorCode, BOOL enble))block;
+
+/**监听设备情绪自动测量开关状态
+ Monitoring device Mood automatic measurement switch status
+ @block enable
+ true:开 false:关
+ */
+- (void)onNotifyAutoMoodStatus:(void(^)(BOOL enable))block;
+
+/** 设置情绪自动检测间隔
+ Set Mood automatic detection interval
+ 
+ @param interval
+ 间隔时间 单位 分钟
+ Interval time unit: minutes
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setAutoMoodInterval:(NSInteger)interval block:(void(^)(NSInteger errorCode))block;
+
+/** 获取情绪自动检测间隔
+ Obtain Mood automatic detection interval
+ 
+ @block interval
+ 间隔时间 单位 分钟
+ Interval time unit: minutes
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getAutoMoodIntervalBlock:(void(^)(NSInteger errorCode,NSInteger interval))block;
+
+/**监听情绪自动检测间隔
+ Nofity automatic measurement of Mood interval
+ 
+ @block interval
+ 单位：分钟
+ unit:minute
+ */
+- (void)onNofityAutoMoodInterval:(void(^)(NSInteger interval))block;
+
+/**设置血压自动检测开关
+ Set automatic Blood detection switch
+ 
+ @param enable
+ true:开启 false:关闭
+ True: enable false: disable
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setAutoBlood:(BOOL)enable
+                block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
+/**获取设备血压自动测量开关状态
+ Obtain the status of the device's automatic blood pressure measurement switch
+ 
+ @block enable
+ true:开 false:关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getAutoBlood:(void(^)(NSInteger errorCode, BOOL enble))block;
+
+/**监听设备血压连续自动测量开关状态
+ Monitoring device Blood automatic measurement switch status
+ @block enable
+ true:开 false:关
+ */
+- (void)onNotifyAutoBloodStatus:(void(^)(BOOL enable))block;
+
+/** 设置血压自动检测间隔
+ Set Blood automatic detection interval
+ 
+ @param interval
+ 间隔时间 单位 分钟
+ Interval time unit: minutes
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setAutoBloodInterval:(NSInteger)interval block:(void(^)(NSInteger errorCode))block;
+
+/** 获取血压自动检测间隔
+ Obtain blood automatic detection interval
+ 
+ @block interval
+ 间隔时间 单位 分钟
+ Interval time unit: minutes
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getAutoBloodIntervalBlock:(void(^)(NSInteger errorCode,NSInteger interval))block;
+
+/**监听血压自动检测间隔
+ Nofity automatic measurement of blood interval
+ 
+ @block interval
+ 单位：分钟
+ unit:minute
+ */
+- (void)onNofityAutoBloodInterval:(void(^)(NSInteger interval))block;
 
 //32.1000 下载周期压力测量文件 endTime 结束时间无效，因为ble不支持。 process没有进度调，因为ble不支持
 - (void)downloadStressDataFile:(NSInteger)startTime
@@ -1523,6 +2108,15 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)readDNDInfo:(void(^)(UTEModeDNDInfo *info,NSInteger errorCode))block;
 
+/** 监听勿扰状态
+ Monitor Do Not Disturb Status
+ 
+ 参考UTEModeDNDInfo注释
+ Refer to UTEModeDNDInfo comments
+ 
+ */
+- (void)onNotifyDNDInfo:(void(^)(UTEModeDNDInfo *model))block;
+
 /** 获取亮屏时长
  Obtain the duration of the bright screen
  
@@ -1562,12 +2156,22 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)setLightTime:(NSInteger)lightTime Block:(void(^)(NSInteger errorCode))block;
 
+/** 监听亮屏时长设置
+ Setting the duration of monitoring the bright screen
+ 
+ @block lightTime
+ 单位：秒
+ Unit: seconds
+ 
+ */
+- (void)onNotifyLightTimeChange:(void(^)(NSInteger lightTime))block;
+
 /** 获取手环支持语言列表
  Obtain a list of supported languages for the bracelet
  
  @block array
- 根据枚举UTEDeviceLanguage来解析
- Parse based on the enumeration of UTEDeviceLanguage
+ 根据枚举UTERYDeviceLanguage来解析
+ Parse based on the enumeration of UTERYDeviceLanguage
  
  @block errorCode
  请求成功:100000 其他:错误码
@@ -1575,8 +2179,27 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)readSupportLanguage:(void(^)(NSArray<NSNumber *> *array,NSInteger errorCode))block;
 
-//获取当前设备语言
-- (void)readCurrentLanguage:(void(^)(NSInteger language,NSInteger errorCode))block;
+/** 获取当前设备语言
+ Get the current device language
+ 
+ @block language
+ 根据枚举UTERYDeviceLanguage来解析
+ Parse based on the enumeration of UTERYDeviceLanguage
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)readCurrentLanguage:(void(^)(UTERYDeviceLanguage language,NSInteger errorCode))block;
+
+/** 监听设备语言设置
+ Monitoring device language settings
+ 
+ @block language
+ 根据枚举UTERYDeviceLanguage来解析
+ Parse based on the enumeration of UTERYDeviceLanguage
+ */
+- (void)onNotifyLanguageChange:(void(^)(UTERYDeviceLanguage language))block;
 
 //获取当前设备重量单位
 - (void)readCurrentUnitWeight:(void(^)(BOOL isKG,NSInteger errorCode))block;
@@ -1618,8 +2241,8 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  Synchronize Address Book
  
  @param array
- 参考UTEModelContactInfo注释
- Refer to UTEModelContactInfo comments
+ 参考UTEModelContactCommon注释
+ Refer to UTEModelContactCommon comments
  
  @block sendTime
  已废弃
@@ -1629,7 +2252,29 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  请求成功:100000 其他:错误码
  Request successful: 100000 Other: Error code
  */
-- (void)setAddressBookModel:(NSArray <UTEModelContactInfo *>*)array Block:(void(^)(NSInteger sendTime,NSInteger errorCode))block;
+- (void)setAddressBookModel:(NSArray <UTEModelContactCommon *>*)array Block:(void(^)(NSInteger sendTime,NSInteger errorCode))block;
+
+/** 获取通讯录 20241025新增需要设备支持
+ get Address Book (New requires device support)
+ 
+ 根据[UTEBluetoothMgr sharedInstance].connnectModel.hasQueryContacts是否支持本接口
+ According to whether hasQueryContacts supports this interface
+ 
+ @block array
+ 参考UTEModelContactCommon注释
+ Refer to UTEModelContactCommon comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getAddressBookModelBlock:(void(^)(NSArray <UTEModelContactCommon *>*array,NSInteger errorCode))block;
+/**
+ 监听设备删除通讯录
+ @block model
+ 返回删除的联系人内容
+ */
+- (void)onNotifyContactsChange:(void(^)(UTEModelContactCommon *model))block;
 
 ///设置SOS号码
 - (void)setSOSNumber:(NSArray *)array Block:(void(^)(NSInteger errorCode))block;
@@ -1638,14 +2283,30 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  Set SOS number (currently only one is supported, repeated settings overwrite display)
  
  @param array
- 参考UTEModelContactInfo注释
- Refer to UTEModelContactInfo comments
+ 参考UTEModelContactCommon注释
+ Refer to UTEModelContactCommon comments
+ 
+ 删除SOS号码，请发送空数组
+ Delete SOS number, please send an empty array
  
  @block errorCode
  请求成功:100000 其他:错误码
  Request successful: 100000 Other: Error code
  */
-- (void)setSOSNumberModel:(NSArray <UTEModelContactInfo *>*)array Block:(void(^)(NSInteger errorCode))block;
+- (void)setSOSNumberModel:(NSArray <UTEModelContactCommon *>*)array Block:(void(^)(NSInteger errorCode))block;
+
+/** 获取SOS号码 20241025新增需要设备支持
+ get SOS number (New requires device support)
+ 
+ @block array
+ 参考UTEModelContactCommon注释
+ Refer to UTEModelContactCommon comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getSOSNumberModelBlock:(void(^)(NSArray <UTEModelContactCommon *>*array,NSInteger errorCode))block;
 
 
 /** 获取运动管理等信息
@@ -1722,6 +2383,28 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  参考 UTEModeWorldClock 注释
  Refer to UTEModeWorldClock comments
  
+ example:
+ 东时区
+ NSMutableArray *arrayModels = [[NSMutableArray alloc] init];
+ UTEModelWorldClock *clock = [[UTEModelWorldClock alloc]init];
+ clock.cityName = @"北京";
+ clock.timeZone = @"8";
+ [arrayModels addObject:clock];
+ 
+ 有半时区 传.50
+ NSMutableArray *arrayModels = [[NSMutableArray alloc] init];
+ UTEModelWorldClock *clock = [[UTEModelWorldClock alloc]init];
+ clock.cityName = @"加尔各答";
+ clock.timeZone = @"5.50";
+ [arrayModels addObject:clock];
+ 
+ 西时区
+ NSMutableArray *arrayModels = [[NSMutableArray alloc] init];
+ UTEModelWorldClock *clock = [[UTEModelWorldClock alloc]init];
+ clock.cityName = @"奥斯汀";
+ clock.timeZone = @"-5";
+ [arrayModels addObject:clock];
+ 
  @block errorCode
  请求成功:100000 其他:错误码
  Request successful: 100000 Other: Error code
@@ -1754,6 +2437,19 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)getSupportWorldClockBlock:(void(^)(NSInteger errorCode,NSInteger max))block;
 
+/**监听世界时钟
+ Monitor the world clock
+ 
+ @block arrayModels
+ 数组 UTEModeWorldClock
+ Array UTEModeWorldClock
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)onNotifyWorldClockBlock:(void(^)(NSInteger errorCode,NSArray<UTEModelWorldClock *> *arrayModels))block;
+
 /**监听同步app时间开关状态
  Monitor the synchronization app's time switch status
  
@@ -1778,11 +2474,11 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 - (void)getDeviceLanguageCapacity:(void(^)(NSInteger errorCode,NSInteger maxCapacity))block;
 /**
  *  从服务器获取语言文本
- *   language: 当为 UTEDeviceLanguageNone，表示从服务器获取支持的所有语言
+ *   language: 当为 UTERYDeviceLanguageNone，表示从服务器获取支持的所有语言
  *  deviceCapacity: 请查看方法(getDeviceLanguageCapacity:)
  *  前提：hasLanguageFile = YES
  */
-- (void)getServerLanguageFile:(UTEDeviceLanguage)language
+- (void)getServerLanguageFile:(UTERYDeviceLanguage)language
                deviceCapacity:(NSInteger)deviceCapacity
                         block:(void(^)(NSArray<UTEModelServerLanguageFile *> *array ,NSError *error))block;
 /**
@@ -1797,22 +2493,487 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
  */
 - (void)deleteLanguageFileIndex:(NSInteger)indexCurrent block:(void(^)(BOOL isSuccess ,NSInteger errorCode))block;
 
+/** 获取设备双向支持功能
+ Obtain device bidirectional support function
+ 
+ @block UTEModelTwoWaySet
+ 参考 UTEModelTwoWaySet 注释
+ Refer to UTEModelTwoWaySet comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getDeviceTwoWaySupportFunction:(void(^)(UTEModelTwoWaySet *model,NSInteger errorCode))block;
+
+
+/** 获取设备离线语音激活状态
+ Offline Voice Control (Activate Status)
+*/
+- (void)getActivateStatusOfOVC:(void(^)(UTEOVControlActivateStatus status,NSInteger errorCode))block;
+
+/** 获取喝水提醒
+ Get a water drink reminder
+ 
+ @block UTEModelWaterClock
+ 参考 UTEModelWaterClock 注释
+ Refer to UTEModelWaterClock comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getWaterClock:(void(^)(UTEModelWaterClock *model,NSInteger errorCode))block;
+
+/** 设置喝水提醒
+ Set a water drink reminder
+ 
+ @param model
+ 参考 UTEModelWaterClock 注释
+ Refer to UTEModelWaterClock comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setWaterClock:(UTEModelWaterClock *)model Block:(void(^)(NSInteger errorCode))block;
+
+/** 获取喝水提醒午休勿扰
+ Get a water drink reminder to don't disturb during lunch break
+ 
+ @block UTEModelWaterDoNotDisturb
+ 参考 UTEModelWaterDoNotDisturb 注释
+ Refer to UTEModelWaterDoNotDisturb comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getWaterDoNotDisturb:(void(^)(UTEModelWaterDoNotDisturb *model,NSInteger errorCode))block;
+
+/** 设置喝水提醒午休勿扰
+ Set a water drink reminder to don't disturb during lunch break
+ 
+ @param model
+ 参考 UTEModelWaterDoNotDisturb 注释
+ Refer to UTEModelWaterDoNotDisturb comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setWaterDoNotDisturb:(UTEModelWaterDoNotDisturb *)model Block:(void(^)(NSInteger errorCode))block;
+
+/** 监听喝水提醒
+ Monitor drinking water reminders
+ 
+ @block model
+ 参考 UTEModelWaterClock 注释
+ Refer to UTEModelWaterClock comments
+ */
+- (void)onNotifyWaterClock:(void(^)(UTEModelWaterClock *model))block;
+
+/** 监听喝水提醒午休勿扰
+ Monitor water not to disturb during lunch break
+ 
+ @block model
+ 参考 UTEModelWaterDoNotDisturb 注释
+ Refer to UTEModelWaterDoNotDisturb comments
+ */
+- (void)onNotifyWaterDoNotDisturb:(void(^)(UTEModelWaterDoNotDisturb *model))block;
+
+- (void)uploadOTAInfo:(UTEUploadStatusModel *)model;
+
+/** 查询AI服务商,需支持"AI服务商查询功能"功能标志，不支持则默认为百度服务商 20241128
+    
+    根据[UTEBluetoothMgr sharedInstance].connnectModel.hasQueryAISDK是否支持本接口
+ 
+    0:百度 1：艾闪 其他对应错误码
+ */
+-(void)checkAISDK:(void(^)(NSInteger type))block;
+
+/**设置设备密码
+ Set device password
+ 
+ @param model
+ 参考 UTEModelDevicePassword 注释
+ Refer to UTEModelWaterDoNotDisturb comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setDevicePassword:(UTEModelDevicePassword *)model block:(void(^)(NSInteger errorCode))block;
+
+/**获取设备密码
+ Get device password
+ 
+ @block model
+ 参考 UTEModelDevicePassword 注释
+ Refer to UTEModelWaterDoNotDisturb comments
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getDevicePasswordBlock:(void(^)(UTEModelDevicePassword *model,NSInteger errorCode))block;
+
+/** 监听设备密码
+ Monitor device password
+ 
+ @block model
+ 参考 UTEModelDevicePassword 注释
+ Refer to UTEModelWaterDoNotDisturb comments
+ */
+- (void)onNotifyDevicePassword:(void(^)(UTEModelDevicePassword *model))block;
+
+/**设置质量保修时间
+ 
+ @param active
+ 激活时间(时间戳)
+ 
+ @param warranty
+ 有效质保期时间(时间戳)
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setActiveTime:(NSInteger)active WarrantyTime:(NSInteger)warranty block:(void(^)(NSInteger errorCode))block;
+
+/** 监听设备激活状态
+ 
+ @block state
+ 1:开始激活 2:激活成功 3:激活失败（超时/断连）
+ */
+- (void)onNotifyActiveState:(void(^)(NSInteger state))block;
+
+/**获取质量保修时间和激活状态
+ 
+ @block state
+ 激活状态 1未激活未进入调试模式 2未激活已进入调试 3已激活
+ 
+ @block active
+ 激活时间(时间戳) 0未激活
+ 
+ @block warranty
+ 有效质保期时间(时间戳) 0未激活
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getActiveTimeAndStateBlock:(void(^)(NSInteger state,NSInteger active,NSInteger warranty,NSInteger errorCode))block;
+
+/**获取设备调试状态
+ 
+ @block state
+ 0:未进入调试模式 1:进入调试模式
+ */
+- (void)getDebugStatusBlock:(void(^)(NSInteger state))block;
+
+/**设置设备调试状态
+ 
+ @param state
+ 0:不进入调试模式 1:进入调试模式
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setDebugStatus:(NSInteger)state Block:(void(^)(NSInteger errorCode))block;
+
+/**APP控制设备激活状态页面展示
+ 
+ @param state
+ 1:开始激活 2:激活成功 3:激活失败
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setControlActivationPage:(NSInteger)state Block:(void(^)(NSInteger errorCode))block;
+
+/**设置屏幕相关功能
+ set Screen Function
+ 
+ @param model
+ 参考UTEModelScreenFunction
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setScreenFunction:(UTEModelScreenFunction *)model Block:(void(^)(NSInteger errorCode))block;
+
+/**获取屏幕相关功能
+ get Screen Function
+ 
+ @block array
+ 参考UTEModelScreenFunction
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getScreenFunctionBlock:(void(^)(NSArray <UTEModelScreenFunction *>*array,NSInteger errorCode))block;
+
+/**监听屏幕相关功能
+ Notify Screen Function
+ 
+ @block array
+ 参考UTEModelScreenFunction
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)onNotifyScreenFunctionBlock:(void(^)(NSArray <UTEModelScreenFunction *>*array,NSInteger errorCode))block;
+
+/**设置声音与震动相关功能
+ set Sound and Vibration
+ 
+ @param model
+ 参考UTEModelSoundVibration
+ 
+ 例子1
+ UTEModelSoundVibration *model = [UTEModelSoundVibration new];
+ model.type  = 1;
+ model.value = @"0";
+ 
+ 例子2
+ UTEModelSoundVibration *model = [UTEModelSoundVibration new];
+ model.type  = 3;
+ model.value = @"1,6";//来电和闹钟等级6
+ 2,3子类型目前预留中
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setSoundVibration:(UTEModelSoundVibration *)model Block:(void(^)(NSInteger errorCode))block;
+
+/**获取声音与震动相关功能
+ set Sound and Vibration
+ 
+ @block model
+ 参考UTEModelSoundVibration
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getSoundVibrationBlock:(void(^)(NSArray <UTEModelSoundVibration *>*array,NSInteger errorCode))block;
+
+/**监听声音与震动相关功能
+ Notify Sound and Vibration
+ 
+ @block model
+ 参考UTEModelSoundVibration
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)onNotifySoundVibrationBlock:(void(^)(NSArray <UTEModelSoundVibration *>*array,NSInteger errorCode))block;
+
+/**获取运动识别开关
+ 
+ @block enable
+ YES：开 NO：关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)getMotionRecognitionBlock:(void(^)(BOOL enable,NSInteger errorCode))block;
+
+/**设置运动识别开关
+ 
+ @param enable
+ YES：开 NO：关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)setMotionRecognition:(BOOL)enable Block:(void(^)(NSInteger errorCode))block;
+
+/**监听运动识别开关
+ 
+ @block enable
+ YES：开 NO：关
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)onNotifyMotionRecognitionBlock:(void(^)(BOOL enable,NSInteger errorCode))block;
+
+/**获取微信支付激活状态
+ 
+ @block status
+ 0授权通过 1有授权数据但授权失败 2设备未授权
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)getWeChatPayActivationBlock:(void(^)(NSInteger status,NSInteger errorCode))block;
+
+/**设置按键唤醒语音助手开关
+ 
+ @param cmd
+ 0：关 1：开
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)setButtonWakeUpVoiceAssistant:(NSInteger)cmd Block:(void(^)(NSInteger errorCode))block;
+
+/**获取设备左右手佩戴信息
+ 
+ @block hand
+ 1:右手 right 0：左手 left
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)getWearingHandsBlock:(void(^)(NSInteger hand,NSInteger errorCode))block;
+
+/**设置设备左右手佩戴信息
+ 
+ @param hand
+ 1:右手 right 0：左手 left
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)setWearingHands:(NSInteger)hand Block:(void(^)(NSInteger errorCode))block;
+
+/**获取泳池长度
+ 
+ @block length
+ 单位：米
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)getPoolLengthBlock:(void(^)(NSInteger length,NSInteger errorCode))block;
+
+/**设置泳池长度
+ 
+ @param length
+ 单位：米
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)setPoolLength:(NSInteger)length Block:(void(^)(NSInteger errorCode))block;
+
+/**获取跑道长度
+ 
+ @block length
+ 单位：米
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)getRunwayLengthBlock:(void(^)(NSInteger length,NSInteger errorCode))block;
+
+/**设置跑道长度
+ 
+ @param length
+ 单位：米
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)setRunwayLength:(NSInteger)length Block:(void(^)(NSInteger errorCode))block;
+
+///获取事务
+-(void)getAllAffairsInfoBlock:(void(^)(NSArray <UTEModelAffirs *>*array,NSInteger errorCode))block;
+///设置事务
+-(void)setAffirsInfo:(NSArray <UTEModelAffirs *>*)array Block:(void(^)(NSInteger errorCode))block;
+
+///获取电子卡包信息 （功能标识hasElectronicCard）
+-(void)getElectronicCardBlock:(void(^)(NSArray <UTEModelElectronicCard *>*array,NSInteger errorCode))block;
+///设置电子卡包 名称不能太长建议20个中英文限制
+-(void)setElectronicCard:(NSArray <UTEModelElectronicCard *>*)array Block:(void(^)(NSInteger errorCode))block;
+
+///查询体温设置信息
+-(void)checkBodyTemperatureBlock:(void(^)(UTEModelRYBodyTemperature *model,NSInteger errorCode))block;
+///查询体温历史记录
+-(void)checkHistoryBodyTemperatureBlock:(void(^)(NSMutableArray <UTEModelRYBodyTemperatureValue*> *array,NSInteger errorCode))block;
+///设置体温配置
+-(void)setBodyTemperature:(UTEModelRYBodyTemperature *)model Block:(void(^)(NSInteger errorCode))block;
+///开始测试体温
+-(void)startBodyTemperatureTestBlock:(void(^)(NSInteger errorCode))block;
+///监听测试体温返回 time：时间戳 state：状态值0正常出值 1脱手 2测试超时  value：体内温度 3520/100得到摄氏度35.20保留2位小数
+-(void)onNotifyBodyTemperatureValueBlock:(void(^)(NSInteger time,NSInteger state,NSInteger value))block;
+/**监听心率值过高过低提醒
+ Monitoring device Heart Rate High and Low Reminder
+ @discussion state
+ 1:心率过高 0:心率过低
+ @discussion value
+ 对应值
+ */
+- (void)onNotifyHeartRateHighLowReminder:(void(^)(NSInteger state,NSInteger value))block;
+///app一键测量
+-(void)oneClickMeasurement:(void(^)(NSInteger errorCode))block;
+
+
+
 #pragma mark - Tool
 - (void)openSleepLog:(void(^)(BOOL ok))block;
 - (void)closeSleepLog:(void(^)(BOOL ok))block;
 
 ///SN号不能都是空格，且只能是数字和字母
+///长度范围（8~32）
 - (void)setDeviceSN:(NSString *)sn block:(void(^)(NSInteger errorCode,NSDictionary *uteDict))block;
 - (void)getDeviceSN:(void(^)(NSInteger errorCode,NSString *sn,NSDictionary *uteDict))block;
-///设置mac地址
+///设置/修改mac地址
 - (void)setDeviceMAC:(NSString *)mac block:(void(^)(NSInteger errorCode,NSDictionary *uteDict))block;
+///设置/修改蓝牙名, 不能都是空格，且只能是数字和字母横杠
+- (void)setDeviceName:(NSString *)name block:(void(^)(NSInteger errorCode,NSDictionary *uteDict))block;
+
 
 - (void)debugReceiveData:(NSData *)data;
 
+-(void)debugGPSData:(NSString *)string block:(void(^)(NSMutableArray *array))block;
+-(void)debugStepData:(NSString *)dataStr block:(void(^)(NSMutableArray *array))block;
+-(NSArray *)debugsleepData:(NSArray *)data;
+-(NSDictionary *)analysisData01C6:(NSString *)dataString block:(void(^)(UTEModelMotionFrame *model))block;
+-(NSDictionary *)analysisData01E8AA02:(NSString *)dataString block:(void(^)(UTEModelMotionFrame *model))block;
+-(void)testSport01E8AA03:(NSString *)dataString block:(void(^)(NSDictionary *dict))block;
+-(NSArray<UTEModeGpsParam*>*)testGPSFileAA09:(NSString*)firstD data:(NSString *)dataString;
+-(NSArray<UTEModeGpsParam*>*)testGPSFile01E8AA09:(NSString*)firstD data:(NSData *)strData;
+
 ///字符串转换Unicode 再转nsdata
 +(NSData*)stringToUnicodeData:(NSString *)dataStr;
+///方法2 字符串转换Unicode 再转nsdata
++(NSData *)stringToUnicodeToData:(NSString *)input;
+
 ///ble nsdata 转 Unicode 转utf8字符串
 +(NSString *)replaceUnicode:(NSData *)strData;
+
+///使用系统转换字符串转换data
+//+(NSData *)FromStringToUniCodeData:(NSString *)text;
+///ble nsdata 转字符串
++(NSString *)FromDataToString:(NSData *)unicodeData;
+
+///字符串转Unicode
++(NSString *)utf8ToUnicode:(NSString *)string;
+///普通字符串转16进制字符串
++ (NSString *)hexStringFromString:(NSString *)string;
+
 ///字符串转ASCII
 +(NSData*)FromStringToASCII:(NSString *)sn;
 ///ASCII转字符串
@@ -1827,6 +2988,76 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 +(double)HEXToDouble:(NSData *)data;
 ///十六进制转Float
 +(double)HEXToFloat:(NSData *)data;
+///10进制转十六进制nsdata 的长度
++ (NSUInteger)minimumHexDataLengthForUnsignedInteger:(NSUInteger)number;
++ (NSData *)dataFromUnsignedInteger:(NSUInteger)number;
+/////LZ4压缩 path文件地址 toPath压缩后地址
+//+(void)LZ4CompressFrom:(NSString *)path To:(NSString*)toPath;
+/////LZ4解压 path文件地址 toPath压缩后地址
+//+(void)LZ4DeCompressFrom:(NSString *)path To:(NSString*)toPath;
+///LZ4压缩
+- (NSData *)LZ4Compress:(NSData *)inputData;
+
++(void)debugCRC;
+-(void)debugCMD:(NSString *)cmd;
+-(void)debugRSA;
+
+#pragma mark - Factory Test
+///查询工厂测试功能
+- (void)checkFactoryFuntion:(void(^)(UTEModelFactoryFuntion *model))block;
+- (void)factoryReadLightLeakage:(void(^)(BOOL success,NSInteger value))result;
+- (void)factoryCloseTestLightLeakage;
+- (void)factoryPostDisplayOpen:(BOOL)on;
+///老化测试（默认支持该功能） UTEFactoryTypePressure
+- (void)factoryTestTypeOpenType:(UTEFactoryType)type result:(void(^)(NSInteger type))result;
+- (void)factoryVibration:(NSInteger)count;
+
+- (void)factoryOpenTestRGB:(BOOL)on;
+- (void)factoryOpenTestTP:(BOOL)on callback:(void(^)(NSInteger tpCount))callback;
+- (void)factoryOpenTestGsensor:(BOOL)on;
+- (void)factoryOpenTestGPS:(BOOL)on satelliteID:(NSInteger)satelliteID range:(NSInteger)range reference:(NSInteger)reference result:(void(^)(BOOL success,NSInteger cn))result;
+- (void)factoryOpenTestNFC:(void(^)(BOOL success))result;
+- (void)factoryOpenTestMike_Speaker;
+- (void)factoryReadGyroData:(void(^)(NSInteger range,NSInteger x,NSInteger y,NSInteger z))result;
+///活体标定cmd 1：开启活体标定（APP提示操作手表对空）（cmdArr：BIO0值 result：1稳定 0不稳定） 2：APP提示操作手表放到导电块上（先发指令后才能移动手表）（cmdArr：BIO1值 result：1稳定 0不稳定） 3：关闭活体测试(cmdArr：@[@(diff),@(diffMax),@(diffMini)] result：1通过 0失败)
+- (void)factoryLiveCalibrationCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSArray *cmdArr, NSInteger result))block;
+
+///漏光测试 pre值 cur值 result：1通过 0失败
+- (void)factoryLeakageTestBlock:(void(^_Nullable)(NSInteger pre,NSInteger cur, NSInteger result))block;
+///红外测试 ps值 cur值 result：1通过 0失败
+- (void)factoryInfraredTestingBlock:(void(^_Nullable)(NSInteger ps,NSInteger cur, NSInteger result))block;
+///心率测试 cmd:1开启 0关闭  open:开关位 state：佩戴状态1佩戴 0未佩戴 result:心率值（未出值为0）
+- (void)factoryHeartRateTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger open, NSInteger state, NSInteger result))block;
+///血氧测试 cmd:1开启 0关闭  open:开关位 state：佩戴状态1佩戴 0未佩戴 result:血氧值（未出值为0）
+- (void)factoryBloodOxygenTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger open, NSInteger state, NSInteger result))block;
+///按键测试 array按键编码
+- (void)factoryKeyTestBlock:(void(^_Nullable)(NSMutableArray * _Nullable array))block;
+///G-sensor 测试 range：量程 x：X轴 y:Y轴 z:Z轴 speed:三轴合加速度
+- (void)factoryGsensorTestBlock:(void(^_Nullable)(NSInteger range, NSInteger x,NSInteger y,NSInteger z, NSInteger speed))block;
+///马达测试 cmd:1开启 0关闭 state：1成功 0失败
+- (void)factoryMotorTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger state))block;
+///充电测试 sampledValue:采样值 powerLevel:电量 state:充电状态 0未充电 1充电中 2充满
+- (void)factoryChargingTestBlock:(void(^_Nullable)(NSInteger sampledValue,NSInteger powerLevel,NSInteger state))block;
+///三色指示灯测试 cmd：1开 0关 open:开关位 state：测试结果1通过 0失败
+- (void)factoryLEDTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger open, NSInteger state))block;
+///体温测试 cmd：1开 0关 open:开关位 environment:环境温度 body：体表温度
+- (void)factoryBodyTemperatureTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger open, CGFloat environment, CGFloat body))block;
+///船运模式/关机 cmd：1恢复出厂设置重启 0恢复出厂设置关机 type标志
+- (void)factory20OperationCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger cmd,NSInteger type))block;
+
 @end
 
 
+@interface UTEWeaterJSONModel : NSObject
+
+@property (nonatomic,copy  ) NSString      *appkey;
+@property (nonatomic,copy  ) NSString      *location;
+@property (nonatomic,copy  ) NSString      *os;
+@property (nonatomic,copy  ) NSString      *lon;
+@property (nonatomic,copy  ) NSString      *package;
+@property (nonatomic,copy  ) NSString      *parentCity;
+@property (nonatomic,copy  ) NSString      *lat;
+@property (nonatomic,copy  ) NSString      *provinces;
+@property (nonatomic,copy  ) NSString      *isocode;
+@property (nonatomic,copy  ) NSString      *language;
+@end
