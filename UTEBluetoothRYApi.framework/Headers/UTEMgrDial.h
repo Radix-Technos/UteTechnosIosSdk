@@ -43,7 +43,7 @@
 - (void)getWatchFaceInfo:(NSInteger)serverMode block:(void(^)(NSArray<UTEModelWatchFace *> *model, NSInteger errorCode,NSDictionary *uteDict))block;
 
 /**39.3 应用表盘/删除表盘
- Apply dial/delete dial
+ set Watchface/delete Watchface
  
  @parma ID
  表盘ID
@@ -54,8 +54,8 @@
  The dial version is 1.0.0
  
  @parma operate
- 操作码 1 应用表盘,2 删除表盘 ,3 应用google表盘（不支持）
- Operation code 1: Apply dial, 2: Delete dial, 3: Apply Google dial (not supported)
+ 操作码 1 设置表盘,2 删除表盘 ,3 设置google表盘（不支持）
+ Operation code 1: set Watchface, 2: Delete dial, 3: set Google Watchface (not supported)
  */
 - (void)applyWatchFace:(NSInteger)ID version:(NSString *)version operate:(NSInteger)operate block:(void(^)(UTEModelWatchFace *model, NSInteger errorCode,NSDictionary *uteDict))block;
 
@@ -252,7 +252,7 @@
 
 /**
  *  @discussion Get Watch From Server
- *
+ *  获取在线表盘
  *  @param sdkkey    Unique Server KEY (Shared with Android)
  *  @param device    see UTEModelWatchServer
  
@@ -264,9 +264,74 @@
                     success:(void (^)(NSArray<UTEModelWatchServer *> *))success
                     failure:(void (^)(NSError *))failure;
 
+/**获取在线表盘组的列表信息
+ 
+ UTEModelWatchServer *model = [UTEModelWatchServer new];
+ model.versionName = @"ATS328SF";
+ 
+ NSMutableData *data = [NSMutableData data];
+ NSString *hexString = @"7802B75BFC37";
+ for (int i = 0; i < hexString.length; i += 2) {
+     NSString *hexByte = [hexString substringWithRange:NSMakeRange(i, 2)];
+     unsigned int byte;
+     [[NSScanner scannerWithString:hexByte] scanHexInt:&byte];
+     unsigned char byteValue = (unsigned char)byte;
+     [data appendBytes:&byteValue length:1];
+ }
+ 
+ model.address = data;
+//    获取设备表盘参数接口返回参数
+ model.height = 466;
+ model.width = 466;
+ model.maxCapacity = 679936;
+ model.shape = UTEDeviceDialTypeCircle;
+ model.cornerRadius = 0;
+ //以下固定参数必填
+ model.isGroup = YES;
+ model.groupID = 0;
+ 
+ */
+- (void)getWatchFromServerGroupInfo:(NSString *)sdkkey
+                         device:(UTEModelWatchServer *)device
+                        success:(void (^)(NSArray<UTEModelWatchServerGroupInfo *> *))success
+                        failure:(void (^)(NSError *))failure;
+
+/**获取在线表盘某个组详细表盘列表信息
+ 
+ UTEModelWatchServer *model = [UTEModelWatchServer new];
+ model.versionName = @"ATS328SF";
+ 
+ NSMutableData *data = [NSMutableData data];
+ NSString *hexString = @"7802B75BFC37";
+ for (int i = 0; i < hexString.length; i += 2) {
+     NSString *hexByte = [hexString substringWithRange:NSMakeRange(i, 2)];
+     unsigned int byte;
+     [[NSScanner scannerWithString:hexByte] scanHexInt:&byte];
+     unsigned char byteValue = (unsigned char)byte;
+     [data appendBytes:&byteValue length:1];
+ }
+ 
+ model.address = data;
+//    获取设备表盘参数接口返回参数
+ model.height = 466;
+ model.width = 466;
+ model.maxCapacity = 679936;
+ model.shape = UTEDeviceDialTypeCircle;
+ model.cornerRadius = 0;
+ //以下固定参数必填
+ model.isGroup = NO;
+ ///根据getWatchFromServerGroupInfo返回的classId
+ model.groupID = 100022;
+ 
+ */
+- (void)getWatchFromServerInfo:(NSString *)sdkkey
+                    device:(UTEModelWatchServer *)device
+                    success:(void (^)(NSArray<RYUTEListBleDisplayInfoModel *> *))success
+                       failure:(void (^)(NSError *))failure;
+
 /**
  *  @discussion Get  Custom Watch From Server (Replaceable background image)
- *
+ *  获取自定义（相册）表盘背景图
  *  @param sdkkey    Unique Server KEY (Shared with Android)
  *  @param device    see UTEModelWatchServer
  

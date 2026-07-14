@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///设置本次传输文件大小，个数，文件列表  state 0设置成功
 -(void)setTransferFileInfo:(UTEModelFileItem *)model Block:(void(^)(NSInteger state,NSInteger errorCode))block;
 
-///设置准备写入的信息 state 0设置成功 1空间不足 2文件系统错误 3参数错误
+///设置准备写入的信息 state 0设置成功 1空间不足 2文件系统错误 3参数错误 13手表打开地图中，设置失败，退出后设置
 -(void)setPrepareToWriteInfo:(UTEModelFileTransferInfo *)model Block:(void(^)(NSInteger state,NSInteger errorCode))block;
 
 ///发送文件内容到设备
@@ -60,7 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///本次传输完成
 -(void)sendFileCompleteBlock:(void(^)(NSInteger errorCode))block;
-
+///取消本次传输
+-(void)cancelSendFileBlock:(void(^)(NSInteger errorCode))block;
 #pragma mark 歌单
 /**
     流程和设置音乐文件一样
@@ -77,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///设置准备写入歌单信息 state 0设置成功 1空间不足 2文件系统错误 3参数错误
 -(void)setPrepareMusicList:(UTEModelMusicList *)model Block:(void(^)(NSInteger state,NSInteger errorCode))block;
 
-///监听设备删除歌曲 listName：歌单名 musicName：歌曲名，如果歌单名为0就是删除歌曲， 有歌单名就是删除歌单的歌曲名
+///监听设备删除歌曲   listName：歌单名   musicName：歌曲名，如果歌单名为0就是删除歌曲， 有歌单名就是删除歌单的歌曲名
 -(void)onNotifyDeleteMusicBlock:(void (^)(NSString *listName,NSString *musicName))block;
 
 ///解析歌单内容

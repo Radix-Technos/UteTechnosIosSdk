@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class CLLocation;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UTEModelAGPSInfo : NSObject
@@ -130,6 +132,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getUTEServerAGPSFile:(UTEServiceAGPSPostModel *)model
                        block:(void(^)(NSArray *array, NSError *error))block;
 
+///设置app手动发送星历文件标志 status：1手动 0自动
+-(void)setAGPSSendStatus:(NSInteger)status Block:(void(^)(NSInteger errorCode))block;
 
 /** 路径导航功能*/
 
@@ -138,9 +142,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)getPathNavigationInfoBlock:(void(^)(UTEPathNavigationInfoModel *model,NSInteger errorCode))block;
 
-///设置路径到设备（坐标点信息数据） state 1成功 2轨迹已存在
+///设置路径到设备（坐标点信息数据） state 1成功 2轨迹已存在 需要根据获取参数进行自行抽稀算法
 -(void)setPathNavigationInfo:(UTEPathNavigationModel *)model Block:(void(^)(NSInteger state,NSInteger errorCode))block;
 
+/** GPS点抽稀算法(可以使用SDK算法也可以自行实现抽稀算法)
+ * 使用Douglas-Peucker算法对GPS坐标点进行抽稀(二分法)
+ *
+ * @param points 原始GPS点数组
+ * @param targetPointCount 目标点数量
+ * @return 抽稀后的GPS点数组
+ */
++ (NSArray<CLLocation *> *)simplifyTrack:(NSArray<CLLocation *> *)points toTargetPointCount:(NSInteger)targetPointCount;
 @end
 
 NS_ASSUME_NONNULL_END

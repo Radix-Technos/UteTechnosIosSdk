@@ -47,4 +47,14 @@
  */
 - (void)uteANCSAuthorization:(BOOL)ancsAuthorized NS_AVAILABLE_IOS(13_0);
 
+/**
+ *  @discussion SDK Log String
+ */
+- (void)uteSDKLog:(NSString *)str;
+
+///录音背夹 数据
+- (void)uteDeviceRecordingClip:(NSData *)data error:(NSError *)error;
+- (void)uteDeviceRecordingClipbattery:(NSData *)data error:(NSError *)error;
+///瑰元ble上报数据
+- (void)uteDeviceGlyphix:(NSData *)data error:(NSError *)error;
 @end

@@ -4,3 +4,7 @@ framework module UTEBluetoothRYApi {
 
   module * { export * }
 }
+
+module UTEBluetoothRYApi.Swift {
+  header "UTEBluetoothRYApi-Swift.h"
+}
