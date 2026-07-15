@@ -147,7 +147,12 @@ typedef NS_ENUM(NSInteger, UTEWatchFaceTypeJLCategory) {
 @property (nonatomic,assign) BOOL                   isSupportIntellectColor;
 ///设备支持的相片背景的格式，1：png，2：压缩后的 bitmap The format of the photo background supported by the device, 1: png, 2: compressed bitmap
 @property (nonatomic,assign) NSInteger              imageType;
-///位置可选项当前索引 1上居中 2下居中 3中居中 Location options: Currently, index 1 is centered on top, 2 is centered on bottom, and 3 is centered on center
+/**
+ *位置可选项当前索引 1上居中 2下居中 3中居中 Location options: Currently, index 1 is centered on top, 2 is centered on bottom, and 3 is centered on center
+ *
+ *新增：4左下(240412) 5右上(240412) 6左上(260518) 7右下(260518)
+ *
+ */
 @property (nonatomic,assign) NSInteger              positionIndex;
 ///样式可选项当前索引 样式1 样式2 样式3 。。。。 Style options: Current index style 1, style 2, style 3....
 @property (nonatomic,assign) NSInteger              styleIndex;
@@ -229,6 +234,7 @@ typedef NS_ENUM(NSInteger, UTEWatchFaceTypeJLCategory) {
  * The following parameters are the data returned by the server
  */
 //Server Watch ID. When ID = -1, it means there is no watch in the device to replace
+
 //Unique Number
 @property (nonatomic,assign) NSInteger               ID;
 //Watch title
@@ -253,6 +259,20 @@ typedef NS_ENUM(NSInteger, UTEWatchFaceTypeJLCategory) {
 
 @end
 
+@interface UTEModelWatchServerGroupInfo : NSObject
+/** 作为组的信息 */
+///分组id(用于查询组的更多表盘)
+@property (nonatomic,assign) NSInteger     classId;
+///分组名字（sdk已自动读取手机语言上传到服务器，返回对应语言名字）
+@property (nonatomic,copy  ) NSString      *className;
+///
+@property (nonatomic,assign) NSInteger     orderNum;
+///总数（指该组总的数量，不是当前返回的数量）
+@property (nonatomic,assign) NSInteger     count;
+///表盘数组(RYUTEListBleDisplayInfoModel)（返回前面几个展示用）
+@property(nonatomic, strong) NSArray       *watchList;
+
+@end
 
 @interface UTEModelCustomWatchServer : NSObject
 
@@ -288,5 +308,78 @@ typedef NS_ENUM(NSInteger, UTEWatchFaceTypeJLCategory) {
 @property (nonatomic,copy  ) NSString                *previewTimeRight;
 
 
+@end
+
+
+@interface RYUTEListBleDisplayInfoModel : NSObject
+
+@property (nonatomic,assign) NSInteger     classId;
+@property (nonatomic,copy  ) NSString      *className;
+@property (nonatomic,assign) NSInteger     orderNum;
+@property (nonatomic,assign) NSInteger     count;
+@property(nonatomic, strong) NSArray       *watchList;
+
+@property (nonatomic,assign) NSInteger     angle;
+@property (nonatomic,assign) NSInteger     ID;
+/**
+ 标题
+ */
+@property (nonatomic,copy  ) NSString      *title;
+/**
+ 预览图片链接
+ 如果有多个，以 符号 ; 区分
+ 例: @"https://dddddd;https://aaaaaaaa;https://ccccc"
+ */
+@property (nonatomic,copy  ) NSString      *preview;
+/**
+ 设备分辨率
+ */
+@property (nonatomic,copy  ) NSString     *dpi;
+/**
+ 设备屏幕类型
+ */
+@property (nonatomic,assign) NSInteger     material;
+/**
+ 设备显示样式 数字类型 指针类型
+ */
+@property (nonatomic,assign) NSInteger     type;
+/**
+ 设备形状 圆形 方形
+ */
+@property (nonatomic,assign) NSInteger     shape;
+/**
+ 描述
+ */
+@property (nonatomic,copy  ) NSString      *des;
+/**
+ 组ID
+ */
+@property (nonatomic,assign) NSInteger                  group;
+
+@property (nonatomic,assign) NSInteger                  capacity;
+
+@property (nonatomic,assign) NSInteger                  bleID;
+
+
+//@property (nonatomic,assign) NSInteger     level;
+//@property (nonatomic,assign) NSInteger     download_num;
+//@property (nonatomic,copy  ) NSString      *createtime;
+@property (nonatomic,copy  ) NSString      *initable;
+
+///表盘bin文件下载地址
+@property (nonatomic,copy  ) NSString      *resource;
+//@property (nonatomic,copy  ) NSString      *author;
+
+/** 自定义表盘 */
+@property (nonatomic,copy  ) NSString      *file;
+@property (nonatomic,copy  ) NSString      *createtime;
+@property (nonatomic,copy  ) NSString      *defaultWidgetPosition;
+@property (nonatomic,strong) NSArray      *position;
+@property (nonatomic,copy  ) NSString      *defaultBg;
+
+///zip
+@property (nonatomic,copy  ) NSString      *customZip;
+///compatible （5视频表盘)
+@property (nonatomic,assign  ) NSInteger      compatible;
 @end
 

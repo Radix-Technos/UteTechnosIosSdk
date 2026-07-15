@@ -41,7 +41,7 @@
  
  @parma version
  升级包软件版本号,比如手环固件AT338V000109，那么发送低版本AT338V000108或者高版本AT338V000110
- Upgrade package software version number, such as AT338V000109
+ The software version number of the upgrade package, such as device firmware AT338V000109, should be sent as either the lower version AT338V000108 or the higher version AT338V000110
  
  @parma componentSize
  目前写0
@@ -117,8 +117,14 @@
                    block:(void (^)(NSString *uuid ,NSInteger errorCode))block;
 //9.17 通知事件ID 为固定的 2321
 - (void)onNotifyOTAConfirmDownload:(void (^)(NSInteger errorCode ,NSDictionary *uteDict))callback;
+/**
+ *  The status of headphones/glasses upgrading via Wi-Fi
+ */
+- (void)onNotifyWearOTAStatus:(void (^)(UTEWearOTAStatus type))callback;
 
-- (void)checkJLFirmwareFromServer:(UTEModelBaseInfo *)model block:(void(^)(UTEModelOTAInfo *result,BOOL hasNew,NSInteger errCode))block;
+///限制5秒钟只能查一次 如果是测试包需要登记测试组mac
+- (void)checkFirmwareFromServer:(UTEModelBaseInfo *)model
+                          block:(void(^)(NSArray <UTEModelOTAInfo *> *result,BOOL hasNew,NSInteger errCode))block;
 - (void)downloadOTAFirmware:(NSString *)url block:(void(^)(NSURL *binURL ,NSInteger errCode))block;
 
 

@@ -25,8 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 ///设备上传录音数据，格式为opus
 - (void)onNotifyAIVoiceData:(void(^)(NSInteger errorCode,NSData *opus))block;
 
-///设备上报开始生成 1:开始生成
-- (void)onNotifyAIStartGenerating:(void(^)(NSInteger status))block;
+///设备上传实时录音数据，格式为opus，isCompleted=YES 表示数据传输完成 支持实时上报时onNotifyChatGPTVoiceData不会再结束录音上报数据了
+- (void)onNotifyAIDialUploadVoiceDataBlock:(void(^)(BOOL isCompleted,NSData *opus))block;
+
+///设备上报开始生成 1:开始生成 （目前废弃了）
+//- (void)onNotifyAIStartGenerating:(void(^)(NSInteger status))block;
 
 ///查询AI表盘功能开关 state 0：关， 1：开
 -(void)getAIDialFuntionStateBlock:(void(^)(NSInteger errorCode, NSInteger state))block;

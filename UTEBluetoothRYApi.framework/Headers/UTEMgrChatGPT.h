@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///设置ChatGPT识别语音内容
 -(void)setChatGPTVoiceContent:(NSString *)text Block:(void(^)(NSInteger errorCode))block;
 
-///设置ChatGPT回答内容
+///设置ChatGPT回答内容 需要先获取getAIQAWordCountBlock，NSData *textData = [self.sendTotalText dataUsingEncoding:NSUTF16BigEndianStringEncoding]; 计算好text转Unicode NSData长度不能超过上报值的内容
 -(void)setChatGPTAnswerContent:(NSString *)text Block:(void(^)(NSInteger errorCode))block;
 
 ///同步备忘录内容
@@ -54,6 +54,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///设备上传录音数据，格式为opus
 - (void)onNotifyChatGPTVoiceData:(void(^)(NSInteger errorCode,NSData *opus))block;
+
+///设备实时上传录音数据，格式为opus,isCompleted=YES 表示数据传输完成 支持实时上报时onNotifyChatGPTVoiceData不会再结束录音上报数据了
+-(void)onNotifyUploadVoiceDataBlock:(void(^)(BOOL isCompleted,NSData *opus))block;
 
 ///设置当前ai语言环境 0:中文 1:英文
 -(void)setAICurrentLanguage:(NSInteger)language Block:(void(^)(NSInteger errorCode))block;
@@ -83,6 +86,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///设置ChatGPT功能开关 state 0：关， 1：开
 -(void)setAIFuntionState:(NSInteger)state Block:(void(^)(NSInteger errorCode))block;
+
+///查询支持问答字数长度 length：字节长度
+-(void)getAIQAWordCountBlock:(void(^)(NSInteger errorCode, NSInteger length))block;
+
+///查询支持备忘录条数和内容长度 number：条数 length：内容字节长度
+-(void)getAIMemoWordCountBlock:(void(^)(NSInteger errorCode, NSInteger number,NSInteger length))block;
+
 
 @end
 

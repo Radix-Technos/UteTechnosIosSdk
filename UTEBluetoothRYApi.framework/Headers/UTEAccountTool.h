@@ -81,6 +81,16 @@
 ///配对指令 state：1配对通过，0配对失败。通过后再调用phoneSendWatchAccountWith判断账号
 -(void)sendPairDevicesBlock:(void(^)(NSInteger state,NSInteger errorCode))block;
 
+
+/** APP清除帐号ID信息
+ Delete Account Information
+ 
+ @discussion Block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+-(void)sendDeleteAccountInformationBlock:(void(^)(NSInteger errorCode))block;
+
 @end
 
 

@@ -1,0 +1,262 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name UTEBluetoothRYApi
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import CommonCrypto
+import CoreBluetooth
+import Foundation
+import Swift
+import UIKit
+@_exported import UTEBluetoothRYApi
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+public protocol UTEABOtaSendDelegate : AnyObject {
+  func sendData(_ data: Foundation.Data)
+}
+public enum UTEABOtaStatus {
+  case OtaStatusReady
+  case OtaStatusStart
+  case OtaStatusUpdating(Swift.Int)
+  case OtaStatusPause
+  case OtaStatusContinue
+  case OtaStatuSuccess
+  case OtaStatusWaitFinish
+  case OtaStatusFail(Swift.Int)
+}
+public protocol UTEABOtaEventListener : AnyObject {
+  func onStatusChanged(_ status: UTEBluetoothRYApi.UTEABOtaStatus)
+  func onReceiveVersion(_ version: Swift.UInt16)
+  func onReceiveTWSInfo(isTWS: Swift.Bool, isTWSConnected: Swift.Bool)
+  func onReceiveChannel(_ isLeftChannel: Swift.Bool)
+}
+public class UTEABOta {
+  public static let ERROR_CODE_DEVICE_REPORT: Swift.Int
+  public static let ERROR_CODE_DEVICE_REFUSED: Swift.Int
+  public static let ERROR_CODE_NO_OTA_DATA: Swift.Int
+  public static let ERROR_CODE_TIMEOUT: Swift.Int
+  public static let ERROR_CODE_TWS_DISCONNECTED: Swift.Int
+  public static let ERROR_CODE_DATA_READER_ERROR: Swift.Int
+  public static let ERROR_CODE_SAME_FIRMWARE: Swift.Int
+  public static let ERROR_CODE_KEY_MISMATCH: Swift.Int
+  public static let ERROR_CODE_CRC_ERROR: Swift.Int
+  weak public var sendDelegate: (any UTEBluetoothRYApi.UTEABOtaSendDelegate)?
+  weak public var eventListener: (any UTEBluetoothRYApi.UTEABOtaEventListener)?
+  public var otaManager: UTEBluetoothRYApi.UTEABOtaTool!
+  public init()
+  public func prepareToUpdate()
+  public func setOtaData(_ data: Foundation.Data)
+  public func setDataRead(_ dataReader: any UTEBluetoothRYApi.UTEABDataReader)
+  public func setPacketSize(_ packetSize: Swift.UInt16)
+  public func isReady() -> Swift.Bool
+  public func startOTA()
+  public func isUpdating() -> Swift.Bool
+  public func disconnectSendData()
+  @objc deinit
+}
+extension UTEBluetoothRYApi.UTEABOta {
+  public func handleData(_ data: Foundation.Data)
+  public func nextRun()
+}
+extension UTEBluetoothRYApi.UTEABOta : UTEBluetoothRYApi.ABOtaManagerDelegate {
+  public func sendOtaData(_ data: Foundation.Data) throws
+  public func onReady()
+  public func onStart()
+  public func onProgress(_ progress: Swift.Float)
+  public func onStop()
+  public func onFinish()
+  public func onPause()
+  public func onContinue()
+  public func onError(_ error: UTEBluetoothRYApi.UTEABOTAError)
+  public func onTWSDisconnected()
+  public func onReceiveVersion(_ version: Swift.UInt16)
+  public func onReceiveIsTWS(_ isTWS: Swift.Bool)
+  public func onReceiveTWSConnected(_ connected: Swift.Bool)
+  public func onReceiveChannel(_ isLeftChannel: Swift.Bool)
+}
+public protocol UTEABDataReader {
+  func open() throws
+  func getSize() throws -> Swift.Int
+  func getHash() throws -> Foundation.Data
+  func read(srcPos: Swift.Int, length: Swift.Int) throws -> Foundation.Data?
+  func close() throws
+}
+public protocol ABOtaManagerDelegate : UTEBluetoothRYApi.UTEABOtaManagerDelegate {
+  func sendOtaData(_ data: Foundation.Data) throws
+}
+@objc @_inheritsConvenienceInitializers open class UTEABOtaTool : UTEBluetoothRYApi.UTEABOtaManager {
+  @available(*, unavailable, message: "Use customDelegate instead")
+  override public var delegate: (any UTEBluetoothRYApi.UTEABOtaManagerDelegate)? {
+    get
+    set
+  }
+  @available(*, unavailable, message: "Use init(_:) instead")
+  @objc override dynamic public init()
+  public init(delegate: any UTEBluetoothRYApi.ABOtaManagerDelegate)
+  override public func getPacketSize() -> Swift.UInt16
+  open func setPacketSize(_ size: Swift.UInt16)
+  override open func send(_ data: Foundation.Data) throws
+  public func nextRun()
+  @objc deinit
+}
+public protocol UTEABLoggerDelegate {
+  func log(message: Swift.String, ofCategory category: Swift.String, withType type: os.OSLogType)
+}
+public protocol UTEABOtaManagerDelegate : AnyObject {
+  func onReady()
+  func onStart()
+  func onProgress(_ progress: Swift.Float)
+  func onStop()
+  func onFinish()
+  func onPause()
+  func onContinue()
+  func onError(_ error: UTEBluetoothRYApi.UTEABOTAError)
+  func onTWSDisconnected()
+  func onReceiveVersion(_ version: Swift.UInt16)
+  func onReceiveIsTWS(_ isTWS: Swift.Bool)
+  func onReceiveTWSConnected(_ connected: Swift.Bool)
+  func onReceiveChannel(_ isLeftChannel: Swift.Bool)
+  func onBleConnect()
+  func onBleDiscoverServices()
+  func onBleDidDiscoverServices()
+  func onBleDisconverCharacteristics()
+  func onBleDidDiscoverCharacteristic(_ characteristic: CoreBluetooth.CBCharacteristic)
+  func onBleSetNotify(_ characteristic: CoreBluetooth.CBCharacteristic)
+  func onBleDidSetNotify(_ characteristic: CoreBluetooth.CBCharacteristic)
+  func onBleNotPoweredOn(_ central: CoreBluetooth.CBCentralManager)
+  func onBleDidConnectPeripheral()
+  func onBleDidDisconnectPeripheral()
+  func onBleDidFailToConnectPeripheral()
+}
+extension UTEBluetoothRYApi.UTEABOtaManagerDelegate {
+  public func onBleConnect()
+  public func onBleDiscoverServices()
+  public func onBleDidDiscoverServices()
+  public func onBleDisconverCharacteristics()
+  public func onBleDidDiscoverCharacteristic(_ characteristic: CoreBluetooth.CBCharacteristic)
+  public func onBleSetNotify(_ characteristic: CoreBluetooth.CBCharacteristic)
+  public func onBleDidSetNotify(_ characteristic: CoreBluetooth.CBCharacteristic)
+  public func onBleNotPoweredOn(_ central: CoreBluetooth.CBCentralManager)
+  public func onBleDidConnectPeripheral()
+  public func onBleDidDisconnectPeripheral()
+  public func onBleDidFailToConnectPeripheral()
+}
+@objc @_inheritsConvenienceInitializers open class UTEABOtaManager : ObjectiveC.NSObject {
+  public static let DEFAULT_TIMEOUT: Swift.Double
+  public static let UNDEFINED_FIRMWARE_VERSION: Swift.UInt16
+  weak open var delegate: (any UTEBluetoothRYApi.UTEABOtaManagerDelegate)?
+  public var otaFirmwareVersion: Swift.UInt16
+  public var deviceFirmwareVersion: Swift.UInt16?
+  public var allowedUpdate: Swift.Bool
+  public var isCompressedData: Swift.Bool {
+    get
+  }
+  @objc override dynamic public init()
+  open func initialize()
+  open func deinitialize()
+  open func getPacketSize() -> Swift.UInt16
+  open func getBlockSize() -> Swift.UInt32
+  open func startOTA()
+  open func isDeviceReady() -> Swift.Bool
+  open func isReadyToUpdate() -> Swift.Bool
+  open func setOtaData(_ otaData: Foundation.Data)
+  open func setDataReader(_ dataReader: any UTEBluetoothRYApi.UTEABDataReader)
+  public func prepareToUpdate()
+  open func isUpdating() -> Swift.Bool
+  open func isTwsDevice() -> Swift.Bool
+  open func isTWSConnected() -> Swift.Bool
+  open func send(_ data: Foundation.Data) throws
+  open func notifyOnStop()
+  open func notifyOnError(_ error: UTEBluetoothRYApi.UTEABOTAError)
+  open func canSendNow() -> Swift.Bool
+  public func checkIfReadyToUpdate()
+  public func notifyOnProgress(progress: Swift.UInt32)
+  public func getOtaInfoVersion()
+  public func getOtaInfoUpdate(version: Swift.UInt16)
+  public func sendOtaIdentification()
+  public func getAllInfo()
+  public func sendOtaStart()
+  public func sendOtaData()
+  public func runDataSend()
+  public func processData(_ data: Foundation.Data) -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class UTEABLogger {
+  public static var logger: (any UTEBluetoothRYApi.UTEABLoggerDelegate)?
+  public static var logLevel: os.OSLogType
+  public static func log(message: Swift.String, ofCategory category: Swift.String, withType type: os.OSLogType)
+  public static func d(_ category: Swift.String, _ message: Swift.String)
+  public static func d(_ categoryClass: Any, _ message: Swift.String)
+  public static func i(_ categoryClass: Any, _ message: Swift.String)
+  public static func i(_ category: Swift.String, _ message: Swift.String)
+  public static func n(_ category: Swift.String, _ message: Swift.String)
+  public static func n(_ categoryClass: Any, _ message: Swift.String)
+  public static func e(_ category: Swift.String, _ message: Swift.String)
+  public static func e(_ categoryClass: Any, _ message: Swift.String)
+  public static func e(_ category: Swift.String, _ error: any Swift.Error)
+  public static func e(_ categoryClass: Any, _ error: any Swift.Error)
+  public static func f(_ category: Swift.String, _ message: Swift.String)
+  public static func f(_ categoryClass: Any, _ message: Swift.String)
+  public static func f(_ category: Swift.String, _ error: any Swift.Error)
+  public static func f(_ categoryClass: Any, _ error: any Swift.Error)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers open class UTEABUpdateMgr : ObjectiveC.NSObject, UTEBluetoothRYApi.UTEABOtaEventListener, UTEBluetoothRYApi.UTEABOtaSendDelegate {
+  public var device: CoreBluetooth.CBPeripheral!
+  public var abOta: UTEBluetoothRYApi.UTEABOta!
+  public var dataInCharacteristic: CoreBluetooth.CBCharacteristic?
+  public var dataOutCharacteristic: CoreBluetooth.CBCharacteristic?
+  @objc public var updateListener: (any UTEBluetoothRYApi.UTEABUpdateMgrListener)?
+  public var maxPacketSize: Swift.Int {
+    get
+  }
+  public func sendData(_ data: Foundation.Data)
+  public func onStatusChanged(_ status: UTEBluetoothRYApi.UTEABOtaStatus)
+  public func onReceiveVersion(_ version: Swift.UInt16)
+  public func onReceiveTWSInfo(isTWS: Swift.Bool, isTWSConnected: Swift.Bool)
+  public func onReceiveChannel(_ isLeftChannel: Swift.Bool)
+  @objc public func initABParam()
+  @objc public func clearABParam()
+  @objc public func doUpdate() -> Swift.Bool
+  @objc public func isReadyToUpdate() -> Swift.Bool
+  @objc public func foundCBCharacteristic(_ cb: CoreBluetooth.CBCharacteristic, de: CoreBluetooth.CBPeripheral)
+  @objc public func setBinData(_ otaData: Foundation.Data)
+  @objc public func onBleReady()
+  @objc public func receiveData(_ data: Foundation.Data)
+  @objc public func sentData()
+  @objc public func disconnectSendData()
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol UTEABUpdateMgrListener {
+  @objc func listenerOnReady()
+  @objc func listenerOnStart()
+  @objc func listenerOnProgress(_ progress: Swift.Float)
+  @objc func listenerOnPause()
+  @objc func listenerOnContinue()
+  @objc func listenerOnWaitFinish()
+  @objc func listenerOnFinish()
+  @objc func listenerOnError(errorCode: Swift.Int)
+}
+@_hasMissingDesignatedInitializers final public class UTEABOtaConstants {
+  public static let DEFAULT_MTU_SIZE: Swift.UInt16
+  public static let DEFAULT_PACKET_SIZE: Swift.UInt16
+  public static let DEFAULT_BLOCK_SIZE: Swift.UInt32
+  public static let UNDEFINED_BLOCK_SIZE: Swift.UInt32
+  @objc deinit
+}
+public enum UTEABOTAError : Swift.Error {
+  case refusedByDevice
+  case noDataAvailable
+  case deviceReport(code: Swift.UInt8)
+  case timeoutWaitingResponse
+  case twsDisconnected
+  case dataReaderError
+}
+extension UTEBluetoothRYApi.UTEABOTAError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}

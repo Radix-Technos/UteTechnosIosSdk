@@ -9,10 +9,15 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, UTEAbilityType) {
+    ///激活开关 action switch
     UTEAbilityTypeAllBtn                    = 0x01,
+    ///经期开始提醒开关 Menstrual reminder switch
     UTEAbilityTypeMenstrualStartBtn         = 0x02,
+    ///经期结束提醒开关 Menstrual end reminder switch
     UTEAbilityTypeMenstrualEndBtn           = 0x04,
+    ///易孕期开始提醒开关 Start of easy pregnancy reminder switch
     UTEAbilityTypePregnancyStartBtn         = 0x08,
+    ///易孕期结束提醒开关 End of pregnancy reminder switch
     UTEAbilityTypePregnancyEndBtn           = 0x10,
 };
 
@@ -23,19 +28,34 @@ typedef NS_ENUM(NSInteger, UTEAbilityType) {
  *
  */
 typedef NS_ENUM(NSInteger, UTEMenstruationType) {
-    ///安全期
+    ///安全期 safe period
     UTEMenstruationTypeSafe,
-    ///经期
+    ///经期 Menstruation
     UTEMenstruationTypeMenstruation,
-    ///排卵/易孕期
+    ///排卵/易孕期 Ovulation
     UTEMenstruationTypeOvulation,
     
 };
 
 @interface UTEModelMenstrualNotifyAbility : NSObject
-
+///开关类型 switch type
 @property (nonatomic,assign) UTEAbilityType     abilityType;
+///开关状态 switch status
 @property (nonatomic,assign) BOOL               enable;
+
+@end
+
+@interface UTEModelMenstrualSwitch : NSObject
+///所有开关 All switches
+@property (nonatomic,assign) BOOL            allEnable;
+///经期开始提醒开关 Menstrual reminder switch
+@property (nonatomic,assign) BOOL            menstrualStartEnable;
+///经期结束提醒开关 Menstrual end reminder switch
+@property (nonatomic,assign) BOOL            menstrualEndEnable;
+///易孕期开始提醒开关 Start of easy pregnancy reminder switch
+@property (nonatomic,assign) BOOL            pregnancyStartEnable;
+///易孕期结束提醒开关 End of pregnancy reminder switch
+@property (nonatomic,assign) BOOL            pregnancyEndEnable;
 
 @end
 
@@ -87,34 +107,43 @@ typedef NS_ENUM(NSInteger, UTEMenstruationType) {
 
 
 @interface UTEModelMenstrualData : NSObject
-///开始时间戳
+///开始时间戳 Menstrual start timestamp
 @property (nonatomic,assign) NSInteger     menstrualStartTime;
-///结束时间戳（开始时间+长度）
+///结束时间戳（开始时间+长度） Menstrual end timestamp (Start time+length)
 @property (nonatomic,assign) NSInteger     menstrualEndTime;
-///易孕期开始时间戳 （比如经期后4天）
+///易孕期开始时间戳 （比如经期后4天）Start timestamp of easy pregnancy period (e.g. 4 days after menstruation)
 @property (nonatomic,assign) NSInteger     easyToPregnantStartTime;
-///易孕期结束时间戳 （比如共10天）
+///易孕期结束时间戳 （比如共10天） End timestamp of easy pregnancy period (e.g. 10 days in total)
 @property (nonatomic,assign) NSInteger     easyToPregnantEndTime;
-///生理期周期
+///生理期周期 Physiological cycle
 @property (nonatomic,assign) NSInteger     cycleDays;
-///固定值1
+///固定值1 (APP设置时)(When setting up the app)Fixed value 1  （获取时）1：用户输入 0：不是(When retrieving) 1: User input 0: No
 @property (nonatomic,assign) NSInteger     isManual;
 
 @end
 @interface UTEModelCycleData : NSObject
-///固定值：生理期长度
+///固定值：生理期长度 Fixed value: length of physiological period
 @property (nonatomic,assign) NSInteger     historyCycleSize;
-///固定值：生理期周期
+///固定值：生理期周期 Fixed value: physiological cycle
 @property (nonatomic,assign) NSInteger     futureCycleSize;
-///设置生理周期数据的发送时间戳（当前时间戳）
+///设置生理周期数据的发送时间戳（当前时间戳） Set the sending timestamp for physiological cycle data (current timestamp)
 @property (nonatomic,assign) NSInteger     modifyTime;
-///生理期长度
+///生理期长度 Physiological period length
 @property (nonatomic,assign) NSInteger     manualMenstrualDays;
-///生理期周期
+///生理期周期 Physiological cycle
 @property (nonatomic,assign) NSInteger     manualCycleDays;
-///生理期具体信息数据
+///生理期具体信息数据 Physiological period specific information data
 @property (nonatomic,strong) NSMutableArray<UTEModelMenstrualData *>       *menstrualDataList;
 
+
+@end
+
+@interface UTEModelCycleBloodVolume : NSObject
+
+///时间戳 timestamp
+@property (nonatomic,assign) NSInteger     timestamp;
+///血量范围 0：无血量 1：少量 2：中等 3：大量 Blood volume range 0: no blood volume 1: small amount 2: moderate 3: large amount
+@property (nonatomic,assign) NSInteger type;
 
 @end
 
@@ -125,8 +154,16 @@ typedef NS_ENUM(NSInteger, UTEMenstruationType) {
  Set female physiological cycle switch
  
  @parma status
- 0：关闭 固定值31：全开启
- 0: Close, fixed value 31: Fully open
+ 0：关闭 0x01|0x02|0x04|0x08|0x10：全开启（建议）
+ 0: Close, 0x01|0x02|0x04|0x08|0x10: Fully open(Suggestion)
+ 
+ 必须设置0x01 0x01 must be set
+ 
+ 比如NSInteger state = 0x01|0x02|0x04|0x08|0x10;全开启
+ e.g. Fully open
+ 
+ 比如NSInteger state = 0x01|0x02;激活开关+经期开始提醒开启
+ e.g. Activate switch+menstrual reminder on
  
  @block errorCode
  请求成功:100000 其他:错误码
@@ -241,6 +278,98 @@ typedef NS_ENUM(NSInteger, UTEMenstruationType) {
 - (void)setMenstrualCapability:(NSInteger)capability block:(void(^)(NSInteger errorCode,NSDictionary *uteDict))block;
 ///主动让设备发通知
 - (void)getnotify:(NSInteger)dd;
+
+/** 获取生理周期开关状态
+ get Physiological cycle switch status
+ 
+ @parma UTEModelMenstrualSwitch
+ 参考UTEModelMenstrualSwitch 注释
+ Refer to UTEModelMenstrualSwitch annotation
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getPhysiologicalCycleSwitchBlock:(void(^)(NSInteger errorCode,UTEModelMenstrualSwitch* model))block;
+
+/** 监听生理周期开关状态
+ notify Physiological cycle switch status
+ 
+ @parma UTEModelMenstrualSwitch
+ 参考UTEModelMenstrualSwitch 注释
+ Refer to UTEModelMenstrualSwitch annotation
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)onNotifyPhysiologicalCycleSwitchBlock:(void(^)(NSInteger errorCode,UTEModelMenstrualSwitch *model))block;
+
+/** 获取生理周期数据
+ get Physiological cycle data
+ 
+ @parma UTEModelCycleData
+ 参考UTEModelCycleData 注释
+ Refer to UTEModelCycleData annotation
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getPhysiologicalCycleDataBlock:(void(^)(NSInteger errorCode,UTEModelCycleData* model))block;
+
+/** 监听生理周期数据
+ notify Physiological cycle data
+ 
+ @parma UTEModelCycleData
+ 参考UTEModelCycleData 注释
+ Refer to UTEModelCycleData annotation
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)onNotifyPhysiologicalCycleDataBlock:(void(^)(NSInteger errorCode,UTEModelCycleData *model))block;
+
+/** 设置生理周期血量
+ get Physiological cycle Blood Volume
+ 
+ @parma UTEModelCycleBloodVolume
+ 参考UTEModelCycleBloodVolume 注释
+ Refer to UTEModelCycleBloodVolume annotation
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)setPhysiologicalCycleBloodVolume:(UTEModelCycleBloodVolume *)model Block:(void(^)(NSInteger errorCode))block;
+
+/** 获取生理周期血量
+ get Physiological cycle Blood Volume
+ 
+ @parma UTEModelCycleBloodVolume
+ 参考UTEModelCycleBloodVolume 注释
+ Refer to UTEModelCycleBloodVolume annotation
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getPhysiologicalCycleBloodVolumeBlock:(void(^)(NSInteger errorCode,NSArray <UTEModelCycleBloodVolume*>* array))block;
+
+/** 监听生理周期血量
+ notify Physiological cycle Blood Volume
+ 
+ @parma UTEModelCycleBloodVolume
+ 参考UTEModelCycleBloodVolume 注释
+ Refer to UTEModelCycleBloodVolume annotation
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)onNotifyPhysiologicalCycleBloodVolumeBlock:(void(^)(NSInteger errorCode,NSArray <UTEModelCycleBloodVolume*>* array))block;
+
 
 #pragma mark - Tool
 /**

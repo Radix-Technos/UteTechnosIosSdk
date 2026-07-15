@@ -16,6 +16,9 @@
 @class UTEUploadStatusModel;
 @class UTEServiceAGPSPostModel;
 @class RYUTEOneBleDisplayInfoModel;
+@class UTEServerAMAPPostModel;
+@class UTEServerAMAPLicenseModel;
+
 
 typedef enum : NSUInteger {
     VVDataTypeActivation            = 1 << 0,
@@ -113,5 +116,11 @@ typedef enum : NSUInteger {
 
 ///获取服务器APGS文件信息
 - (void)getServerAGPSFile:(UTEServiceAGPSPostModel *)model success:(void (^)(id data))success failure:(void (^)(NSError *  error))failure;
+
+///高德授权
+- (void)getServerAMAPLicense:(UTEServerAMAPLicenseModel *)model success:(void (^)(id data))success failure:(void (^)(NSError *  error))failure;
+
+///获取服务器高德地图文件信息
+- (void)getServerAMAP:(UTEServerAMAPPostModel *)model success:(void (^)(id data))success failure:(void (^)(NSError *  error))failure;
 
 @end

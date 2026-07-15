@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, UTEDevicePlatformType) {
     UTEDevicePlatformTypeATS308x,
     UTEDevicePlatformTypeATS3085S,
     UTEDevicePlatformTypeATS3028Sigmastar,
+    UTEDevicePlatformTypeAB895,
 };
 
 typedef NS_ENUM(NSInteger, UTEDeviceDialType) {
@@ -299,6 +300,26 @@ typedef NS_ENUM(NSInteger, UTEWeekType) {
     UTEWeekTypeEveryday = 0x7F,
 
 };
+
+/*!
+ *  @enum UTEScheduleType
+ */
+typedef NS_ENUM(NSInteger, UTEScheduleType) {
+    UTEScheduleTypeNoLoop   = 0,
+    
+    UTEScheduleTypeSun      = 0x01,
+    UTEScheduleTypeMon      = 0x02,
+    UTEScheduleTypeTue      = 0x04,
+    UTEScheduleTypeWed      = 0x08,
+    UTEScheduleTypeThur     = 0x10,
+    UTEScheduleTypeFri      = 0x20,
+    UTEScheduleTypeSat      = 0x40,
+    
+    UTEScheduleTypeEveryday = 0x7F,
+
+};
+
+
 
 /*!
  *  @enum UTEWeather
@@ -867,6 +888,9 @@ typedef NS_ENUM(NSInteger, UTEApp) {
     UTEAppYahoo,
 //    UTEAppTitanSmartWorld,//定制app，不再专设枚举，屏蔽
     UTEAppSlack,
+    UTEAppOkru,
+    UTEAppYandex,
+    
     UTEAppSpotify,
     UTEAppiOSMail,
     
@@ -907,8 +931,95 @@ typedef NS_ENUM(NSInteger, UTEApp) {
     
     UTEAppDouYin,
     ///需要固件支持否则无效，还是属于其他提醒通知
-    UTEAppAlipay,
     
+    UTEAppMeesho,
+    UTEAppZivame,
+    UTEAppAjio,
+    UTEAppUrbanic,
+    UTEAppNykaa,
+    UTEAppHealthifyme,
+    UTEAppCultfit,
+    UTEAppFlo,
+    UTEAppHinge,
+    UTEAppBumble,
+    UTEAppAlipay,
+    UTEAppMeituan,
+    UTEAppWeibo,
+    UTEAppAICOACH,
+    UTEAppMorningpaper,
+    UTEAppBlinkit,
+    UTEAppZepto,
+    UTEAppAha,
+    UTEAppBigbasket,
+    UTEAppYonoBySBI,
+    UTEAppJioSaavn,
+    UTEAppMyJio,
+    UTEAppIMobilePay,
+    UTEAppAirtel,
+    UTEAppRapido,
+    UTEApp365scores,
+    UTEApp7eleven,
+    UTEAppABABank,
+    UTEAppAcleda,
+    UTEAppAYAPay,
+    UTEAppBangkokBank,
+    UTEAppBe,
+    UTEAppBkash,
+    UTEAppBolt,
+    UTEAppCabify,
+    UTEAppCBPay,
+    UTEAppChatGPT,
+    UTEAppDcard,
+    UTEAppDidi,
+    UTEAppDISCORD,
+    UTEAppFilgoal,
+    UTEAppFoodpanda,
+    UTEAppGoogle,
+    UTEAppGrab,
+    UTEAppHaraj,
+    UTEAppHungerStation,
+    UTEAppInstapay,
+    UTEAppKBZPay,
+    UTEAppKPLUS,
+    UTEAppKrungsri,
+    UTEAppKrungthaiNEXT,
+    UTEAppLineman,
+    UTEAppMessage,
+    UTEAppMrsool,
+    UTEAppNoon,
+    UTEAppPickaboo,
+    UTEAppRappi,
+    UTEAppRednote,
+    UTEAppSnapp,
+    UTEAppSTCPay,
+    UTEAppTADA,
+    UTEAppThreads,
+    UTEAppTinder,
+    UTEAppTrueMoney,
+    UTEAppTtb,
+    UTEAppUABPay,
+    UTEAppUala,
+    UTEAppVeeka,
+    UTEAppWaze,
+    UTEAppXanhSM,
+    UTEAppYassir,
+    UTEAppZoom,
+    UTEAppMAX,
+    UTEAppFlipboard,
+    UTEAppPandora,
+    UTEAppGoogleMap,
+    UTEAppLyft,
+    UTEAppGoogleDuo,
+    UTEAppShazam,
+    UTEAppDingTalk,
+    UTEAppStrava,
+    UTEAppAVITO,
+    UTEAppRussia_VK,
+    UTEAppRussia_odnoklassniki,
+    UTEAppRussia_yandex,
+    UTEAppRussia_yandex_mobile,
+    UTEAppRussia_Mail,
+    UTEAppRussia_yandex_mail,
 };
 
 /*!
@@ -940,6 +1051,36 @@ typedef NS_ENUM(NSInteger, UTEHealthType1) {
 typedef NS_ENUM(NSInteger, UTEHealthType2) {
     UTEHealthType2BloodPressure         = 0x01,
     UTEHealthType2Mood                  = 0x02,
+
+};
+
+
+typedef NS_ENUM(NSInteger, UTEFirmwareType) {
+    UTEFirmwareTypeBT           = 1 << 0,
+    UTEFirmwareTypePatch        = 1 << 1,
+    UTEFirmwareTypeUI           = 1 << 2,
+    UTEFirmwareTypeM3           = 1 << 3,
+    UTEFirmwareTypeDSP          = 1 << 4,
+    UTEFirmwareTypePIC          = 1 << 5,
+    UTEFirmwareTypeCLK0         = 1 << 6,
+    UTEFirmwareTypeCLK1         = 1 << 7,
+    
+    UTEFirmwareTypeSGS          = 1 << 8,
+    UTEFirmwareTypeBOOT         = 1 << 9,
+    UTEFirmwareTypeLINUX        = 1 << 10,
+    UTEFirmwareTypeWear         = 1 << 11,
+};
+
+typedef NS_ENUM(NSInteger, UTEHealthType3) {
+    UTEHealthType3HighPAIDur         = 0x01,
+    UTEHealthType3HRV                = 0x02,
+
+};
+
+typedef NS_ENUM(NSInteger, UTEBatteryStatus) {
+    UTEBatteryStatusNormal              = 0,
+    UTEBatteryStatusCharging,
+    UTEBatteryStatusChargingFully,
 
 };
 
@@ -1153,7 +1294,7 @@ typedef NS_ENUM(NSInteger, UTEALICMD) {
 };
 
 /*!
- *  @enum Offline Voice Control (Activate Status)
+ *  @enum UTERegionType
  */
 typedef NS_ENUM(NSInteger, UTERegionType) {
     UTERegionTypeChina               = 1,
@@ -1169,7 +1310,7 @@ typedef NS_ENUM(NSInteger, UTERegionType) {
  */
 typedef NS_ENUM(NSInteger, UTESystemSettingsType) {
     ///恢复出厂设置
-    UTESystemSettingsTypeRestore       = 0x01, //Restore factory settings
+    UTESystemSettingsTypeReset       = 0x01, //Reset factory settings
     ///关机
     UTESystemSettingsTypeShutdown      = 0x02,
     ///重启
@@ -1178,30 +1319,31 @@ typedef NS_ENUM(NSInteger, UTESystemSettingsType) {
 };
 
 /*!
- *  @enum Glasses Status
+ *  @enum Wear Status
  */
-typedef NS_ENUM(NSInteger, UTEGlassesStatus) {
-    ///眼镜支架已折叠
-    UTEGlassesStatusBracketFolded          = 0x01, //The bracket has been folded.
-    ///眼镜支架已打开
-    UTEGlassesStatusBracketUnfolded        = 0x02,
-    ///眼镜录像模式
-    UTEGlassesStatusVideo                  = 0x03,
-    ///眼镜拍照模式
-    UTEGlassesStatusPhoto                  = 0x04,
-    ///眼镜录音模式
-    UTEGlassesStatusRecord                 = 0x05,
-    ///眼镜正常待机模式
-    UTEGlassesStatusNormal                 = 0x06,
-    ///眼镜已佩戴
-    UTEGlassesStatusWearing                = 0x07,       //Glasses have been worn.
-    ///眼镜未佩戴
-    UTEGlassesStatusNotWearing             = 0x08,
-    ///眼镜升级中
-    UTEGlassesStatusOTA                    = 0x09,        //Glasses are being upgraded
+typedef NS_ENUM(NSInteger, UTEWearStatus) {
+    UTEWearStatusIdle                   = 1 << 0,
+    UTEWearStatusCameraOpen             = 1 << 1, //If not in this status, please remember to turn on your camera
     
-    ///眼镜工作异常
-    UTEGlassesStatusAbnormal               = 0xff,
+    UTEWearStatusVideoMode              = 1 << 2,  //Recording video mode
+    UTEWearStatusPhotoMode              = 1 << 3,  //Taking a photo
+    UTEWearStatusAudioMode              = 1 << 4,  //Recording audio mode
+    
+    UTEWearStatusWearing                = 1 << 5,
+    UTEWearStatusLowBattery             = 1 << 6,
+    UTEWearStatusWiFiOpen               = 1 << 7,
+    UTEWearStatusIdentifyingImg         = 1 << 8,
+    UTEWearStatusCameraCalibrate        = 1 << 9,
+    UTEWearStatusReset                  = 1 << 10,
+    
+    UTEWearStatusLiveNetworkConnecting  = 1 << 11,
+    UTEWearStatusStreaming              = 1 << 12,
+    UTEWearStatusMediaNumGetting        = 1 << 13,
+    UTEWearStatusNetworkListGetting     = 1 << 14,
+    
+    UTEWearStatusLiveNetworkConnected   = 1 << 15,
+    UTEWearStatusLiveNetworkDisconnecting   = 1 << 16,
+
 };
 
 /*!
@@ -1220,9 +1362,9 @@ typedef NS_ENUM(NSInteger, UTEStorageType) {
     UTEStorageTypeVideoTotal          = 0x05,
     ///新增录制视频的数量
     UTEStorageTypeVideoNew            = 0x06,
-    ///存储的总内存
+    ///存储的总内存 （单位byte）
     UTEStorageTypeTotalSize           = 0x07,
-    ///存储的剩余内存
+    ///存储的剩余内存（单位byte）
     UTEStorageTypeTotalAvailable      = 0x08,
 };
 
@@ -1238,20 +1380,20 @@ typedef NS_ENUM(NSInteger, UTEDirectionType) {
 };
 
 /*!
- *  @enum Device Audio Type
+ *  @enum Device Audio Style
  */
-typedef NS_ENUM(NSInteger, UTEAudioType) {
+typedef NS_ENUM(NSInteger, UTEAudioStyle) {
     ///音效标准模式
-    UTEAudioTypeNormal           = 0x01,
+    UTEAudioStyleNormal           = 0x01,
     ///音效轻柔模式
-    UTEAudioTypeSoft             = 0x02,
+    UTEAudioStyleSoft             = 0x02,
     ///音效增强模式
-    UTEAudioTypeStrengthen       = 0x03,
+    UTEAudioStyleStrengthen       = 0x03,
     ///音效降噪模式
-    UTEAudioTypeNoiseReduction   = 0x04,
+    UTEAudioStyleNoiseReduction   = 0x04,
     
     ///耳机工作异常
-    UTEAudioTypeAbnormal         = 0xff,
+    UTEAudioStyleAbnormal         = 0xff,
 
 };
 
@@ -1272,4 +1414,408 @@ typedef NS_ENUM(NSInteger, UTEPasswordStatus) {
     UTEPasswordStatusSame,      //Same as the previous account password
     UTEPasswordStatusNoAccount, //The device did not have an account password before
     UTEPasswordStatusDifferent, //Wrong password
+};
+
+/*!
+ *  @enum UTEControlType
+ */
+typedef NS_ENUM(NSInteger, UTEControlType) {
+    UTEControlTypeVideoStart,
+    UTEControlTypeVideoStop,
+    UTEControlTypeVoiceStart,
+    UTEControlTypeVoiceStop,
+    UTEControlTypeTakePic,
+    UTEControlTypeAiPic,
+};
+
+/*!
+ *  @enum UTEControlStatus
+ */
+typedef NS_ENUM(NSInteger, UTEControlStatus) {
+    UTEControlStatusTakePicSuccess      = 1,
+    UTEControlStatusTakePicFail,
+    
+    UTEControlStatusVideoStartSuccess,
+    UTEControlStatusVideoStartFail,
+    UTEControlStatusVideoStopSuccess,
+    UTEControlStatusVideoStopFail,
+    
+    UTEControlStatusVoiceStartSuccess,
+    UTEControlStatusVoiceStartFail,
+    UTEControlStatusVoiceStopSuccess,
+    UTEControlStatusVoiceStopFail,
+    
+    UTEControlStatusStreamingStartSuccess,
+    UTEControlStatusStreamingStartFail,
+    UTEControlStatusStreamingStopSuccess,
+    UTEControlStatusStreamingStopFail,
+    
+    UTEControlStatusResetSuccess,
+    UTEControlStatusResetFail,
+    
+    UTEControlStatusGetMediaFilesSuccess,
+    UTEControlStatusGetMediaFilesFail,
+    
+};
+
+/*!
+ *  @enum UTEOfflineVoiceAuth
+ */
+
+typedef NS_ENUM(NSInteger, UTEOfflineVoiceAuth) {
+    UTEOfflineVoiceAuthAuthorized,
+    UTEOfflineVoiceAuthServerFail,
+    UTEOfflineVoiceAuthUnauthorized,
+    UTEOfflineVoiceAuthFail,
+};
+typedef NS_ENUM(NSInteger, UTEMediaStatus) {
+    UTEMediaStatusStop,       //Stop recording audio or video
+    UTEMediaStatusStart,      //Start recording audio or video
+    UTEMediaStatusProcessing, //In the recording audio or video
+    UTEMediaStatusTakePic,
+    UTEMediaStatusOtherBusy,
+};
+
+/*!
+ *  @enum UTEOfflineVoiceAuthorizationStatus
+ */
+typedef NS_ENUM(NSInteger, UTEOfflineVoiceAuthorizationStatus) {
+    ///授权通过
+    UTEOfflineVoiceAuthorizationStatusAuthorized,
+    ///服务器授权失败
+    UTEOfflineVoiceAuthorizationStatusServerFail,
+    ///设备未授权
+    UTEOfflineVoiceAuthorizationStatusUnauthorized,
+    ///离线语音授权失败
+    UTEOfflineVoiceAuthorizationStatusFail,
+    ///设备时间异常
+    UTEOfflineVoiceAuthorizationStatusNone,
+
+};
+
+/*!
+ *  @enum UTEAiModel
+ */
+typedef NS_ENUM(NSInteger, UTEAiModel) {
+    UTEAiModelERNIEBot,
+    UTEAiModelAdFlash,
+    UTEAiModelDoubao,
+    UTEAiModeliFlytek,
+    UTEAiModelChatGPT,
+    UTEAiModelMicrosoft,
+    UTEAiModelTencentYuanbao,
+    UTEAiModelDeepseek,
+    UTEAiModelYoujie,
+};
+
+/*!
+ *  @enum UTEOffWristModel
+ */
+typedef NS_ENUM(NSInteger, UTEOffWristModel) {
+    ///无
+    UTEOffWristModelNone = 0,
+    ///心率
+    UTEOffWristModelHRM,
+    ///血氧
+    UTEOffWristModelSpo2,
+    ///定时血氧
+    UTEOffWristModelSpo2Time,
+    ///hrv
+    UTEOffWristModelHRV,
+    ///压力
+    UTEOffWristModelStress,
+    ///佩戴
+    UTEOffWristModelWear,
+    ///工厂测试模式
+    UTEOffWristModelFactcry,
+    ///体温
+    UTEOffWristModelTemperature,
+    ///FPC测试
+    UTEOffWristModelFPCTest,
+    ///一键测量
+    UTEOffWristModelOneKeyTest,
+    ///情绪
+    UTEOffWristModelEmo,
+    ///血压
+    UTEOffWristModelBP,
+};
+
+/*!
+ *  @enum UTEDeviceError
+ */
+typedef NS_ENUM(NSInteger, UTEDeviceError) {
+    
+    UTEDeviceErrorDisconnect            = -1000, //设备已断开
+    UTEDeviceErrorCRC                   = -999,  //数据校验失败
+    UTEDeviceErrorAppParamEmpty         = -998,  //App参数为空
+    
+    UTEDeviceErrorCharacteristicNil     = -996,  //SDK的特征值为空
+    UTEDeviceErrorNetworkTimeout        = -995,
+    UTEDeviceErrorDownload              = -994,
+    UTEDeviceErrorFolderOperation       = -993,
+    
+    UTEDeviceErrorDialSending           = -853,  //表盘数据指令在交互中
+    UTEDeviceErrorBetaFile              = -852,  //Beta文件有错误
+    UTEDeviceErrorDialCancel            = -851,  //设备主动取消表盘
+    UTEDeviceErrorDialFail              = -850,  //表盘操作失败
+    UTEDeviceErrorDialOpen              = -849,  //打开文件失败
+    UTEDeviceErrorDialRest              = -848,  //重置失败
+    UTEDeviceErrorDialCmd               = -847,  //指令失败
+    UTEDeviceErrorDialSize              = -846,  //表盘的大小与传入的图片大小不一致
+    
+    UTEDeviceErrorOTABinNil             = -807,  //文件bin 不存在
+    UTEDeviceErrorOTAConfigNil          = -806,  //文件config 不存在
+    UTEDeviceErrorOTAUnzipFail          = -805,  //固件解压文件
+    UTEDeviceErrorOTADeleteFail         = -804,  //固件删除文件
+    UTEDeviceErrorOTADiffVersion        = -803,  //固件版本不一致
+    UTEDeviceErrorOTAHighTemperature    = -802,  //设备温度过高
+    UTEDeviceErrorOTACancelFail         = -801,  //设备升级取消失败
+    UTEDeviceErrorOTAFirmwarePath       = -800,  //固件路径为空
+    
+    UTEDeviceErrorOTA_JLFail                = -724, //OTA升级失败
+    UTEDeviceErrorOTA_JLDataIsNull          = -723, //OTA升级数据为空
+    UTEDeviceErrorOTA_JLCommandFail         = -722, //OTA指令失败
+    UTEDeviceErrorOTA_JLSeekFail            = -721, //OTA标示偏移查找失败
+    UTEDeviceErrorOTA_JLInfoFail            = -720, //OTA升级固件信息错误
+    UTEDeviceErrorOTA_JLLowPower            = -719, //OTA升级设备电压低
+    UTEDeviceErrorOTA_JLEnterFail           = -718, //未能进入OTA升级模式
+    UTEDeviceErrorOTA_JLUpgrading           = -717, //OTA升级中
+    UTEDeviceErrorOTA_JLReconnect           = -716, //OTA需重连设备(uuid方式)
+    UTEDeviceErrorOTA_JLReboot              = -715, //OTA需设备重启
+    UTEDeviceErrorOTA_JLPreparing           = -714, //OTA准备中
+    UTEDeviceErrorOTA_JLPrepared            = -713, //OTA准备完成
+    UTEDeviceErrorOTA_JLFailVerification    = -712, //升级数据校验失败
+    UTEDeviceErrorOTA_JLFailCompletely      = -711, //升级失败
+    UTEDeviceErrorOTA_JLFailKey             = -710, //升级数据校验失败
+    UTEDeviceErrorOTA_JLFailErrorFile       = -709, //升级文件出错
+    UTEDeviceErrorOTA_JLFailUboot           = -708, //uboot不匹配
+    UTEDeviceErrorOTA_JLFailLenght          = -707, //升级过程长度出错
+    UTEDeviceErrorOTA_JLFailFlash           = -706, //升级过程flash读写失败
+    UTEDeviceErrorOTA_JLFailCmdTimeout      = -705, //升级过程指令超时
+    UTEDeviceErrorOTA_JLFailSameVersion     = -704, //相同版本
+    UTEDeviceErrorOTA_JLFailTWSDisconnect   = -703, //TWS耳机未连接
+    UTEDeviceErrorOTA_JLFailNotInBin        = -702, //耳机未在充电仓
+    UTEDeviceErrorOTA_JLReconnectWithMacAddr= -701, //OTA需重连设备(mac方式)
+    
+    UTEDeviceErrorOTAFail               = -700,  //升级失败了，原因要看Log
+    UTEDeviceErrorDataEmpty             = -601,   //设备返回空值
+    UTEDeviceErrorNotSupport            = -600,   //不支持功能指令
+    
+    
+    UTEDeviceErrorParamNotStandardized  = -100, //数据不符合规范
+    UTEDeviceErrorStarburstAi           = -101, //AI库返回错误
+    
+    UTEDeviceErrorCommonFail            = -2,    //操作失败
+    UTEDeviceErrorOTAUnknow             = -1,    //其他未知不能升级
+    
+    UTEDeviceErrorNone                  = 0,        //正常（无错误）
+    UTEDeviceErrorCmdTimeout            = 408,      //指令超时
+    UTEDeviceErrorFileEmpty             = 701,      //文件为空
+    UTEDeviceErrorParamEmpty            = 40003,    //参数为空
+    ///正常（无错误） normal No problem
+    UTEDeviceErrorNil                   = 100000,   //正常（无错误）
+    
+    
+    UTEDeviceErrorOTALowPower           = 109002,//ota传输错误手表电量低
+    UTEDeviceErrorOTAProgress           = 109019,//设备ota升级中
+    UTEDeviceErrorDialSizeTooBig        = 140009,//设备内存不足
+    UTEDeviceErrorDialUpperLimit        = 140004,//表盘数量达上限
+};
+/*!
+ *  @enum UTEMeasurementType
+ */
+typedef NS_ENUM(NSInteger, UTEMeasurementType) {
+    UTEMeasurementTypeNONE              = 0,
+    ///心率
+    UTEMeasurementTypeHRM               = 0x0001,
+    ///血氧
+    UTEMeasurementTypeOXY               = 0x0002,
+    ///心电
+    UTEMeasurementTypeECG               = 0x0004,
+    ///HRV
+    UTEMeasurementTypeHRV               = 0x0008,
+    ///压力
+    UTEMeasurementTypePressure          = 0x0010,
+    ///体温
+    UTEMeasurementTypeTemperature       = 0x0020,
+    ///血压
+    UTEMeasurementTypeBlood             = 0x0040,
+    ///情绪
+    UTEMeasurementTypeEmo               = 0x0080,
+    ///其他
+    UTEMeasurementTypeOther             = 0x0100,
+
+};
+/*!
+ *  @enum UTEAudioType
+ */
+typedef NS_ENUM(NSInteger, UTEAudioType) {
+    
+    UTEAudioTypeOPUS,
+    UTEAudioTypeSBC,
+    UTEAudioTypePCM,
+    UTEAudioTypeWAV,
+};
+/*!
+ *  @enum UTEWearFunction
+ */
+typedef NS_ENUM(NSInteger, UTEWearFunction) {
+    
+    UTEWearFunctionSpeaker = 1, //see UTESpeakerType (UTEWearFunctionModel.value)
+    UTEWearFunctionLED,         //see UTELEDType (UTEWearFunctionModel.value)
+    UTEWearFunctionMic,         //see UTEMicType (UTEWearFunctionModel.value)
+    UTEWearFunctionButton,      //see UTEButtonKey | UTEButtonKeyEvent (UTEWearFunctionModel.value)
+    UTEWearFunctionTP,          //see UTEButtonTP (UTEWearFunctionModel.value)
+    UTEWearFunctionHall,
+    UTEWearFunctionGsensor3,
+    UTEWearFunctionSensorLight,
+    UTEWearFunctionGsensor6,
+    UTEWearFunctionTFCard,
+    UTEWearFunctionWiFi,
+    UTEWearFunctionCamera,
+
+};
+
+/*!
+ *  @enum UTESpeakerType
+ */
+typedef NS_ENUM(NSInteger, UTESpeakerType) {
+    
+    UTESpeakerTypeLeft                  = 1 << 0,
+    UTESpeakerTypeRight                 = 1 << 1,
+    UTESpeakerTypeCenter                = 1 << 2,
+    UTESpeakerTypeFourth                = 1 << 3,
+};
+
+/*!
+ *  @enum UTELEDType
+ */
+typedef NS_ENUM(NSInteger, UTELEDType) {
+    
+    UTELEDTypeRed1                      = 1 << 0,
+    UTELEDTypeGreen2                    = 1 << 1,
+    UTELEDTypeBlue3                     = 1 << 2,
+    UTELEDTypeLED4                      = 1 << 3,
+};
+
+/*!
+ *  @enum UTEMicType
+ */
+typedef NS_ENUM(NSInteger, UTEMicType) {
+    
+    UTEMicTypeLeft                      = 1 << 0,
+    UTEMicTypeRight                     = 1 << 1,
+    UTEMicTypeCenter                    = 1 << 2,
+};
+/*!
+ *  @enum UTEButtonKey
+ */
+typedef NS_ENUM(NSInteger, UTEButtonKey) {
+    
+    UTEButtonKeyPower                    = 0x0100,
+    UTEButtonKeyPic                      = 0x0200,
+    UTEButtonKeyAudio                    = 0x0400,
+    UTEButtonKeyFourth                   = 0x0800,
+};
+
+typedef NS_ENUM(NSInteger, UTEButtonKeyEvent) {
+    
+    UTEButtonKeyEventClick               = 1 << 0,
+    UTEButtonKeyEventDouble              = 1 << 1,
+    UTEButtonKeyEventPress               = 1 << 2,
+
+};
+/*!
+ *  @enum UTEButtonTP
+ */
+typedef NS_ENUM(NSInteger, UTEButtonTP) {
+    
+    UTEButtonTP_up                      = 1 << 0,
+    UTEButtonTP_down                    = 1 << 1,
+    UTEButtonTP_left                    = 1 << 2,
+    UTEButtonTP_right                   = 1 << 3,
+    UTEButtonTP_click                   = 1 << 4,
+    UTEButtonTP_double                  = 1 << 5,
+    UTEButtonTP_press                   = 1 << 6,
+};
+
+/*!
+ *  @enum UTEVoiceAiStatus
+ */
+typedef NS_ENUM(NSInteger, UTEVoiceAiStatus) {
+    
+    UTEVoiceAiStatusStop,
+    UTEVoiceAiStatusStart,
+    UTEVoiceAiStatusContinue,
+};
+
+/*!
+ *  @enum UTEWearOTAStatus
+ */
+typedef NS_ENUM(NSInteger, UTEWearOTAStatus) {
+    
+    UTEWearOTAStatusRebootSuccess,
+    UTEWearOTAStatusRebootFail,
+    UTEWearOTAStatusOpenISPSuccess,
+    UTEWearOTAStatusOpenISPFail,
+};
+
+/*!
+ *  @enum UTEControlMedia
+ */
+typedef NS_ENUM(NSInteger, UTEControlMedia) {
+    
+    UTEControlMediaPlay,
+    UTEControlMediaPause,
+    UTEControlMediaSongPre,
+    UTEControlMediaSongNext,
+    UTEControlMediaVolumeUp,
+    UTEControlMediaVolumeDown,
+};
+
+/*!
+ *  @enum UTEStabilizationCalibrationStatus
+ */
+typedef NS_ENUM(NSInteger, UTEStabilizationCalibrationStatus) {
+    
+    UTEStabilizationCalibrationStatusStart,
+    UTEStabilizationCalibrationStatusSuccess,
+    UTEStabilizationCalibrationStatusFail,
+};
+/*!
+ *  @enum UTEMeasurementType
+ */
+typedef NS_ENUM(NSInteger, UTEHealthLabFunctionType) {
+    
+    ///血压
+    UTEHealthLabFunctionTypeBloodPressure            = 0x01,
+    ///血糖
+    UTEHealthLabFunctionTypeBloodSugar               = 0x02,
+    
+
+};
+
+/*!
+ *  @enum UTEWearSDCardStatus
+ */
+typedef NS_ENUM(NSInteger, UTEWearSDCardStatus) {
+    
+    UTEWearSDCardStatusNormal,
+    
+    //The SD card needs to be formatted. please invoke setGlassesSystemSettingsType:UTESystemSettingsTypeRestore
+    UTEWearSDCardStatusAbnormal,
+
+};
+
+/*!
+ *  @enum UTEBPUnitType
+ */
+typedef NS_ENUM(NSInteger, UTEBPUnitType) {
+    
+    ///
+    UTEBPUnitTypmmHg            = 0x00,
+    ///
+    UTEBPUnitTypeKPa            = 0x01,
+    
+
 };

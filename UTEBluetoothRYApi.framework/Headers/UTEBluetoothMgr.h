@@ -14,7 +14,7 @@
 #import "UTEOTAMgr.h"
 #import "UTEDeviceMgr.h"
 #import "RYUTELogTool.h"
-#import "UTEDeviceError.h"
+
 #import "UTEAiOfflineVoice.h"
 #import "RYUTEServerDataTool.h"
 
@@ -72,6 +72,9 @@ typedef void (^syncOrderBlock)(BOOL ok);
 @property (nonatomic,assign) UTEBluetoothAlertType   deviceAlertType;
 @property (nonatomic,assign) UTEBluetoothAlertType   deviceAlertTypeExcluding;
 
+/**
+ *  When the device is disconnected, this property is nil
+ */
 @property (nonatomic,strong) UTEModelDevice          *connnectModel;
 
 @property (nonatomic,copy  ) uteDevicesStatusBlock   uteDevicesStatusBlock;
@@ -79,6 +82,8 @@ typedef void (^syncOrderBlock)(BOOL ok);
 
 @property(nonatomic, copy  ) syncOrderBlock syncOrderBlock;
 
+//Classic Bluetooth Connection, default is yes
+@property (nonatomic,assign) BOOL                    isClassicBluetoothConnect;
 @property (nonatomic,assign) BOOL                    isFactoryMode;
 
 @property (nonatomic,strong) NSString *SERVICE_UUID;
@@ -151,6 +156,10 @@ typedef void (^syncOrderBlock)(BOOL ok);
  */
 - (NSString *)sdkVersion;
 
+///录音背夹 发送数据接口  每个指令小端
+- (void)sendRecordingClipData:(NSData *)data;
+
+
 #pragma mark - 触发bt连接
 -(void)readBT;
 
@@ -167,8 +176,14 @@ typedef void (^syncOrderBlock)(BOOL ok);
 - (void)setMtu:(NSInteger)mtu;
 - (NSUInteger)getMtuForType:(CBCharacteristicWriteType)type;
 
+/// MARK: 瑰元SDK
+/// 瑰元发送数据给ble
+- (void)sendGlyphixData:(NSData *)data;
+
 #pragma mark - Tool
+//e.g NSString@"ab15cdfe" ---> NSData<ab15cdfe>
 + (NSData *)strToData:(NSString *)hexString;
+//e.g NSData<ab15cdfe> ---> NSString@"ab15cdfe"
 + (NSString *)dataToStr:(NSData *)data;
 
 

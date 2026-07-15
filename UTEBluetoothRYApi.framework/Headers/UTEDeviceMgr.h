@@ -18,12 +18,13 @@
 #import "UTEMgrOfflineMap.h"
 #import "UTEMgrAlipay.h"
 
-#import "UTEMgrGlassesEarphone.h"
+#import "UTEMgrWear.h"
 #import "UTEMgrWiFi.h"
 
 #import "UTEMgrPlanCourse.h"
 
 #import "UTEFileTransferMgr.h"
+#import "UTERecordMgr.h"
 
 typedef NS_ENUM(NSInteger, UTEDeviceDateType) {
     UTEDeviceDateTypeYMD  = 1,
@@ -39,6 +40,9 @@ typedef NS_ENUM(NSInteger, UTEDeviceTimeType) {
 
 typedef NS_ENUM(NSInteger, UTEFactoryType) {
     UTEFactoryTypePressure,
+    UTEFactoryTypePressure1H,
+    UTEFactoryTypePressure2H,
+    UTEFactoryTypePressure4H,
     UTEFactoryTypePower,
 };
 
@@ -57,12 +61,14 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 @property(nonatomic, strong, readonly) UTEMgrOfflineMap            *offlineMap;
 @property(nonatomic, strong, readonly) UTEMgrAlipay                *alipayCode;
 
-@property(nonatomic, strong, readonly) UTEMgrGlassesEarphone       *glassesEarphone;
+@property(nonatomic, strong, readonly) UTEMgrWear                  *wear;
 @property(nonatomic, strong, readonly) UTEMgrWiFi                  *wifiMgr;
 
 @property(nonatomic, strong, readonly) UTEMgrPlanCourse            *planCourse;
 
-@property(nonatomic, strong, readonly) UTEFileTransferMgr           *fileMgr;
+@property(nonatomic, strong, readonly) UTEFileTransferMgr          *fileMgr;
+
+@property(nonatomic, strong, readonly) UTERecordMgr                *recordMgr;
 
 /**
  *  @discussion KEY
@@ -96,12 +102,75 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  */
 - (void)setTimeDisplay:(NSInteger)dateType timeType:(NSInteger)timeType block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+/**
+ *获取设备日期和时间格式 260616
+ *@discussion dateType
+ 日期显示格式，1：年-月-日格式；2：月-日-年格式；3：日-月-年格式；4：月-日-星期格式
+ Date display format, 1: year month day format; 2: Month day year format; 3: Day month year format; 4: Month Day Week Format
+ *
+ *@discussion timeType
+ 时间显示格式，1：显示 12 小时格式；2：显示 24 小时格式
+ Time display format, 1: Display 12 hour format; 2: Display 24-hour format
+ *
+ *@discussion errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+- (void)getBleTimeDisplayBlock:(void(^)(NSInteger errorCode ,NSInteger dateType, NSInteger timeType))block;
+
+/**
+ *监听设备日期和时间格式 260616
+ *@discussion 可能返回日期或者时间或者同时2个返回，-1表示固件没返回不处理
+ *@discussion dateType
+ 日期显示格式，1：年-月-日格式；2：月-日-年格式；3：日-月-年格式；4：月-日-星期格式
+ Date display format, 1: year month day format; 2: Month day year format; 3: Day month year format; 4: Month Day Week Format
+ *
+ *@discussion timeType
+ 时间显示格式，1：显示 12 小时格式；2：显示 24 小时格式
+ Time display format, 1: Display 12 hour format; 2: Display 24-hour format
+ *
+ */
+- (void)onNotifyBleTimeDisplayBlock:(void(^)(NSInteger dateType, NSInteger timeType))block;
+
 /**1.41 监听设备相机状态 通知事件ID 为固定的 297
  Monitor the status of the wristband camera
  
  @parma UTECameraStatus
  参考UTECameraStatus注释
  Refer to UTECameraStatus comments
+ 
+ @discussion 注意
+ 需设置APP相机权限状态 notifyCamera这个接口才会生效 The notifyCamera interface will only take effect if the APP camera permission status is set
+ 
+ [[UTEDeviceMgr sharedInstance] setCameraSwitch:1 block:^(NSInteger errorCode) {
+     NSLog(@"设置相机权限%ld",errorCode);
+ }];
+ 
+ @discussion 注意
+ APP打开相机时候需要设置状态给设备
+ //步骤1先发送指令1 Step 1: Send command 1 first
+ 
+ [[UTEDeviceMgr sharedInstance] setCameraStatus:1 block:^(NSInteger status, NSInteger errorCode, NSDictionary *uteDict) {
+     if (errorCode == UTEDeviceErrorNil) {
+         
+         //步骤2再发送指令0 Step 2: Send command 0 again
+ 
+         [[UTEDeviceMgr sharedInstance] setCameraStatus:0 block:^(NSInteger status, NSInteger errorCode, NSDictionary *uteDict) {
+             if (errorCode == UTEDeviceErrorNil) {
+                 
+             }
+         }];
+     }
+ }];
+ 
+ @discussion 注意
+ 退出相机时候发送退出指令给设备
+ [[UTEDeviceMgr sharedInstance] setCameraStatus:2 block:^(NSInteger status, NSInteger errorCode, NSDictionary *uteDict) {
+     if (errorCode == UTEDeviceErrorNil) {
+         
+     }
+ }];
+ 
  
  @block errorCode
  请求成功:100000 其他:错误码
@@ -110,7 +179,7 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 - (void)notifyCamera:(void(^)(UTECameraStatus status,NSInteger errorCode ,NSDictionary *uteDict))block;
 
 /**1.42 设置手机相机状态给设备
- Set the phone camera status to the bracelet
+ Set the camera status of the phone to the device
  
  @parma eventCode
  0:手机进入相机   1：手机打开相机   2：手机退出相机
@@ -169,11 +238,11 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  时间戳(使用格林尼治时间)
  Timestamp (using Greenwich Mean Time)
  
- @block timeZone
+ @block timeZone(目前无效 Currently invalid)
  时区
  time zone
  
- @block minuteOffset
+ @block minuteOffset(目前无效 Currently invalid)
  分钟调整差值，部分地区为非整点时区
  Minute adjustment difference, some regions are in non hour time zones
  
@@ -369,7 +438,8 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  */
 - (void)notifyFindMyPhoneNotifyReal:(void(^)(UTEFindWearStatus status,NSInteger errorCode ,NSDictionary *uteDict))block;
 
-/**APP端收到查找手机回复操作
+/**APP端收到查找手机回复操作 （接口暂时废弃）
+ The APP received a search phone reply operation (interface temporarily abandoned)
  
  @parma cmd
  0:关闭查找手机功能 1:点击开启查找手机功能
@@ -384,8 +454,8 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  Set phone loss prevention alarm
  
  @parma action
- 1:要求服务端报警 2:要求服务端停止报警
- 1: Request server alarm 2: Request server to stop alarm
+ 1:要求服务端报警 0:要求服务端停止报警
+ 1: Request server alarm 0: Request server to stop alarm
  
  @block errorCode
  请求成功:100000 其他:错误码
@@ -431,10 +501,39 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
                    unit:(NSInteger)unit
                   block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+/**12.1 设置语言
+ Set language
+ 
+ @parma language
+ 参考UTERYDeviceLanguage
+ Refer to UTERYDeviceLanguage
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+///单独设置语言
 - (void)setLanguageOnly:(UTERYDeviceLanguage)language
                   block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
+/**12.1 设置公英制
+ Set metric and imperial units
+ 
+ @parma unit
+ 0: 公制；1：英制
+ 0: metric system; 1: English system
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+///单独设置公英制
 - (void)setUnitOnly:(NSInteger)unit
                   block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
+
+///监听设备上报公英制设置 type:0公制 1英制
+- (void)onNotifiyUnitBlock:(void(^)(NSInteger type))block;
+
 
 /**2.4 设置消息提醒开关状态
  Set message reminder switch status
@@ -595,8 +694,8 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 - (void)setMotionGoal:(NSArray<NSDictionary *> *)array
                 block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
-/**7.1 设置运动目标信息
- Set motion target information
+/**7.1 设置每日活动目标
+ Set daily activity goals
  
  @parma arrayModel
  参考UTEModelSportGoal
@@ -1149,11 +1248,12 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  */
 - (void)getAlarmArrayModel:(void(^)(NSInteger errorCode ,NSArray<UTEModelClock *> *modelArray))block;
 
-///获取手表支持的闹钟个数（支持个数）
+///获取手表支持的闹钟个数（支持个数）Get the number of alarms supported by the watch
 - (void)getAlarmInfo:(void(^)(NSInteger errorCode ,UTEModelClockInfo *model))block;
 
 /* 手表修改闹钟通知app获取闹钟（固件支持才会上报）
  收到通知后调用获取闹钟接口getAlarmArrayModel
+ Modify the alarm clock of the monitoring device
  */
 - (void)onNotifyAlarmChange:(void (^)(NSInteger errorCode))block;
 
@@ -1379,6 +1479,12 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 - (void)setTemperatureUnit:(NSInteger)unit
                      block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
+///获取温度单位 Get temperature unit type:0摄氏度 1华氏度 0: Celsius 1: Fahrenheit
+- (void)getTemperatureUnitBlock:(void(^)(NSInteger errorCode, NSInteger type))block;
+
+///监听设备温度单位修改 Modify the temperature unit of the monitoring device
+- (void)onNotifyTemperatureUnitBlock:(void(^)(NSInteger type))block;
+
 //15.7  weatherErrorType 0：网络错误；1：定位失败；2：关闭天气推送
 - (void)setWeatherErrorInfoOld:(NSInteger)weatherErrorType
                          block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
@@ -1516,21 +1622,82 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  Retrieve ID through 23.7 to query corresponding motion records
  
  显示逻辑
- *户外骑行 越野滑雪 单板滑雪显示平均速度，其他显示平均配速
- *游泳平均配速单位（秒/百米），其他（秒/公里）
- *先判断以下类型有哪些，在判断是否有该属性值再显示
  1、户外跑步、户外走路、室内跑步、室内走路：总时间、距离、卡路里、心率、步数、平均步频、平均步幅、平均配速
- 2、户外骑行 ：总时间、距离、卡路里、心率、平均速度、带气压计设备（最高海拔、累计上升、累计下降）
+ （户外跑步：1 - EnumRYSDKSportType1RUNNING；操场跑圈：243 - EnumRYSDKSportType243TRACKRUN；户外走路：35 - EnumRYSDKSportType2OUTDOOR_WALK、9 - EnumRYSDKSportType9WALKING、43 - EnumRYSDKSportType43HIKING；室内走路：26 - EnumRYSDKSportType3INDOOR_WALK；室内跑步：21 - EnumRYSDKSportType5TREADMILL、27 - EnumRYSDKSportType27INDOOR_RUN）
+
+ 2、户外骑行：总时间、距离、卡路里、心率、平均速度、带气压计设备（最高海拔、累计上升、累计下降）
+ （户外骑行：2 - EnumRYSDKSportType6RIDE_BIKE、123 - EnumRYSDKSportType167BMX_BIKE）
+
  3、登山、越野跑：总时间、距离、步数、卡路里、心率、平均配速、带气压计设备（最高海拔、累计上升、累计下降），没有气压计数据同步户外走路跑步
+ （登山：8 - EnumRYSDKSportType11CLIMBING；越野跑：36 - EnumRYSDKSportType17TRAIL_RUNNING；定向越野：142 - EnumRYSDKSportType168ORIENTEERING）
+
  4、越野滑雪：总时间、距离、卡路里、平均速度，带气压计设备（最高海拔、累计上升、累计下降）
+ （越野滑雪：124 - EnumRYSDKSportType157CROSS_COUNTRY_SKIING）
+
  5、单板滑雪：总时间、距离、卡路里、平均速度，带气压计设备（最高海拔、累计上升、累计下降）
+ （单板滑雪：68 - EnumRYSDKSportType159SNOWBOARDING）
+
  6、泳池游泳：划水次数、泳姿（自由式，蛙式，仰式，蝶式、混合式、未知）、趟数、卡路里、swolf、总时间、划水频率、心率、平均配速（秒/百米）
+ （泳池游泳：4 - EnumRYSDKSportType8SWIMMING；游泳_自由式：207 - EnumRYSDKSportType146FREESTYLE_SWIMMING；游泳_蛙式：208 - EnumRYSDKSportType147BREAST_STROKE；游泳_仰式：209 - EnumRYSDKSportType148BACKSTROKE；游泳_蝶式：210 - EnumRYSDKSportType149BUTTERFLY_STROKE）
+
  7、开放域游泳：划水次数、卡路里、总时间、划水频率、泳姿、心率
+ （开放域游泳：141 - EnumRYSDKSportType9OPEN_WATER_SWIMMING；浮潜：107 - EnumRYSDKSportType107SNORKELING）
+
  8、椭圆机：总时间、步数、步频、卡路里、心率
+ （椭圆机：31 - EnumRYSDKSportType12ELLIPTICAL_TRAINER）
+
  9、划船机：总时间、次数、划桨频率（平均步频就是桨频）
+ （划船机：41 - EnumRYSDKSportType13ROWING_MACHING；赛艇：145 - EnumRYSDKSportType134RACING_BOAT）
+
  10、跳绳：总时间、跳绳数（次数）、绊绳（次数）、连跳（次数），最大连跳（次数）、卡路里、心率
+ （跳绳：3 - EnumRYSDKSportType32JUMP_ROPE；蹦床：100 - EnumRYSDKSportType100TRAMPOLINE）
+
  11、爬楼梯：总时间、上楼层数、下楼层数、卡路里、心率
+ （爬楼：62 - EnumRYSDKSportType89STAIRS；爬楼梯机：181 - EnumRYSDKSportType53STAIR_CLIMBING_MACHINE）
+
  12、其他运动：总时间、卡路里、心率
+ （对应所有未在上述分类中明确指定数据字段的其他运动类型）
+ 
+ Display Logic
+ *For outdoor cycling, cross-country skiing, and snowboarding, display average speed; for others, display average pace.
+ *For swimming, the unit for average pace is seconds/100 meters; for other sports, it is seconds/kilometer.
+ *First, determine the types below, then check whether the corresponding attribute values exist before displaying them.
+
+ 1.  **Outdoor Running, Outdoor Walking, Indoor Running, Indoor Walking**: Total time, distance, calories, heart rate, steps, average cadence, average stride length, average pace
+     (Outdoor Running: 1 - EnumRYSDKSportType1RUNNING; Track Running: 243 - EnumRYSDKSportType243TRACKRUN; Outdoor Walking: 35 - EnumRYSDKSportType2OUTDOOR_WALK, 9 - EnumRYSDKSportType9WALKING, 43 - EnumRYSDKSportType43HIKING; Indoor Walking: 26 - EnumRYSDKSportType3INDOOR_WALK; Indoor Running: 21 - EnumRYSDKSportType5TREADMILL, 27 - EnumRYSDKSportType27INDOOR_RUN)
+
+ 2.  **Outdoor Cycling**: Total time, distance, calories, heart rate, average speed, with barometer device (max altitude, cumulative ascent, cumulative descent)
+     (Outdoor Cycling: 2 - EnumRYSDKSportType6RIDE_BIKE, 123 - EnumRYSDKSportType167BMX_BIKE)
+
+ 3.  **Mountain Climbing, Trail Running**: Total time, distance, steps, calories, heart rate, average pace, with barometer device (max altitude, cumulative ascent, cumulative descent). Synchronizes with outdoor walking/running data if no barometer data.
+     (Mountain Climbing: 8 - EnumRYSDKSportType11CLIMBING; Trail Running: 36 - EnumRYSDKSportType17TRAIL_RUNNING; Orienteering: 142 - EnumRYSDKSportType168ORIENTEERING)
+
+ 4.  **Cross-Country Skiing**: Total time, distance, calories, average speed, with barometer device (max altitude, cumulative ascent, cumulative descent)
+     (Cross-Country Skiing: 124 - EnumRYSDKSportType157CROSS_COUNTRY_SKIING)
+
+ 5.  **Snowboarding**: Total time, distance, calories, average speed, with barometer device (max altitude, cumulative ascent, cumulative descent)
+     (Snowboarding: 68 - EnumRYSDKSportType159SNOWBOARDING)
+
+ 6.  **Pool Swimming**: Stroke count, stroke type (freestyle, breaststroke, backstroke, butterfly, medley, unknown), laps, calories, swolf, total time, stroke rate, heart rate, average pace (seconds per 100m)
+     (Pool Swimming: 4 - EnumRYSDKSportType8SWIMMING; Freestyle Swimming: 207 - EnumRYSDKSportType146FREESTYLE_SWIMMING; Breaststroke: 208 - EnumRYSDKSportType147BREAST_STROKE; Backstroke: 209 - EnumRYSDKSportType148BACKSTROKE; Butterfly Stroke: 210 - EnumRYSDKSportType149BUTTERFLY_STROKE)
+
+ 7.  **Open Water Swimming**: Stroke count, calories, total time, stroke rate, stroke type, heart rate
+     (Open Water Swimming: 141 - EnumRYSDKSportType9OPEN_WATER_SWIMMING; Snorkeling: 107 - EnumRYSDKSportType107SNORKELING)
+
+ 8.  **Elliptical Trainer**: Total time, steps, cadence, calories, heart rate
+     (Elliptical Trainer: 31 - EnumRYSDKSportType12ELLIPTICAL_TRAINER)
+
+ 9.  **Rowing Machine**: Total time, count, stroke rate (average cadence is stroke rate)
+     (Rowing Machine: 41 - EnumRYSDKSportType13ROWING_MACHING; Rowing: 145 - EnumRYSDKSportType134RACING_BOAT)
+
+ 10. **Jump Rope**: Total time, jumps (count), trip-ups (count), consecutive jumps (count), max consecutive jumps (count), calories, heart rate
+     (Jump Rope: 3 - EnumRYSDKSportType32JUMP_ROPE; Trampoline: 100 - EnumRYSDKSportType100TRAMPOLINE)
+
+ 11. **Stair Climbing**: Total time, floors ascended, floors descended, calories, heart rate
+     (Stairs: 62 - EnumRYSDKSportType89STAIRS; Stair Climber Machine: 181 - EnumRYSDKSportType53STAIR_CLIMBING_MACHINE)
+
+ 12. **Other Sports**: Total time, calories, heart rate
+     (Corresponding to all other sport types not explicitly specified with data fields in the above categories).
  
  @block model
  参考UTEModeSportRecordSummary注释
@@ -1621,7 +1788,13 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  */
 - (void)setWorkoutRealTimeDataModel:(UTEModeSportWorkoutRealTimeData *)model block:(void(^)(NSInteger errorCode ,NSDictionary *uteDict))block;
 
-//23.12
+/**23.12 获取运动每公里配速
+ 20250711新增标识
+ 需要支持[UTEBluetoothMgr sharedInstance].connnectModel.hasPaceKM才可以调用。
+ recordId 和 paceIndex 需要通过23.7 getRecordList接口获取到的id、paceIndex
+ 例如：paceIndex = 3，代表该ID有3条配速数据。调用3次，从0开始 0、1、2
+ 
+ */
 - (void)getWorkoutPace:(NSInteger)recordId
              paceIndex:(NSInteger)paceIndex
                  block:(void(^)(UTEModeWorkoutPace *model,NSInteger errorCode ,NSDictionary *uteDict))block;
@@ -1863,7 +2036,7 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  请求成功:100000 其他:错误码
  Request successful: 100000 Other: Error code
  */
-- (void)getAutoMood:(void(^)(NSInteger errorCode, BOOL enble))block;
+- (void)getAutoMood:(void(^)(NSInteger errorCode, BOOL enable))block;
 
 /**监听设备情绪自动测量开关状态
  Monitoring device Mood automatic measurement switch status
@@ -1931,7 +2104,7 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  请求成功:100000 其他:错误码
  Request successful: 100000 Other: Error code
  */
-- (void)getAutoBlood:(void(^)(NSInteger errorCode, BOOL enble))block;
+- (void)getAutoBlood:(void(^)(NSInteger errorCode, BOOL enable))block;
 
 /**监听设备血压连续自动测量开关状态
  Monitoring device Blood automatic measurement switch status
@@ -2072,6 +2245,8 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  @param type
  1:开启 固定发1
  1: Enable fixed transmission 1
+ 
+ 0:close
  
  调用setBT3Pair接口后收到成功再调用此接口
  After successfully calling the setBT3Pair interface, call this interface again
@@ -2269,10 +2444,11 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  Request successful: 100000 Other: Error code
  */
 - (void)getAddressBookModelBlock:(void(^)(NSArray <UTEModelContactCommon *>*array,NSInteger errorCode))block;
-/**
- 监听设备删除通讯录
- @block model
+/** 监听设备删除通讯录 The monitoring device deletes the contact list
+ 
+ @discussion model
  返回删除的联系人内容
+ Return the deleted contact content
  */
 - (void)onNotifyContactsChange:(void(^)(UTEModelContactCommon *model))block;
 
@@ -2379,29 +2555,31 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 /**设置世界时钟
  Set World Clock
  
+ 覆盖方式来达到删除 Use a covering method to achieve deletion.
+ 
  @param arrayModels
  参考 UTEModeWorldClock 注释
  Refer to UTEModeWorldClock comments
  
  example:
- 东时区
+ 东时区 Eastern Time Zone
  NSMutableArray *arrayModels = [[NSMutableArray alloc] init];
  UTEModelWorldClock *clock = [[UTEModelWorldClock alloc]init];
- clock.cityName = @"北京";
+ clock.cityName = @"Beijing";
  clock.timeZone = @"8";
  [arrayModels addObject:clock];
  
- 有半时区 传.50
+ 有半时区,传.50 Half-time zone, pass .50
  NSMutableArray *arrayModels = [[NSMutableArray alloc] init];
  UTEModelWorldClock *clock = [[UTEModelWorldClock alloc]init];
- clock.cityName = @"加尔各答";
+ clock.cityName = @"New Delhi";
  clock.timeZone = @"5.50";
  [arrayModels addObject:clock];
  
- 西时区
+ 西时区 Western Time Zone
  NSMutableArray *arrayModels = [[NSMutableArray alloc] init];
  UTEModelWorldClock *clock = [[UTEModelWorldClock alloc]init];
- clock.cityName = @"奥斯汀";
+ clock.cityName = @"New York";
  clock.timeZone = @"-5";
  [arrayModels addObject:clock];
  
@@ -2512,6 +2690,13 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 */
 - (void)getActivateStatusOfOVC:(void(^)(UTEOVControlActivateStatus status,NSInteger errorCode))block;
 
+///获取设备离线语音更多信息
+- (void)getOFOVCInfoBlock:(void(^)(UTEModelOfflineVoiceInfo *model,NSInteger errorCode))block;
+
+///设置设备离线语音授权码 Set offline voice authorization code for the device
+- (void)setActivateStatusOfOVC:(NSString*)code Block:(void(^)(NSInteger errorCode))block;
+
+
 /** 获取喝水提醒
  Get a water drink reminder
  
@@ -2588,7 +2773,7 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
     
     根据[UTEBluetoothMgr sharedInstance].connnectModel.hasQueryAISDK是否支持本接口
  
-    0:百度 1：艾闪 其他对应错误码
+    0:百度 1：艾闪（非联网） 2：艾闪（联网）3：豆包 4：艾闪（高德导航语音转文本）
  */
 -(void)checkAISDK:(void(^)(NSInteger type))block;
 
@@ -2898,14 +3083,25 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  */
 -(void)setRunwayLength:(NSInteger)length Block:(void(^)(NSInteger errorCode))block;
 
-///获取事务
--(void)getAllAffairsInfoBlock:(void(^)(NSArray <UTEModelAffirs *>*array,NSInteger errorCode))block;
-///设置事务
--(void)setAffirsInfo:(NSArray <UTEModelAffirs *>*)array Block:(void(^)(NSInteger errorCode))block;
+#pragma mark 日程功能通过事务接口来实现
+///查询支持哪些事务码功能 事务码类型：1日程提醒
+-(void)checkSupportAffairsBlock:(void(^)(NSArray *array,NSInteger errorCode))block;
+///查询对应事务相关参数 type：事务码 array:查询1日程提醒时 array返回UTEModelScheduleInfo模型
+-(void)checkAffairsInfoType:(NSInteger)type Block:(void(^)(NSArray <UTEModelScheduleInfo *>*array,NSInteger errorCode))block;
+///获取对应事务码所有数据
+-(void)checkAllAffairsDataType:(NSInteger)type Block:(void(^)(NSArray *array,NSInteger errorCode))block;
+///设置事务type事务码：1日程提醒 opcode操作码：1新增 3修改 
+-(void)setAffirsInfo:(UTEModelSchedule*)model Type:(NSInteger)type Opcode:(NSInteger)opcode Block:(void(^)(NSInteger errorCode))block;
+///删除事务type事务码：1日程提醒 array：填写对应id，删除1个或多个，填写多个删除多个
+-(void)deteleAffairsType:(NSInteger)type ID:(NSArray *)array Block:(void(^)(NSInteger errorCode))block;
+///监听手表端上报事务数据修改 type：事务码，opcode：操作码，index：id, model：修改数据
+-(void)onNotifyAffirsChangeBlock:(void(^)(NSInteger type,NSInteger opcode,NSInteger index,UTEModelSchedule *model))block;
+///监听事务操作码上报  opcode：1新增 3修改  app设置setAffirsInfo这个接口后有异常通过这个监听上报状态,array如果是删除操作可能存在多个
+-(void)onNotifyAffirsOpcodeBlock:(void(^)(NSInteger type,NSInteger opcode,NSArray <UTEModelScheduleState *>*array))block;
 
-///获取电子卡包信息 （功能标识hasElectronicCard）
+///获取电子卡包信息(get ElectronicCard) （功能标识hasElectronicCard）
 -(void)getElectronicCardBlock:(void(^)(NSArray <UTEModelElectronicCard *>*array,NSInteger errorCode))block;
-///设置电子卡包 名称不能太长建议20个中英文限制
+///设置电子卡包(set ElectronicCard，Limit to 20 English characters) 名称不能太长建议20个中英文限制
 -(void)setElectronicCard:(NSArray <UTEModelElectronicCard *>*)array Block:(void(^)(NSInteger errorCode))block;
 
 ///查询体温设置信息
@@ -2914,10 +3110,13 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 -(void)checkHistoryBodyTemperatureBlock:(void(^)(NSMutableArray <UTEModelRYBodyTemperatureValue*> *array,NSInteger errorCode))block;
 ///设置体温配置
 -(void)setBodyTemperature:(UTEModelRYBodyTemperature *)model Block:(void(^)(NSInteger errorCode))block;
-///开始测试体温
+///开始测量体温
 -(void)startBodyTemperatureTestBlock:(void(^)(NSInteger errorCode))block;
-///监听测试体温返回 time：时间戳 state：状态值0正常出值 1脱手 2测试超时  value：体内温度 3520/100得到摄氏度35.20保留2位小数
+///监听测试体温返回 time：时间戳 state：状态值0正常出值 1脱手 2测试超时  value：体内温度 3520/100得到摄氏度35.2
 -(void)onNotifyBodyTemperatureValueBlock:(void(^)(NSInteger time,NSInteger state,NSInteger value))block;
+///结束测量体温
+-(void)setEndBodyTemperatureTestBlock:(void(^)(NSInteger errorCode))block;
+
 /**监听心率值过高过低提醒
  Monitoring device Heart Rate High and Low Reminder
  @discussion state
@@ -2926,18 +3125,181 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  对应值
  */
 - (void)onNotifyHeartRateHighLowReminder:(void(^)(NSInteger state,NSInteger value))block;
+
+/**监听血氧值过高过低提醒
+ Monitoring device oxygen High and Low Reminder
+ @discussion state
+ 1:血氧过高 0:血氧过低
+ @discussion value
+ 对应值
+ */
+- (void)onNotifyOxygenHighLowReminder:(void(^)(NSInteger state,NSInteger value))block;
+
 ///app一键测量
 -(void)oneClickMeasurement:(void(^)(NSInteger errorCode))block;
+///监听一键测量数据结果
+- (void)onNotifyOneClickMeasurementBlock:(void(^)(NSInteger timestamp,NSInteger hrm,NSInteger oxy,NSInteger pressure))block;
 
+///app单独测量 type：对应测试功能
+-(void)clickMeasurementType:(UTEMeasurementType)type Block:(void(^)(NSInteger errorCode))block;
 
+/**监听单独测量数据结果
+ 
+ 血压取值：
+ 收缩压：(value >> 8) & 0xFF
+ 舒张压：value & 0xFF
+ 
+ 情绪取值：
+ value:1消极，2正常，3积极
+ */
+- (void)onNotifyMeasurementBlock:(void(^)(NSInteger timestamp,UTEMeasurementType type,NSInteger value))block;
+
+///脱手监听 timestamp:时间戳  model：查看UTEOffWristModel说明  state:0脱手1佩戴
+-(void)onNotifyOffWristBlock:(void(^)(NSInteger timestamp,UTEOffWristModel model,NSInteger state))block;
+
+///设置晨间速报开关 0关1开
+-(void)setMorningExpress:(NSInteger)state Block:(void(^)(NSInteger errorCode))block;
+///设置晨间速报内容开关
+-(void)setMorningExpressContent:(UTEModelMorningExpressContent *)model Block:(void(^)(NSInteger errorCode))block;
+///查询晨间速报设置信息
+-(void)checkMorningExpressInfoBlock:(void(^)(NSInteger errorCode))block;
+///查询晨间速报开关状态
+-(void)checkMorningExpressStateBlock:(void(^)(NSInteger state,NSInteger errorCode))block;
+///查询晨间速报内容开关状态
+-(void)checkMorningExpressContentBlock:(void(^)(UTEModelMorningExpressContent *model,NSInteger errorCode))block;
+///监听晨间速报开关状态
+-(void)onNotifyMorningExpressStateBlock:(void(^)(NSInteger state))block;
+///监听晨间速报内容开关状态
+-(void)onNotifyMorningExpressContentBlock:(void(^)(UTEModelMorningExpressContent *model))block;
+
+/**设置血糖单位 Set blood sugar unit
+ 
+ @param unit
+ 0:mmol/L 1:mg/dL
+ 
+ @block errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+///设置血糖单位 0:mmol/L 1:mg/dL
+-(void)setBloodSugarUnit:(NSInteger)unit Block:(void(^)(NSInteger errorCode))block;
+
+/**获取血糖单位 Get blood sugar unit
+ 
+ @discussion unit
+ 0:mmol/L 1:mg/dL
+ 
+ @discussion errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+///获取血糖单位 0:mmol/L 1:mg/dL
+-(void)getBloodSugarUnitBlock:(void(^)(NSInteger errorCode, NSInteger unit))block;
+
+/**获取血糖定时测量时间间隔 Obtain the timing interval for blood glucose measurement
+ 
+ @discussion interval
+ 单位：分钟
+ unit:minute
+ 
+ @discussion errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+///获取血糖定时测量时间间隔 单位：分钟
+-(void)getBloodSugarTimeIntervalBlock:(void(^)(NSInteger errorCode, NSInteger interval))block;
+
+/**获取血糖自动测量开关状态 Obtain the status of the automatic blood glucose measurement switch
+ 
+ @discussion state
+ 0:close; 1：open
+ 
+ @discussion errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+///获取血糖自动测量开关状态 state:0:关闭；1：打开
+-(void)getBloodSugarSwitchBlock:(void(^)(NSInteger errorCode, NSInteger state))block;
+
+/**设置血糖定时测量时间间隔 Set the time interval for regular blood glucose measurement
+ 
+ @discussion interval
+ unit:minute
+ 
+ @discussion errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+///设置血糖定时测量时间间隔 interval 单位：分钟
+-(void)setBloodSugarTimeInterval:(NSInteger)interval Block:(void(^)(NSInteger errorCode))block;
+
+/**设置血糖自动测量开关状态 Set the automatic blood glucose measurement switch status
+ 
+ @discussion state
+ 0:close; 1：open
+ 
+ @discussion errorCode
+ 请求成功:100000 其他:错误码
+ Request successful: 100000 Other: Error code
+ */
+///设置血糖自动测量开关状态 state:0:关闭；1：打开
+-(void)setBloodSugarSwitch:(NSInteger)state Block:(void(^)(NSInteger errorCode))block;
+
+/**监听血糖测量间隔时间上报 Monitor and report the interval time of blood glucose measurements
+ 
+ @discussion interval
+ unit:minute
+ */
+///监听血糖测量间隔时间上报
+-(void)onNotifyBloodSugarTimeIntervalBlock:(void(^)(NSInteger interval))block;
+
+/**监听血糖测量开关上报 Monitor the reporting of blood glucose measurement switch
+ 
+ @discussion state
+ 0:close; 1：open
+ */
+///监听血糖测量开关上报
+-(void)onNotifyBloodSugarSwitchBlock:(void(^)(NSInteger state))block;
+
+///设置健康实验室支持功能
+-(void)setHealthLabFunction:(NSMutableArray <UTEModelHealthLabFunction *>*)array Block:(void(^)(NSInteger errorCode))block;
+
+///获取健康实验室支持功能和状态
+-(void)getHealthLabFunctionBlock:(void(^)(NSMutableArray <UTEModelHealthLabFunction *>*array,NSInteger errorCode))block;
+
+///获取血压单位
+-(void)getBloodPressureUintBlock:(void(^)(UTEBPUnitType unit,NSInteger errorCode))block;
+
+///设置血压单位
+-(void)setBloodPressureUint:(UTEBPUnitType)unit Block:(void(^)(NSInteger errorCode))block;
+
+/**人为操作手机之后，可以下发当前指令，用于提醒设备出睡眠（26.6.30需固件支持）
+ *一定是人为操作手机之后下发指令
+ */
+-(void)setManualOperationPhoneBlock:(void(^)(NSInteger errorCode))block;
+
+/// MARK: 健康分析相关接口
+///设置健康分析报告，数据不够就发空字符串
+-(void)setHealthAnalysis:(NSString *)result Block:(void(^)(NSInteger errorCode))block;
+
+///设置健康分析报告的建议，数据不够就发空字符串
+-(void)setHealthAnalysisSuggestion:(NSString *)result Block:(void(^)(NSInteger errorCode))block;
+
+///监听健康分析报告请求 暂时01为全部
+-(void)onNotifyHealthAnalysisBlock:(void(^)(NSInteger state))block;
+
+///监听健康分析报告的建议请求 暂时01为全部
+-(void)onNotifyHealthAnalysisSuggestionBlock:(void(^)(NSInteger state))block;
 
 #pragma mark - Tool
 - (void)openSleepLog:(void(^)(BOOL ok))block;
 - (void)closeSleepLog:(void(^)(BOOL ok))block;
 
-///SN号不能都是空格，且只能是数字和字母
-///长度范围（8~32）
+/** 设置SN号（需确认固件是否支持）
+ *SN号不能都是空格，且只能是数字和字母 长度范围（8~32）
+ */
 - (void)setDeviceSN:(NSString *)sn block:(void(^)(NSInteger errorCode,NSDictionary *uteDict))block;
+///获取设备SN号
 - (void)getDeviceSN:(void(^)(NSInteger errorCode,NSString *sn,NSDictionary *uteDict))block;
 ///设置/修改mac地址
 - (void)setDeviceMAC:(NSString *)mac block:(void(^)(NSInteger errorCode,NSDictionary *uteDict))block;
@@ -2984,6 +3346,9 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 + (NSString *)StringFromhexData:(NSData *)data;
 ///根据长度解析 index解析数据起始位置 length解析数据长度 data解析数据
 +(NSInteger)getData:(NSInteger)index WithLength:(NSInteger)length WithData:(NSData *)data;
+///大端转小端专用
++(uint32_t)getStartIndex:(NSInteger)index WithLength:(NSInteger)length WithData:(NSData *)data;
+
 ///十六进制转Double
 +(double)HEXToDouble:(NSData *)data;
 ///十六进制转Float
@@ -3001,6 +3366,8 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 +(void)debugCRC;
 -(void)debugCMD:(NSString *)cmd;
 -(void)debugRSA;
+-(NSDictionary *)analys01e8AC01:(NSString *)dataString;
+-(NSDictionary *)analys01e8AA03:(NSString *)dataString;
 
 #pragma mark - Factory Test
 ///查询工厂测试功能
@@ -3031,20 +3398,22 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 ///血氧测试 cmd:1开启 0关闭  open:开关位 state：佩戴状态1佩戴 0未佩戴 result:血氧值（未出值为0）
 - (void)factoryBloodOxygenTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger open, NSInteger state, NSInteger result))block;
 ///按键测试 array按键编码
-- (void)factoryKeyTestBlock:(void(^_Nullable)(NSMutableArray * _Nullable array))block;
+- (void)factoryKeyTestBlock:(void(^_Nullable)(NSInteger keyCount,NSInteger keyNumber))block;
 ///G-sensor 测试 range：量程 x：X轴 y:Y轴 z:Z轴 speed:三轴合加速度
 - (void)factoryGsensorTestBlock:(void(^_Nullable)(NSInteger range, NSInteger x,NSInteger y,NSInteger z, NSInteger speed))block;
 ///马达测试 cmd:1开启 0关闭 state：1成功 0失败
 - (void)factoryMotorTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger state))block;
 ///充电测试 sampledValue:采样值 powerLevel:电量 state:充电状态 0未充电 1充电中 2充满
 - (void)factoryChargingTestBlock:(void(^_Nullable)(NSInteger sampledValue,NSInteger powerLevel,NSInteger state))block;
-///三色指示灯测试 cmd：1开 0关 open:开关位 state：测试结果1通过 0失败
+///三色指示灯测试（LED） cmd：1开 0关 open:开关位 state：测试结果1通过 0失败
 - (void)factoryLEDTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger open, NSInteger state))block;
 ///体温测试 cmd：1开 0关 open:开关位 environment:环境温度 body：体表温度
 - (void)factoryBodyTemperatureTestCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger open, CGFloat environment, CGFloat body))block;
 ///船运模式/关机 cmd：1恢复出厂设置重启 0恢复出厂设置关机 type标志
 - (void)factory20OperationCMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger cmd,NSInteger type))block;
 
+///读取陀螺仪3轴数据 cmd：1开 0关， state:开光状态，x,y,z需要除以1000，result:0不通过 1通过。晃动设备返回值不全为0表示通过
+- (void)factoryGyroscope3CMD:(NSInteger)cmd Block:(void(^_Nullable)(NSInteger state,NSInteger x,NSInteger y,NSInteger z,NSInteger result))block;
 @end
 
 
