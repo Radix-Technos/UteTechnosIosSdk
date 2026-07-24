@@ -52,7 +52,7 @@
  */
 - (void)uteSDKLog:(NSString *)str;
 
-///录音背夹 数据
+///录音背夹协议直接通讯 数据
 - (void)uteDeviceRecordingClip:(NSData *)data error:(NSError *)error;
 - (void)uteDeviceRecordingClipbattery:(NSData *)data error:(NSError *)error;
 ///瑰元ble上报数据

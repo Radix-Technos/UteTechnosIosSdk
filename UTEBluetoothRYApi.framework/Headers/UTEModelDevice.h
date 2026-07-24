@@ -631,19 +631,25 @@
  */
 @property(nonatomic,assign) BOOL                hasIndependentAI;
 /**
- *  ① Support hasIndependentAI 支持chatGpt和AI表盘会员读取和最大使用次数、剩余次数读取
+ *  ① Support hasAIReadingCount 支持chatGpt和AI表盘会员读取和最大使用次数、剩余次数读取
  */
 @property(nonatomic,assign) BOOL                hasAIReadingCount;
 /**
- *  ① Support hasIndependentAI 支持在线视频表盘功能
+ *  ① Support hasVideoWatch 支持在线视频表盘功能
  */
 @property(nonatomic,assign) BOOL                hasVideoWatch;
 /**
- *  ① Support hasIndependentAI 支持设备保存日志功能
+ *  ① Support hasDeviceSaveLog 支持设备保存日志功能
  */
 @property(nonatomic,assign) BOOL                hasDeviceSaveLog;
-
-
+/**
+ *  ① Support hasBlEInternet 支持手表通过蓝牙上网功能
+ */
+@property(nonatomic,assign) BOOL                hasBlEInternet;
+/**
+ *  ① Support hasRecordingRTT 支持录音实时同传功能
+ */
+@property(nonatomic,assign) BOOL                hasRecordingRTT;
 
 @end
 
@@ -1605,70 +1611,164 @@
 @property (nonatomic, assign) NSInteger            aerobicEffectfloat;
 ///无氧训练效果 [0,50] 取数值需要除以10 如返回38，结果是3.8
 @property (nonatomic, assign) NSInteger            anaerobicEffectfloat;
-
+///扣球次数，对应网球扣发球次数 2b
+@property (nonatomic, assign) NSInteger            smashCounts;
 @end
 
 /*!
  *  UTEModelDeviceSportRealData
  */
 @interface UTEModelDeviceSportRealData : NSObject
-
+///运动时间 单位：秒  // Exercise time, unit: seconds
 @property (nonatomic,assign) NSInteger              duration;
+
+///实时心率 单位bpm  // Real-time heart rate, unit: bpm
 @property (nonatomic,assign) NSInteger              heartRate;
+
+///心率区间类型， 0最大心率 1储备心率  // Heart rate zone type, 0: max heart rate, 1: reserve heart rate
 @property (nonatomic,assign) NSInteger              heartRateZone;
-@property (nonatomic,assign) NSInteger              step;///（步数、桨次、跳绳数复用）
+
+///步数、桨次、跳绳数复用  // Step count, paddle strokes, jump rope count (shared)
+@property (nonatomic,assign) NSInteger              step;
+
+///步频 单位：步/5秒（APP换算后得到每分钟步频）（桨频复用）2023/09/06 单位更为步/分钟  // Cadence, unit: steps/min (formerly steps/5s, shared with stroke rate)
 @property (nonatomic,assign) NSInteger              cadence;
+
+///配速 单位：s/km  // Pace, unit: s/km
 @property (nonatomic,assign) NSInteger              pace;
+
+///运动距离 单位：分米  // Exercise distance, unit: dm
 @property (nonatomic,assign) NSInteger              distance;
+
+///运动卡路里 单位：卡  // Calories burned, unit: cal
 @property (nonatomic,assign) NSInteger              calorie;
-@property (nonatomic,assign) NSInteger              totalRise; //累计爬升,单位: dm，4byte
-@property (nonatomic,assign) NSInteger              totalDescend;//累计下降,单位: dm，4byte
-@property (nonatomic,assign) NSInteger              altitude;//高度 单位:dm 4byte
+
+///累计爬升,单位: dm，4byte  // Cumulative ascent, unit: dm, 4 bytes
+@property (nonatomic,assign) NSInteger              totalRise;
+
+///累计下降,单位: dm，4byte  // Cumulative descent, unit: dm, 4 bytes
+@property (nonatomic,assign) NSInteger              totalDescend;
+
+///高度 单位:dm 4byte  // Altitude, unit: dm, 4 bytes
+@property (nonatomic,assign) NSInteger              altitude;
+
+///有氧训练效果  // Aerobic training effect
 @property (nonatomic,assign) NSInteger              aerobicEffect;
+
+///无氧训练效果  // Anaerobic training effect
 @property (nonatomic,assign) NSInteger              anaerobicEffect;
+
+///效益指标  // Performance condition (benefit indicator)
 @property (nonatomic,assign) NSInteger              performanceCondition;
+
+///数据产生的时间  // Timestamp of data generation
 @property (nonatomic,assign) NSInteger              timeInfo;
+
+///执行状态  // Execution status / operation type
 @property (nonatomic,assign) NSInteger              operatorType;
+
+///恢复时间 单位：分钟  // Recovery time, unit: minutes
 @property (nonatomic,assign) NSInteger              recoveryTime;
+
+///最大摄氧量  // Maximum oxygen uptake (VO2 max)
 @property (nonatomic,assign) NSInteger              oxygenUptake;
+
+///算法类型  // Algorithm type (ETE type)
 @property (nonatomic,assign) NSInteger              eteType;
+
+///跳绳速率  // Jump rope frequency / rate
 @property (nonatomic,assign) NSInteger              jumpRopeFrequency;
+
+///燃脂速率 单位：kcal/min  // Fat burning rate, unit: kcal/min
 @property (nonatomic,assign) NSInteger              fatBurnRate;
+
+///燃糖速率 单位：kcal/min  // Carbohydrate burning rate, unit: kcal/min
 @property (nonatomic,assign) NSInteger              fatGlycogen;
+
+///脂肪占比 [0-100]  // Fat percentage [0-100]
 @property (nonatomic,assign) NSInteger              fatPercent;
+
+///累计脂肪 单位 mg  // Cumulative fat burned, unit: mg
 @property (nonatomic,assign) NSInteger              fatCalorie;
+
+///平均配速 单位：s/km  // Average pace, unit: s/km
 @property (nonatomic,assign) NSInteger              avgPace;
+
 ///新增
-@property (nonatomic,assign) NSInteger              stride;//26步幅，单位：cm  2byte
-@property (nonatomic,assign) NSInteger              tripTimes;//27泳池游泳趟数,滑雪趟数（复用）1byte
-@property (nonatomic,assign) NSInteger              swimPullTimes;//28划水次数，2byte
-@property (nonatomic,assign) NSInteger              swimPullRate;//29划水频率，1byte
-@property (nonatomic,assign) NSInteger              swimType;//30泳姿1: 蛙泳 2: 自由泳 3: 蝶泳 4: 仰泳 5: 混合泳，1byte
-@property (nonatomic,assign) NSInteger              swimSwolf;//31单趟泳池长度所需时间 （以秒为单位）2byte
-@property (nonatomic,assign) NSInteger              pullTime;//32拉浆时间 单位：毫秒  app转换保留2位小数的秒，不用四舍五入 2byte
-@property (nonatomic,assign) NSInteger              freeTime;//33收桨时间 单位：毫秒  app转换保留2位小数的秒，不用四舍五入 2byte
-@property (nonatomic,assign) NSInteger              tripped;//34绊绳次数 2byte
-@property (nonatomic,assign) NSInteger              maxRopeCombo;//35最大连跳 2byte
-@property (nonatomic,assign) NSInteger              CurrRopeCombo;//36当前连跳 2byte
-@property (nonatomic,assign) NSInteger              floorsUp;//37上楼层数 2byte
-@property (nonatomic,assign) NSInteger              floorsDown;//38下楼层数 2byte
-@property (nonatomic,assign) NSInteger              forehandCounts;//39 正手挥击次数 2
-@property (nonatomic,assign) NSInteger              backhandCounts;//40反手 2byte
-@property (nonatomic,assign) NSInteger              overhandCounter;//41上手 2byte
-@property (nonatomic,assign) NSInteger              underhandCounter;//42下手 2byte
-@property (nonatomic,assign) NSInteger              contSwingCnt;//43最长连拍 2byte
-///实时速度 4b dm/s
+///26步幅，单位：cm  2byte  // Stride length, unit: cm, 2 bytes
+@property (nonatomic,assign) NSInteger              stride;
+
+///27泳池游泳趟数,滑雪趟数（复用）1byte  // Pool swimming laps / skiing trips (shared), 1 byte
+@property (nonatomic,assign) NSInteger              tripTimes;
+
+///28划水次数，2byte  // Stroke count (swimming pull count), 2 bytes
+@property (nonatomic,assign) NSInteger              swimPullTimes;
+
+///29划水频率，1byte  // Stroke rate, 1 byte
+@property (nonatomic,assign) NSInteger              swimPullRate;
+
+///30泳姿1: 蛙泳 2: 自由泳 3: 蝶泳 4:仰泳 5: 混合泳，1byte  // Swimming stroke type: 1: Breaststroke, 2: Freestyle, 3: Butterfly, 4: Backstroke, 5: Medley, 1 byte
+@property (nonatomic,assign) NSInteger              swimType;
+
+///31单趟泳池长度所需时间 （以秒为单位）2byte  // Time per pool length (SWOLF), unit: seconds, 2 bytes
+@property (nonatomic,assign) NSInteger              swimSwolf;
+
+///32拉浆时间 单位：毫秒  app转换保留2位小数的秒，不用四舍五入 2byte  // Pull time, unit: ms (APP converts to seconds with 2 decimal places, no rounding), 2 bytes
+@property (nonatomic,assign) NSInteger              pullTime;
+
+///33收桨时间 单位：毫秒  app转换保留2位小数的秒，不用四舍五入 2byte  // Recovery time between pulls, unit: ms (APP converts to seconds with 2 decimal places, no rounding), 2 bytes
+@property (nonatomic,assign) NSInteger              freeTime;
+
+///34绊绳次数 2byte  // Rope tripping count, 2 bytes
+@property (nonatomic,assign) NSInteger              tripped;
+
+///35最大连跳 2byte  // Maximum consecutive jumps, 2 bytes
+@property (nonatomic,assign) NSInteger              maxRopeCombo;
+
+///36当前连跳 2byte  // Current consecutive jumps, 2 bytes
+@property (nonatomic,assign) NSInteger              CurrRopeCombo;
+
+///37上楼层数 2byte  // Floors climbed up, 2 bytes
+@property (nonatomic,assign) NSInteger              floorsUp;
+
+///38下楼层数 2byte  // Floors descended, 2 bytes
+@property (nonatomic,assign) NSInteger              floorsDown;
+
+///39 正手挥击次数 2  // Forehand swings count, 2 bytes
+@property (nonatomic,assign) NSInteger              forehandCounts;
+
+///40反手 2byte  // Backhand swings count, 2 bytes
+@property (nonatomic,assign) NSInteger              backhandCounts;
+
+///41上手 2byte  // Overhand swings count, 2 bytes
+@property (nonatomic,assign) NSInteger              overhandCounter;
+
+///42下手 2byte  // Underhand swings count, 2 bytes
+@property (nonatomic,assign) NSInteger              underhandCounter;
+
+///43最长连拍 2byte  // Longest consecutive hits / swings, 2 bytes
+@property (nonatomic,assign) NSInteger              contSwingCnt;
+
+///实时速度 4b dm/s  // Real-time speed, 4 bytes, unit: dm/s
 @property (nonatomic,assign) NSInteger              realTimeSpeed;//44
-///最大挥击速度 dm/s 45 1b
+
+///最大挥击速度 dm/s 45 1b  // Maximum swing speed, unit: dm/s, 1 byte
 @property (nonatomic,assign) NSInteger              swingMaxSpeed;
-///坡度 百分比  46 1b
+
+///坡度 百分比  46 1b  // Slope / gradient, percentage, 1 byte
 @property (nonatomic,assign) NSInteger              slope;
-///跑步功率 瓦特 47 2b
+
+///跑步功率 瓦特 47 2b  // Running power, unit: watts, 2 bytes
 @property (nonatomic,assign) NSInteger              runingPower;
-///触地时间 毫秒 48 2b
+
+///触地时间 毫秒 48 2b  // Ground contact time, unit: ms, 2 bytes
 @property (nonatomic,assign) NSInteger              groundContactTime;
-///垂直振幅 cm 49 1b
+
+///垂直振幅 cm 49 1b  // Vertical oscillation, unit: cm, 1 byte
 @property (nonatomic,assign) NSInteger              vosc;
+
+///扣发球次数 50 2b  // Smash / spike count, 2 bytes
+@property (nonatomic,assign) NSInteger              smashCounts;
 
 @end
 
@@ -1698,6 +1798,8 @@
 @property (nonatomic,assign) BOOL              hasKospetAlgorithmV2;
 ///赛维新升级P08算法
 @property (nonatomic,assign) BOOL              hasSaiWeiP08;
+///网球专项 ，需显示网球专项数据
+@property (nonatomic,assign) BOOL              hasTennisData;
 @end
 
 /*!
@@ -1958,6 +2060,9 @@
 @property (nonatomic, assign) NSInteger            aerobicEffectfloat;
 ///无氧训练效果 [0,50] 取数值需要除以10 如返回38，结果是3.8
 @property (nonatomic, assign) NSInteger            anaerobicEffectfloat;
+///扣球次数，对应网球扣发球次数 2b
+@property (nonatomic, assign) NSInteger            smashCounts;
+
 
 //不涉及，暂时为空
 @property (nonatomic,strong) NSMutableArray<UTEModeSportRecordSummaryRelation*> *motionRelationList;
@@ -3269,4 +3374,15 @@
 @property(nonatomic,copy)NSString *reset;
 
 
+@end
+
+@interface UTEModelCrashLog : NSObject
+///时间戳
+@property (nonatomic,assign) NSInteger timestamp;
+///日志类型 00死机日志 01断言日志
+@property (nonatomic,assign) NSInteger logType;
+///日志标志
+@property (nonatomic,assign) NSInteger logFlag;
+///日志内容
+@property (nonatomic,copy) NSString * logContent;
 @end

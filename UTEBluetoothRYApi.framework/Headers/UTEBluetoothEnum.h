@@ -862,7 +862,7 @@ typedef NS_ENUM(NSInteger, UTEApp) {
     UTEAppGpay,
     UTEAppPhonePe,
 //    UTEAppHotstar,//找不到ID，屏蔽
-//    UTEAppPrimeVideo,
+    UTEAppPrimeVideo,
     UTEAppFlipkart,
     UTEAppAmazon,
     UTEAppMyntra,

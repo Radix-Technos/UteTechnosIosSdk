@@ -1248,7 +1248,11 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  */
 - (void)getAlarmArrayModel:(void(^)(NSInteger errorCode ,NSArray<UTEModelClock *> *modelArray))block;
 
-///获取手表支持的闹钟个数（支持个数）Get the number of alarms supported by the watch
+/**
+ *获取手表支持的闹钟个数（支持个数）Get the number of alarms supported by the watch
+ *参考UTEModelClockInfo注释
+ *Refer to UTEModelClockInfo comments
+ */
 - (void)getAlarmInfo:(void(^)(NSInteger errorCode ,UTEModelClockInfo *model))block;
 
 /* 手表修改闹钟通知app获取闹钟（固件支持才会上报）
@@ -1364,6 +1368,10 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  @block enable
  true:开 false:关
  
+ @block limit
+ 提醒值
+ reminder value
+ 
  @block errorCode
  请求成功:100000 其他:错误码
  Request successful: 100000 Other: Error code
@@ -1405,6 +1413,10 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
  
  @block enable
  true:开 false:关
+ 
+ @block limit
+ 提醒值
+ reminder value
  
  @block errorCode
  请求成功:100000 其他:错误码
@@ -1571,7 +1583,7 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 /**23.2 监听设备主动上报执行状态 通知事件ID 为固定的 5890
  The monitoring device actively reports the execution status
  
- @parma model
+ @block model
  通过operatorType同步设备的开始、暂停、继续、结束
  Synchronize device start, pause, resume, and end through operatorType
  */
@@ -3273,8 +3285,9 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 ///设置血压单位
 -(void)setBloodPressureUint:(UTEBPUnitType)unit Block:(void(^)(NSInteger errorCode))block;
 
-/**人为操作手机之后，可以下发当前指令，用于提醒设备出睡眠（26.6.30需固件支持）
- *一定是人为操作手机之后下发指令
+/**人为操作手机之后，可以下发当前指令，用于提醒设备出睡眠（26.6.30需固件支持）After manual operation of the phone, the current command can be issued to remind the device to exit sleep mode (firmware support required by 2026.6.30).
+ *一定是人为操作手机之后下发指令The command must be issued only after manual operation of the phone.
+ *必须严格控制指令逻辑，一旦下发当设备在睡眠中，就退出睡眠The logic of the instruction must be strictly controlled. Once issued, the device should exit sleep mode if it is currently in sleep mode
  */
 -(void)setManualOperationPhoneBlock:(void(^)(NSInteger errorCode))block;
 
@@ -3290,6 +3303,13 @@ typedef NS_ENUM(NSInteger, UTEFactoryType) {
 
 ///监听健康分析报告的建议请求 暂时01为全部
 -(void)onNotifyHealthAnalysisSuggestionBlock:(void(^)(NSInteger state))block;
+
+/// MARK: 设备单独保存日志
+/// 获取设备死机等日志
+-(void)getDeviceAllLogBlock:(void(^)(NSArray <UTEModelCrashLog *>*array, NSInteger errorCode))block;
+
+///删除设备所有日志
+-(void)delDeviceAllLogBlock:(void(^)(NSInteger errorCode))block;
 
 #pragma mark - Tool
 - (void)openSleepLog:(void(^)(BOOL ok))block;
